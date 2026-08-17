@@ -3,6 +3,11 @@ from django.db import models
 
 
 class User(AbstractUser):
+    email = models.EmailField(
+        "email address",
+        unique=True,
+    )
+
     class Role(models.TextChoices):
         ATHLETE = "ATHLETE", "Athlete"
         COACH = "COACH", "Coach"

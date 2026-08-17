@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}Matches | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">Matches</p>
+
+            <h1>Match history</h1>
+
+            <p class="page-subtitle">
+                Record, review and manage every competitive match.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'matches:create' %}"
+            class="primary-button"
+        >
+            Add match
+        </a>
+    </div>
+
+    <div class="filter-card">
+        <form method="get" class="filter-form">
+            <div class="form-group">
+                <label for="id_q">Search</label>
+
+                <input
+                    type="search"
+                    id="id_q"
+                    name="q"
+                    value="{{ current_query }}"
+                    placeholder="Opponent, player or competition"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="id_player">Player</label>
+
+                <select id="id_player" name="player">
+                    <option value="">All players</option>
+
+                    {% for player in players %}
+                        <option
+                            value="{{ player.id }}"
+                            {% if current_player == player.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ player.first_name }} {{ player.last_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="id_status">Status</label>
+
+                <select id="id_status" name="status">
+                    <option value="">All statuses</option>
+
+                    {% for value, label in status_choices %}
+                        <option
+                            value="{{ value }}"
+                            {% if current_status == value %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-actions">
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Filter
+                </button>
+
+                <a
+                    href="{% url 'matches:list' %}"
+                    class="secondary-button"
+                >
+                    Clear
+                </a>
+            </div>
+        </form>
+    </div>
+
+    {% if page_obj.object_list %}
+        <div class="matches-list">
+            {% for match in page_obj %}
+                <article class="match-card">
+                    <div class="match-card-main">
+                        <div>
+                            <p class="match-date">
+                                {{ match.played_at|date:"M d, Y • H:i" }}
+                            </p>
+
+                            <h2>
+                                {{ match.player }}
+                                <span class="match-vs">vs</span>
+                                {{ match.opponent_name }}
+                            </h2>
+
+                            {% if match.competition %}
+                                <p class="match-competition">
+                                    {{ match.competition }}
+                                </p>
+                            {% endif %}
+                        </div>
+
+                        <div class="match-result result-{{ match.result|lower }}">
+                            <span class="result-label">
+                                {{ match.result }}
+                            </span>
+
+                            <strong>
+                                {{ match.score }}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <div class="match-card-footer">
+                        <span>
+                            {{ match.get_best_of_display }}
+                        </span>
+
+                        <span>
+                            {{ match.get_status_display }}
+                        </span>
+
+                        <div class="card-actions">
+                            <a
+                                href="{% url 'matches:detail' match.pk %}"
+                            >
+                                View
+                            </a>
+
+                            <a
+                                href="{% url 'matches:update' match.pk %}"
+                            >
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.has_other_pages %}
+            <nav class="pagination" aria-label="Match pagination">
+                {% if page_obj.has_previous %}
+                    <a
+                        href="?page={{ page_obj.previous_page_number }}{% if current_query %}&q={{ current_query|urlencode }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}{% if current_player %}&player={{ current_player }}{% endif %}"
+                    >
+                        Previous
+                    </a>
+                {% endif %}
+
+                <span>
+                    Page {{ page_obj.number }}
+                    of {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a
+                        href="?page={{ page_obj.next_page_number }}{% if current_query %}&q={{ current_query|urlencode }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}{% if current_player %}&player={{ current_player }}{% endif %}"
+                    >
+                        Next
+                    </a>
+                {% endif %}
+            </nav>
+        {% endif %}
+    {% else %}
+        <div class="empty-state">
+            <span class="empty-state-icon">🏓</span>
+
+            <h2>No matches found</h2>
+
+            <p>
+                Start building your match history by recording
+                your first table tennis match.
+            </p>
+
+            <a
+                href="{% url 'matches:create' %}"
+                class="primary-button"
+            >
+                Add your first match
+            </a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ page_title }} | Table Tennis Manager
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="form-page-header">
+        <a
+            href="{% url 'matches:list' %}"
+            class="back-link"
+        >
+            ← Back to matches
+        </a>
+
+        <p class="eyebrow">Matches</p>
+
+        <h1>{{ page_title }}</h1>
+
+        <p class="page-subtitle">
+            Record match information accurately so your
+            future performance analytics remain reliable.
+        </p>
+    </div>
+
+    <div class="professional-form-card">
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <span class="help-text">
+                            {{ field.help_text }}
+                        </span>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <p class="field-error">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div class="form-actions">
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    {{ submit_label }}
+                </button>
+
+                <a
+                    href="{% url 'matches:list' %}"
+                    class="secondary-button"
+                >
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

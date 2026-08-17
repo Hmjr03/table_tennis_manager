@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ match.player }} vs {{ match.opponent_name }}
+    | Table Tennis Manager
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="form-page-header">
+        <a
+            href="{% url 'matches:list' %}"
+            class="back-link"
+        >
+            ← Back to matches
+        </a>
+
+        <p class="eyebrow">Match details</p>
+
+        <h1>
+            {{ match.player }}
+            <span class="match-vs">vs</span>
+            {{ match.opponent_name }}
+        </h1>
+
+        <p class="page-subtitle">
+            {{ match.played_at|date:"F d, Y • H:i" }}
+        </p>
+    </div>
+
+    <div class="match-detail-card">
+        <div class="match-scoreboard">
+            <div class="score-player">
+                <span class="score-label">Player</span>
+
+                <strong>{{ match.player }}</strong>
+
+                {% if match.result == "Win" %}
+                    <span class="winner-label">Winner</span>
+                {% endif %}
+            </div>
+
+            <div class="score-center">
+                <span class="detail-result">
+                    {{ match.result }}
+                </span>
+
+                <strong class="large-score">
+                    {{ match.score }}
+                </strong>
+
+                <span>
+                    {{ match.get_best_of_display }}
+                </span>
+            </div>
+
+            <div class="score-player">
+                <span class="score-label">Opponent</span>
+
+                <strong>{{ match.opponent_name }}</strong>
+
+                {% if match.result == "Loss" %}
+                    <span class="winner-label">Winner</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="match-information">
+            <div class="information-item">
+                <span>Competition</span>
+
+                <strong>
+                    {{ match.competition|default:"Not specified" }}
+                </strong>
+            </div>
+
+            <div class="information-item">
+                <span>Status</span>
+
+                <strong>
+                    {{ match.get_status_display }}
+                </strong>
+            </div>
+
+            <div class="information-item">
+                <span>Format</span>
+
+                <strong>
+                    {{ match.get_best_of_display }}
+                </strong>
+            </div>
+
+            <div class="information-item">
+                <span>Recorded</span>
+
+                <strong>
+                    {{ match.created_at|date:"M d, Y" }}
+                </strong>
+            </div>
+        </div>
+
+        {% if match.notes %}
+            <div class="match-notes">
+                <h2>Match notes</h2>
+
+                <p>
+                    {{ match.notes|linebreaksbr }}
+                </p>
+            </div>
+        {% endif %}
+
+        <div class="form-actions">
+            <a
+                href="{% url 'matches:update' match.pk %}"
+                class="primary-button"
+            >
+                Edit match
+            </a>
+
+            <a
+                href="{% url 'matches:delete' match.pk %}"
+                class="danger-button"
+            >
+                Delete match
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+
+    <div class="dashboard-header">
+        <div>
+            <p class="eyebrow">Dashboard</p>
+
+            <h1>Welcome, {{ user.first_name|default:user.username }}!</h1>
+
+            <p class="dashboard-subtitle">
+                Your Table Tennis Manager workspace.
+            </p>
+        </div>
+
+        <div class="role-badge">
+            {{ user.get_role_display }}
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <a
+            href="{% url 'matches:list' %}"
+            class="dashboard-card dashboard-card-link"
+        >
+            <span class="card-icon">🏓</span>
+
+            <h2>Matches</h2>
+
+            <p>
+                Record matches, opponents, scores and results.
+                Build the foundation for future performance analytics.
+            </p>
+
+            <span class="card-action">
+                Open matches →
+            </span>
+        </a>
+
+        <a
+            href="{% url 'players:list' %}"
+            class="dashboard-card dashboard-card-link"
+        >
+            <span class="card-icon">👤</span>
+
+            <h2>Players</h2>
+
+            <p>
+                Manage your athletes, player profiles,
+                rankings and playing characteristics.
+            </p>
+
+            <span class="card-action">
+                Open players →
+            </span>
+        </a>
+
+        <a
+            href="{% url 'performance:dashboard' %}"
+            class="dashboard-card dashboard-card-link"
+        >
+            <span class="card-icon">📊</span>
+
+            <h2>Performance</h2>
+
+            <p>
+                Analyze wins, losses, trends and sporting
+                performance using your real match history.
+            </p>
+
+            <span class="card-action">
+                Open analytics →
+            </span>
+        </a>
+
+        <article class="dashboard-card">
+            <span class="card-icon">🏆</span>
+
+            <h2>Rankings</h2>
+
+            <p>
+                Track ranking progression and competitive
+                position over time.
+            </p>
+
+            <span class="coming-soon">
+                Coming soon
+            </span>
+        </article>
+
+        <article class="dashboard-card">
+            <span class="card-icon">📅</span>
+
+            <h2>Training</h2>
+
+            <p>
+                Plan training sessions, exercises,
+                workload and your sporting calendar.
+            </p>
+
+            <span class="coming-soon">
+                Coming soon
+            </span>
+        </article>
+
+    </div>
+
+</section>
+{% endblock %}

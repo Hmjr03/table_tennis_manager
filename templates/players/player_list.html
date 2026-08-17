@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Players | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="players-page">
+
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">Players</p>
+
+            <h1>My Players</h1>
+
+            <p class="page-subtitle">
+                Manage your table tennis athletes and keep their profiles
+                organized in one place.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'players:create' %}"
+            class="primary-button"
+        >
+            Add player
+        </a>
+    </div>
+
+    {% if players %}
+        <div class="players-grid">
+
+            {% for player in players %}
+                <article class="player-card">
+
+                    <div class="player-card-header">
+
+                        <div class="player-avatar">
+                            {{ player.first_name|first|upper }}{{ player.last_name|first|upper }}
+                        </div>
+
+                        <div>
+                            <h2>
+                                {{ player.first_name }}
+                                {{ player.last_name }}
+                            </h2>
+
+                            <p class="player-role">
+                                Table tennis player
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="player-details">
+
+                        <div class="player-detail">
+                            <span class="detail-label">
+                                Ranking
+                            </span>
+
+                            <strong>
+                                {% if player.ranking %}
+                                    #{{ player.ranking }}
+                                {% else %}
+                                    Not ranked
+                                {% endif %}
+                            </strong>
+                        </div>
+
+                        <div class="player-detail">
+                            <span class="detail-label">
+                                Playing hand
+                            </span>
+
+                            <strong>
+                                {{ player.get_hand_display }}
+                            </strong>
+                        </div>
+
+                        <div class="player-detail">
+                            <span class="detail-label">
+                                Date of birth
+                            </span>
+
+                            <strong>
+                                {% if player.date_of_birth %}
+                                    {{ player.date_of_birth|date:"d/m/Y" }}
+                                {% else %}
+                                    Not provided
+                                {% endif %}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="player-card-footer">
+
+                        <a
+                            href="{% url 'players:detail' player.pk %}"
+                            class="secondary-button"
+                        >
+                            View profile
+                        </a>
+
+                        <a
+                            href="{% url 'players:edit' player.pk %}"
+                            class="text-link"
+                        >
+                            Edit
+                        </a>
+
+                    </div>
+
+                </article>
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-state-icon">
+                🏓
+            </div>
+
+            <h2>No players yet</h2>
+
+            <p>
+                Start building your player database by adding your first
+                table tennis athlete.
+            </p>
+
+            <a
+                href="{% url 'players:create' %}"
+                class="primary-button"
+            >
+                Add your first player
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+{% endblock %}
+

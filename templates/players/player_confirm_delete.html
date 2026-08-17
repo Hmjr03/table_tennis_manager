@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delete {{ player.first_name }} {{ player.last_name }} |
+    Table Tennis Manager
+{% endblock %}
+
+{% block content %}
+<section class="danger-page">
+
+    <div class="danger-card">
+
+        <div class="danger-icon">
+            ⚠️
+        </div>
+
+        <p class="eyebrow">Delete player</p>
+
+        <h1>
+            Delete {{ player.first_name }} {{ player.last_name }}?
+        </h1>
+
+        <p class="danger-description">
+            This action will permanently remove this player profile.
+            Player-related records connected to this profile may also be
+            affected as the platform grows.
+        </p>
+
+        <div class="danger-warning">
+            <strong>This action cannot be undone.</strong>
+
+            <span>
+                Make sure you really want to remove this player before
+                continuing.
+            </span>
+        </div>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="form-actions">
+
+                <a
+                    href="{% url 'players:detail' player.pk %}"
+                    class="secondary-button"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="danger-button"
+                >
+                    Delete player
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+{% endblock %}
+

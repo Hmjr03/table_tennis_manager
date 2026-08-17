@@ -1,0 +1,143 @@
+<nav class="site-navbar">
+
+    <div class="container navbar-container">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="{% url 'dashboard:home' %}"
+            class="navbar-logo"
+        >
+            🏓 Table Tennis Manager
+        </a>
+
+
+
+        <!-- NAVIGATION -->
+
+        <ul class="navbar-menu">
+
+
+            {% if user.is_authenticated %}
+
+
+                <li>
+                    <a
+                        href="{% url 'dashboard:home' %}"
+                        class="navbar-link"
+                    >
+                        Dashboard
+                    </a>
+                </li>
+
+
+
+                <li>
+                    <a
+                        href="{% url 'players:list' %}"
+                        class="navbar-link"
+                    >
+                        Players
+                    </a>
+                </li>
+
+
+
+                <li>
+                    <a
+                        href="{% url 'matches:list' %}"
+                        class="navbar-link"
+                    >
+                        Matches
+                    </a>
+                </li>
+
+
+
+                <li>
+                    <a
+                        href="{% url 'performance:dashboard' %}"
+                        class="navbar-link"
+                    >
+                        Performance
+                    </a>
+                </li>
+
+
+
+                <!-- USER AREA -->
+
+                <li class="navbar-user">
+
+
+                    <span class="user-name">
+                        {{ user.username }}
+                    </span>
+
+
+
+                    <form
+                        method="post"
+                        action="{% url 'accounts:logout' %}"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <button
+                            type="submit"
+                            class="logout-button"
+                        >
+                            Logout
+                        </button>
+
+
+                    </form>
+
+
+                </li>
+
+
+
+            {% else %}
+
+
+
+                <li>
+
+                    <a
+                        href="{% url 'accounts:login' %}"
+                        class="navbar-link"
+                    >
+                        Login
+                    </a>
+
+                </li>
+
+
+
+
+                <li>
+
+                    <a
+                        href="{% url 'accounts:register' %}"
+                        class="navbar-link navbar-primary"
+                    >
+                        Register
+                    </a>
+
+                </li>
+
+
+
+            {% endif %}
+
+
+
+        </ul>
+
+
+    </div>
+
+</nav>

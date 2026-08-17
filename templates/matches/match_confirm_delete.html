@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delete Match | Table Tennis Manager
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="professional-form-card delete-card">
+        <p class="eyebrow">Danger zone</p>
+
+        <h1>Delete this match?</h1>
+
+        <p>
+            You are about to permanently delete:
+        </p>
+
+        <div class="delete-summary">
+            <strong>
+                {{ match.player }}
+                vs
+                {{ match.opponent_name }}
+            </strong>
+
+            <span>
+                {{ match.played_at|date:"M d, Y • H:i" }}
+            </span>
+
+            <span>
+                Score: {{ match.score }}
+            </span>
+        </div>
+
+        <p class="delete-warning">
+            This action cannot be undone.
+        </p>
+
+        <form method="post" class="form-actions">
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="danger-button"
+            >
+                Yes, delete match
+            </button>
+
+            <a
+                href="{% url 'matches:detail' match.pk %}"
+                class="secondary-button"
+            >
+                Cancel
+            </a>
+        </form>
+    </div>
+</section>
+{% endblock %}

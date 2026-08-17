@@ -1,0 +1,411 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Dashboard | Table Tennis Manager
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<section class="page-section">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <p class="eyebrow">
+                Overview
+            </p>
+
+
+            <h1>
+                Athlete Dashboard
+            </h1>
+
+
+            <p class="page-subtitle">
+                Track your progress, matches and competitive evolution.
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- STATISTICS -->
+
+
+    <div class="dashboard-grid">
+
+
+
+        <article class="dashboard-card">
+
+
+            <h2>
+                Players
+            </h2>
+
+
+            <strong>
+                {{ players_count }}
+            </strong>
+
+
+            <p>
+                Registered athletes
+            </p>
+
+
+        </article>
+
+
+
+
+
+        <article class="dashboard-card">
+
+
+            <h2>
+                Matches played
+            </h2>
+
+
+            <strong>
+                {{ matches_played }}
+            </strong>
+
+
+            <p>
+                Completed matches
+            </p>
+
+
+        </article>
+
+
+
+
+
+        <article class="dashboard-card">
+
+
+            <h2>
+                Wins
+            </h2>
+
+
+            <strong>
+                {{ wins }}
+            </strong>
+
+
+            <p>
+                Victories
+            </p>
+
+
+        </article>
+
+
+
+
+
+        <article class="dashboard-card">
+
+
+            <h2>
+                Losses
+            </h2>
+
+
+            <strong>
+                {{ losses }}
+            </strong>
+
+
+            <p>
+                Defeats
+            </p>
+
+
+        </article>
+
+
+
+
+    </div>
+
+
+
+
+
+    <!-- PERFORMANCE DETAILS -->
+
+
+    <div class="dashboard-grid">
+
+
+
+        <article class="dashboard-card">
+
+
+            <h2>
+                Win rate
+            </h2>
+
+
+            <strong>
+                {{ win_rate }}%
+            </strong>
+
+
+            <p>
+                Overall performance
+            </p>
+
+
+        </article>
+
+
+
+
+
+        <article class="dashboard-card">
+
+
+            <h2>
+                Sets won
+            </h2>
+
+
+            <strong>
+                {{ sets_won }}
+            </strong>
+
+
+            <p>
+                Total sets
+            </p>
+
+
+        </article>
+
+
+
+
+
+        <article class="dashboard-card">
+
+
+            <h2>
+                Sets lost
+            </h2>
+
+
+            <strong>
+                {{ sets_lost }}
+            </strong>
+
+
+            <p>
+                Opponent advantage
+            </p>
+
+
+        </article>
+
+
+
+
+
+        <article class="dashboard-card">
+
+
+            <h2>
+                Current streak
+            </h2>
+
+
+            <strong>
+                {{ current_streak }}
+            </strong>
+
+
+            <p>
+                Consecutive wins
+            </p>
+
+
+        </article>
+
+
+
+
+    </div>
+
+
+
+
+
+
+    <!-- RECENT MATCHES -->
+
+
+    <div class="professional-form-card">
+
+
+        <h2>
+            Recent matches
+        </h2>
+
+
+
+
+        {% if recent_matches %}
+
+
+
+            <div class="match-list">
+
+
+
+                {% for match in recent_matches %}
+
+
+
+                    <div class="match-row">
+
+
+
+                        <div>
+
+
+                            <strong>
+                                {{ match.player }}
+                            </strong>
+
+
+                            <p>
+
+                                vs
+
+                                {{ match.opponent_name }}
+
+                            </p>
+
+
+                        </div>
+
+
+
+
+
+                        <div>
+
+
+
+                            {% if match.result == "Win" %}
+
+
+                                <span class="result-win">
+
+                                    WIN
+
+                                </span>
+
+
+                            {% else %}
+
+
+                                <span class="result-loss">
+
+                                    LOSS
+
+                                </span>
+
+
+                            {% endif %}
+
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+
+        {% else %}
+
+
+
+            <div class="empty-state">
+
+
+                <span class="empty-state-icon">
+                    🏓
+                </span>
+
+
+                <h2>
+                    No matches yet
+                </h2>
+
+
+                <p>
+                    Your performance story starts with your first match.
+                </p>
+
+
+
+                <a
+                    href="{% url 'matches:create' %}"
+                    class="primary-button"
+                >
+
+                    Add your first match
+
+                </a>
+
+
+
+            </div>
+
+
+
+        {% endif %}
+
+
+
+    </div>
+
+
+
+
+
+</section>
+
+
+{% endblock %}

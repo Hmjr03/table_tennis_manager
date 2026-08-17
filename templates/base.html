@@ -1,0 +1,89 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+<head>
+
+
+    <meta charset="UTF-8">
+
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+
+    <title>
+
+        {% block title %}
+        Table Tennis Manager
+        {% endblock %}
+
+    </title>
+
+
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/styles.css' %}"
+    >
+
+
+</head>
+
+
+
+<body>
+
+
+    {% include "includes/navbar.html" %}
+
+
+
+    <main class="main-content">
+
+
+        <div class="container">
+
+
+            {% block content %}
+
+            {% endblock %}
+
+
+        </div>
+
+
+    </main>
+
+
+
+
+    <footer class="site-footer">
+
+
+        <div class="container">
+
+
+            <p>
+                © 2026 Table Tennis Manager.
+                Built for competitive table tennis.
+            </p>
+
+
+        </div>
+
+
+    </footer>
+
+
+
+</body>
+
+
+</html>

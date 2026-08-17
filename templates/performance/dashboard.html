@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Performance | Table Tennis Manager
+{% endblock %}
+
+
+
+{% block content %}
+
+<section class="page-section">
+
+
+<div class="page-header">
+
+<div>
+
+<p class="eyebrow">
+Performance
+</p>
+
+
+<h1>
+Performance dashboard
+</h1>
+
+
+<p class="page-subtitle">
+Analyze your competitive evolution and track your progress.
+</p>
+
+
+</div>
+
+</div>
+
+
+
+<div class="dashboard-grid">
+
+
+<article class="dashboard-card">
+
+<h2>
+Matches played
+</h2>
+
+<strong>
+{{ total_matches }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+Wins
+</h2>
+
+<strong>
+{{ wins }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+Losses
+</h2>
+
+<strong>
+{{ losses }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+Win rate
+</h2>
+
+<strong>
+{{ win_rate }}%
+</strong>
+
+</article>
+
+
+</div>
+
+
+
+
+<div class="dashboard-grid">
+
+
+<article class="dashboard-card">
+
+<h2>
+Sets won
+</h2>
+
+<strong>
+{{ sets_won }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+Sets lost
+</h2>
+
+<strong>
+{{ sets_lost }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+Sets difference
+</h2>
+
+<strong>
+{{ sets_difference }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+Current streak
+</h2>
+
+<strong>
+{{ current_streak }}
+</strong>
+
+<p>
+{{ current_streak_type }}
+</p>
+
+</article>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-grid">
+
+
+<article class="dashboard-card">
+
+
+<h2>
+Recent form
+</h2>
+
+
+{% if recent_matches %}
+
+
+<p>
+Wins:
+{{ recent_wins }}
+</p>
+
+
+<p>
+Losses:
+{{ recent_losses }}
+</p>
+
+
+<p>
+Win rate:
+{{ recent_win_rate }}%
+</p>
+
+
+
+<div class="form-list">
+
+
+{% for item in form %}
+
+<span class="form-item">
+{{ item }}
+</span>
+
+
+{% endfor %}
+
+
+</div>
+
+
+
+{% else %}
+
+
+<p>
+Your performance story starts with your first match.
+</p>
+
+
+{% endif %}
+
+
+
+</article>
+
+
+</div>
+
+
+
+
+
+<div class="professional-form-card">
+
+
+<h2>
+Recent matches
+</h2>
+
+
+{% if recent_matches %}
+
+
+{% for match in recent_matches %}
+
+
+<div class="match-row">
+
+
+<div>
+
+<strong>
+{{ match.player }}
+</strong>
+
+
+<p>
+{{ match.score }}
+</p>
+
+
+</div>
+
+
+
+{% if match.result == "Win" %}
+
+<span class="result-win">
+WIN
+</span>
+
+
+{% else %}
+
+<span class="result-loss">
+LOSS
+</span>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+{% endfor %}
+
+
+
+{% else %}
+
+
+<p>
+No completed matches yet.
+</p>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+</section>
+
+
+{% endblock %}

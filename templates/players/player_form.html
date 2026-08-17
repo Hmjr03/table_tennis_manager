@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ page_title }} | Table Tennis Manager
+{% endblock %}
+
+{% block content %}
+<section class="form-page">
+
+    <div class="form-page-header">
+
+        <a
+            href="{% url 'players:list' %}"
+            class="back-link"
+        >
+            ← Back to players
+        </a>
+
+        <p class="eyebrow">Player management</p>
+
+        <h1>{{ page_title }}</h1>
+
+        <p class="page-subtitle">
+            Create and maintain an accurate player profile.
+        </p>
+
+    </div>
+
+    <div class="form-card">
+
+        <form method="post" novalidate>
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-section">
+
+                <div class="form-section-heading">
+                    <h2>Personal information</h2>
+
+                    <p>
+                        Tell us the basic information about this athlete.
+                    </p>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="{{ form.first_name.id_for_label }}">
+                            First name
+                        </label>
+
+                        {{ form.first_name }}
+
+                        {% if form.first_name.errors %}
+                            {% for error in form.first_name.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="{{ form.last_name.id_for_label }}">
+                            Last name
+                        </label>
+
+                        {{ form.last_name }}
+
+                        {% if form.last_name.errors %}
+                            {% for error in form.last_name.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="{{ form.date_of_birth.id_for_label }}">
+                            Date of birth
+                        </label>
+
+                        {{ form.date_of_birth }}
+
+                        {% if form.date_of_birth.errors %}
+                            {% for error in form.date_of_birth.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="{{ form.hand.id_for_label }}">
+                            Playing hand
+                        </label>
+
+                        {{ form.hand }}
+
+                        {% if form.hand.errors %}
+                            {% for error in form.hand.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-information">
+                <span>💡</span>
+
+                <p>
+                    Ranking and performance data will be calculated and
+                    managed by the platform as the player records matches
+                    and competitive activity.
+                </p>
+            </div>
+
+            <div class="form-actions">
+
+                <a
+                    href="{% url 'players:list' %}"
+                    class="secondary-button"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    {{ submit_label }}
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+{% endblock %}
+

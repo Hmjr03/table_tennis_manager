@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="home-hero">
+    <p class="eyebrow">Table Tennis Manager</p>
+    <h1>Manage your table tennis journey.</h1>
+    <p class="home-intro">
+        A professional workspace for athletes, coaches and clubs.
+    </p>
+
+    {% if user.is_authenticated %}
+        <a class="primary-button" href="{% url 'accounts:dashboard' %}">
+            Open dashboard
+        </a>
+    {% else %}
+        <div class="home-actions">
+            <a class="primary-button" href="{% url 'accounts:register' %}">
+                Create an account
+            </a>
+            <a class="secondary-button" href="{% url 'accounts:login' %}">
+                Sign in
+            </a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
