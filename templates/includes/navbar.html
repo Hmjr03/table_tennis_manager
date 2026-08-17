@@ -7,8 +7,17 @@
             href="{% url 'home' %}"
             class="logo"
         >
-            🏓 Table Tennis Manager
+
+            <span class="logo-icon">
+                🏓
+            </span>
+
+            <span>
+                Table Tennis Manager
+            </span>
+
         </a>
+
 
 
 
@@ -23,9 +32,11 @@
                 </a>
 
 
+
                 <a href="{% url 'players:list' %}">
                     Players
                 </a>
+
 
 
                 <a href="{% url 'matches:list' %}">
@@ -33,9 +44,11 @@
                 </a>
 
 
+
                 <a href="{% url 'performance:dashboard' %}">
                     Performance
                 </a>
+
 
 
 
@@ -52,11 +65,14 @@
                         type="submit"
                         class="nav-button"
                     >
+
                         Logout
+
                     </button>
 
 
                 </form>
+
 
 
 
@@ -68,13 +84,16 @@
                 </a>
 
 
-                <a href="{% url 'accounts:register' %}">
+                <a
+                    href="{% url 'accounts:register' %}"
+                    class="nav-register"
+                >
                     Register
                 </a>
 
 
-
             {% endif %}
+
 
 
         </nav>
