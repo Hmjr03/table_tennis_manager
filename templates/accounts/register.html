@@ -1,57 +1,140 @@
 {% extends "base.html" %}
 
-{% block title %}Create Account | Table Tennis Manager{% endblock %}
+
+{% block title %}
+Register | Table Tennis Manager
+{% endblock %}
+
+
 
 {% block content %}
-<section class="auth-card">
-    <h1>Create your account</h1>
 
-    <p class="auth-subtitle">
-        Join Table Tennis Manager and start managing your
-        table tennis career.
-    </p>
 
-    <form method="post" class="auth-form">
-        {% csrf_token %}
+<section class="page-section">
 
-        {% if form.non_field_errors %}
-            <div class="form-errors">
-                {{ form.non_field_errors }}
-            </div>
-        {% endif %}
 
-        {% for field in form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                </label>
+    <div class="professional-form-card">
 
-                {{ field }}
 
-                {% if field.help_text %}
-                    <small class="help-text">
-                        {{ field.help_text }}
-                    </small>
-                {% endif %}
+        <div class="page-header">
 
-                {% for error in field.errors %}
-                    <p class="field-error">
-                        {{ error }}
-                    </p>
-                {% endfor %}
-            </div>
-        {% endfor %}
+            <p class="eyebrow">
+                Account
+            </p>
 
-        <button type="submit" class="primary-button">
-            Create account
-        </button>
-    </form>
 
-    <p class="auth-footer">
-        Already have an account?
-        <a href="{% url 'accounts:login' %}">
-            Sign in
-        </a>
-    </p>
+            <h1>
+                Create account
+            </h1>
+
+
+            <p class="page-subtitle">
+                Join Table Tennis Manager and start managing your journey.
+            </p>
+
+        </div>
+
+
+
+
+        <form method="post">
+
+
+            {% csrf_token %}
+
+
+
+            {% if form.non_field_errors %}
+
+                <div class="form-errors">
+
+                    {% for error in form.non_field_errors %}
+
+                        <p>
+                            {{ error }}
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+
+
+
+            {% for field in form %}
+
+
+                <div class="form-group">
+
+
+                    <label
+                        for="{{ field.id_for_label }}"
+                    >
+
+                        {{ field.label }}
+
+                    </label>
+
+
+
+                    {{ field }}
+
+
+
+
+                    {% if field.errors %}
+
+                        <div class="field-errors">
+
+
+                            {% for error in field.errors %}
+
+                                <p>
+                                    {{ error }}
+                                </p>
+
+
+                            {% endfor %}
+
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                </div>
+
+
+
+            {% endfor %}
+
+
+
+
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+
+                Create account
+
+            </button>
+
+
+
+        </form>
+
+
+
+    </div>
+
+
 </section>
+
+
 {% endblock %}
