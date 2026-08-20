@@ -7,7 +7,6 @@
             href="{% url 'home' %}"
             class="logo"
         >
-
             <span class="logo-icon">
                 🏓
             </span>
@@ -17,7 +16,6 @@
             </span>
 
         </a>
-
 
 
 
@@ -32,17 +30,14 @@
                 </a>
 
 
-
                 <a href="{% url 'players:list' %}">
                     Players
                 </a>
 
 
-
                 <a href="{% url 'matches:list' %}">
                     Matches
                 </a>
-
 
 
                 <a href="{% url 'performance:dashboard' %}">
@@ -75,7 +70,6 @@
 
 
 
-
             {% else %}
 
 
@@ -84,12 +78,14 @@
                 </a>
 
 
+
                 <a
                     href="{% url 'accounts:register' %}"
                     class="nav-register"
                 >
-                    Register
+                    Create account
                 </a>
+
 
 
             {% endif %}
@@ -97,6 +93,7 @@
 
 
         </nav>
+
 
 
     </div>

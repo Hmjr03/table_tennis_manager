@@ -4,12 +4,13 @@
 
 {% block content %}
 <section class="dashboard">
-
     <div class="dashboard-header">
         <div>
             <p class="eyebrow">Dashboard</p>
 
-            <h1>Welcome, {{ user.first_name|default:user.username }}!</h1>
+            <h1>
+                Welcome, {{ user.username }}!
+            </h1>
 
             <p class="dashboard-subtitle">
                 Your Table Tennis Manager workspace.
@@ -22,7 +23,6 @@
     </div>
 
     <div class="dashboard-grid">
-
         <a
             href="{% url 'matches:list' %}"
             class="dashboard-card dashboard-card-link"
@@ -59,24 +59,6 @@
             </span>
         </a>
 
-        <a
-            href="{% url 'performance:dashboard' %}"
-            class="dashboard-card dashboard-card-link"
-        >
-            <span class="card-icon">📊</span>
-
-            <h2>Performance</h2>
-
-            <p>
-                Analyze wins, losses, trends and sporting
-                performance using your real match history.
-            </p>
-
-            <span class="card-action">
-                Open analytics →
-            </span>
-        </a>
-
         <article class="dashboard-card">
             <span class="card-icon">🏆</span>
 
@@ -85,6 +67,21 @@
             <p>
                 Track ranking progression and competitive
                 position over time.
+            </p>
+
+            <span class="coming-soon">
+                Coming soon
+            </span>
+        </article>
+
+        <article class="dashboard-card">
+            <span class="card-icon">📊</span>
+
+            <h2>Performance</h2>
+
+            <p>
+                Analyze wins, losses, trends and sporting
+                performance using your match history.
             </p>
 
             <span class="coming-soon">
@@ -106,8 +103,6 @@
                 Coming soon
             </span>
         </article>
-
     </div>
-
 </section>
 {% endblock %}

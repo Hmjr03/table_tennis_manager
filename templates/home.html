@@ -1,28 +1,162 @@
 {% extends "base.html" %}
 
-{% block title %}Home | Table Tennis Manager{% endblock %}
+
+{% block title %}
+Table Tennis Manager | Professional Sports Management
+{% endblock %}
+
+
 
 {% block content %}
-<section class="home-hero">
-    <p class="eyebrow">Table Tennis Manager</p>
-    <h1>Manage your table tennis journey.</h1>
-    <p class="home-intro">
-        A professional workspace for athletes, coaches and clubs.
-    </p>
 
-    {% if user.is_authenticated %}
-        <a class="primary-button" href="{% url 'accounts:dashboard' %}">
-            Open dashboard
-        </a>
-    {% else %}
-        <div class="home-actions">
-            <a class="primary-button" href="{% url 'accounts:register' %}">
-                Create an account
+
+<section class="home-hero">
+
+
+    <div class="hero-content">
+
+
+        <p class="eyebrow">
+            TABLE TENNIS MANAGEMENT PLATFORM
+        </p>
+
+
+
+        <h1>
+            Manage your game.<br>
+            Improve your performance.<br>
+            Reach your next level.
+        </h1>
+
+
+
+        <p class="home-intro">
+            A professional workspace designed for athletes,
+            coaches and clubs to track performance,
+            matches and evolution.
+        </p>
+
+
+
+        {% if user.is_authenticated %}
+
+
+            <a
+                class="primary-button hero-button"
+                href="{% url 'accounts:dashboard' %}"
+            >
+                Open dashboard
             </a>
-            <a class="secondary-button" href="{% url 'accounts:login' %}">
-                Sign in
-            </a>
-        </div>
-    {% endif %}
+
+
+        {% else %}
+
+
+            <div class="home-actions">
+
+
+                <a
+                    class="primary-button"
+                    href="{% url 'accounts:register' %}"
+                >
+                    Create account
+                </a>
+
+
+
+                <a
+                    class="secondary-button"
+                    href="{% url 'accounts:login' %}"
+                >
+                    Sign in
+                </a>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+
+    </div>
+
+
 </section>
+
+
+
+
+
+<section class="features-section">
+
+
+    <div class="features-grid">
+
+
+        <article class="feature-card">
+
+
+            <h2>
+                Performance Tracking
+            </h2>
+
+
+            <p>
+                Analyze wins, losses, statistics and
+                competitive evolution.
+            </p>
+
+
+        </article>
+
+
+
+
+
+        <article class="feature-card">
+
+
+            <h2>
+                Match Management
+            </h2>
+
+
+            <p>
+                Register matches, results and
+                create your competitive history.
+            </p>
+
+
+        </article>
+
+
+
+
+
+        <article class="feature-card">
+
+
+            <h2>
+                Athlete Development
+            </h2>
+
+
+            <p>
+                Build a complete profile and follow
+                your progression over time.
+            </p>
+
+
+        </article>
+
+
+
+    </div>
+
+
+</section>
+
+
+
 {% endblock %}

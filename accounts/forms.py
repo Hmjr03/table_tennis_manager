@@ -7,27 +7,21 @@ from accounts.models import User
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
-        widget=forms.EmailInput(
-            attrs={
-                "placeholder": "Email",
-            }
-        ),
+        label="Email",
     )
 
     class Meta:
         model = User
-        fields = (
+        fields = [
             "username",
             "email",
-            "first_name",
-            "last_name",
-            "role",
             "password1",
             "password2",
-        )
+            "role",
+        ]
 
     def clean_email(self):
-        email = self.cleaned_data["email"].lower()
+        email = self.cleaned_data["email"].strip().lower()
 
         if User.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError(
