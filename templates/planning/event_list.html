@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Calendar | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="planning-page">
+
+    <div class="page-header">
+
+        <div>
+            <p class="eyebrow">Planning</p>
+
+            <h1>Calendar</h1>
+
+            <p class="page-subtitle">
+                Organize your training, competitions, travel, recovery
+                and professional activities throughout the year.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'planning:create' %}"
+            class="primary-button"
+        >
+            Add event
+        </a>
+
+    </div>
+
+    {% if events %}
+
+        <div class="calendar-toolbar">
+
+            <div>
+                <h2>Upcoming activities</h2>
+
+                <p>
+                    Your personal and professional schedule.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="event-list">
+
+            {% for event in events %}
+
+                <article class="event-card">
+
+                    <div class="event-date">
+
+                        <span class="event-day">
+                            {{ event.start_datetime|date:"d" }}
+                        </span>
+
+                        <span class="event-month">
+                            {{ event.start_datetime|date:"M" }}
+                        </span>
+
+                    </div>
+
+                    <div class="event-content">
+
+                        <div class="event-header">
+
+                            <div>
+
+                                <p class="event-type">
+                                    {{ event.get_event_type_display }}
+                                </p>
+
+                                <h2>
+                                    <a
+                                        href="{% url 'planning:detail' event.pk %}"
+                                    >
+                                        {{ event.title }}
+                                    </a>
+                                </h2>
+
+                            </div>
+
+                            <span class="priority-badge priority-{{ event.priority|lower }}">
+                                {{ event.get_priority_display }}
+                            </span>
+
+                        </div>
+
+                        <div class="event-meta">
+
+                            <span>
+                                🕐
+                                {{ event.start_datetime|date:"d/m/Y H:i" }}
+                            </span>
+
+                            <span>
+                                →
+                                {{ event.end_datetime|date:"d/m/Y H:i" }}
+                            </span>
+
+                            {% if event.location %}
+                                <span>
+                                    📍 {{ event.location }}
+                                </span>
+                            {% endif %}
+
+                        </div>
+
+                        {% if event.description %}
+                            <p class="event-description">
+                                {{ event.description|truncatewords:25 }}
+                            </p>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="event-actions">
+
+                        <a
+                            href="{% url 'planning:detail' event.pk %}"
+                            class="secondary-button"
+                        >
+                            View
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-state-icon">
+                📅
+            </div>
+
+            <h2>Your calendar is empty</h2>
+
+            <p>
+                Start organizing your season by adding your first
+                training session, competition, travel or personal event.
+            </p>
+
+            <a
+                href="{% url 'planning:create' %}"
+                class="primary-button"
+            >
+                Create your first event
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+{% endblock %}

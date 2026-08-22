@@ -1,45 +1,198 @@
 {% extends "base.html" %}
 
+
 {% block title %}
     Delete {{ player.first_name }} {{ player.last_name }} |
     Table Tennis Manager
 {% endblock %}
 
+
 {% block content %}
+
 <section class="danger-page">
+
+
+    <!-- ==============================
+         BACK NAVIGATION
+    =============================== -->
+
+    <div class="danger-navigation">
+
+        <a
+            href="{% url 'players:detail' player.pk %}"
+            class="back-link"
+        >
+            ← Back to player profile
+        </a>
+
+    </div>
+
+
+    <!-- ==============================
+         DELETE CARD
+    =============================== -->
 
     <div class="danger-card">
 
-        <div class="danger-icon">
-            ⚠️
+
+        <div class="danger-card-header">
+
+
+            <div class="danger-icon">
+                ⚠️
+            </div>
+
+
+            <p class="eyebrow danger-eyebrow">
+                Permanent action
+            </p>
+
+
+            <h1>
+                Delete player?
+            </h1>
+
+
+            <p class="danger-description">
+
+                You are about to permanently remove
+
+                <strong>
+                    {{ player.first_name }}
+                    {{ player.last_name }}
+                </strong>
+
+                from your player database.
+
+            </p>
+
+
         </div>
 
-        <p class="eyebrow">Delete player</p>
 
-        <h1>
-            Delete {{ player.first_name }} {{ player.last_name }}?
-        </h1>
+        <!-- ==============================
+             PLAYER PREVIEW
+        =============================== -->
 
-        <p class="danger-description">
-            This action will permanently remove this player profile.
-            Player-related records connected to this profile may also be
-            affected as the platform grows.
-        </p>
+        <div class="danger-player-preview">
+
+
+            <div class="danger-player-avatar">
+
+                {{ player.first_name|first|upper }}{{ player.last_name|first|upper }}
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    {{ player.first_name }}
+                    {{ player.last_name }}
+                </strong>
+
+
+                <span>
+                    Table tennis athlete
+                </span>
+
+            </div>
+
+
+            <div class="danger-player-ranking">
+
+                <span>
+                    Ranking
+                </span>
+
+
+                <strong>
+
+                    {% if player.ranking %}
+
+                        #{{ player.ranking }}
+
+                    {% else %}
+
+                        —
+
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ==============================
+             WARNING
+        =============================== -->
 
         <div class="danger-warning">
-            <strong>This action cannot be undone.</strong>
 
-            <span>
-                Make sure you really want to remove this player before
-                continuing.
-            </span>
+
+            <div class="danger-warning-icon">
+                !
+            </div>
+
+
+            <div>
+
+                <strong>
+                    This action cannot be undone.
+                </strong>
+
+
+                <p>
+                    Once this player profile is deleted,
+                    it will no longer be available through
+                    your player database.
+                </p>
+
+            </div>
+
+
         </div>
 
-        <form method="post">
+
+        <!-- ==============================
+             FUTURE DATA WARNING
+        =============================== -->
+
+        <div class="danger-data-notice">
+
+
+            <span>
+                ℹ️
+            </span>
+
+
+            <p>
+                As the platform evolves, player profiles may become
+                connected to matches, training sessions, rankings and
+                performance records. Deletion rules will be extended
+                accordingly to protect the integrity of those records.
+            </p>
+
+        </div>
+
+
+        <!-- ==============================
+             ACTIONS
+        =============================== -->
+
+        <form
+            method="post"
+            class="danger-form"
+        >
 
             {% csrf_token %}
 
+
             <div class="form-actions">
+
 
                 <a
                     href="{% url 'players:detail' player.pk %}"
@@ -48,6 +201,7 @@
                     Cancel
                 </a>
 
+
                 <button
                     type="submit"
                     class="danger-button"
@@ -55,12 +209,15 @@
                     Delete player
                 </button>
 
+
             </div>
 
         </form>
 
+
     </div>
 
-</section>
-{% endblock %}
 
+</section>
+
+{% endblock %}

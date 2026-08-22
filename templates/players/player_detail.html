@@ -1,45 +1,94 @@
 {% extends "base.html" %}
 
+
 {% block title %}
-    {{ player.first_name }} {{ player.last_name }} | Table Tennis Manager
+    {{ player.first_name }} {{ player.last_name }} |
+    Table Tennis Manager
 {% endblock %}
 
+
 {% block content %}
+
 <section class="player-profile-page">
 
+
+    <!-- ==============================
+         BACK NAVIGATION
+    =============================== -->
+
     <div class="profile-navigation">
+
         <a
             href="{% url 'players:list' %}"
             class="back-link"
         >
             ← Back to players
         </a>
+
     </div>
 
-    <div class="profile-header">
+
+    <!-- ==============================
+         PROFILE HEADER
+    =============================== -->
+
+    <header class="profile-header">
+
 
         <div class="profile-identity">
 
+
             <div class="profile-avatar">
+
                 {{ player.first_name|first|upper }}{{ player.last_name|first|upper }}
+
             </div>
 
-            <div>
-                <p class="eyebrow">Player profile</p>
+
+            <div class="profile-identity-content">
+
+                <p class="eyebrow">
+                    Player profile
+                </p>
+
 
                 <h1>
+
                     {{ player.first_name }}
                     {{ player.last_name }}
+
                 </h1>
 
-                <p class="profile-subtitle">
-                    Table tennis athlete
-                </p>
+
+                <div class="profile-meta">
+
+                    <span>
+                        🏓 Table tennis athlete
+                    </span>
+
+
+                    <span class="profile-meta-separator">
+                        •
+                    </span>
+
+
+                    <span class="profile-active-status">
+
+                        <span class="profile-status-dot"></span>
+
+                        Active profile
+
+                    </span>
+
+                </div>
+
             </div>
 
         </div>
 
+
         <div class="profile-actions">
+
 
             <a
                 href="{% url 'players:edit' player.pk %}"
@@ -47,6 +96,7 @@
             >
                 Edit profile
             </a>
+
 
             <a
                 href="{% url 'players:delete' player.pk %}"
@@ -57,166 +107,581 @@
 
         </div>
 
-    </div>
 
-    <div class="profile-grid">
+    </header>
 
-        <article class="profile-card">
 
-            <div class="profile-card-heading">
-                <span class="profile-card-icon">👤</span>
+    <!-- ==============================
+         PERFORMANCE OVERVIEW
+    =============================== -->
 
-                <div>
-                    <h2>Personal information</h2>
+    <div class="profile-overview-grid">
 
-                    <p>
-                        Basic player information.
-                    </p>
-                </div>
-            </div>
 
-            <div class="profile-info-list">
+        <article class="profile-stat-card">
 
-                <div class="profile-info-item">
-                    <span>First name</span>
-                    <strong>{{ player.first_name }}</strong>
-                </div>
 
-                <div class="profile-info-item">
-                    <span>Last name</span>
-                    <strong>{{ player.last_name }}</strong>
-                </div>
+            <span class="profile-stat-icon">
+                🏆
+            </span>
 
-                <div class="profile-info-item">
-                    <span>Date of birth</span>
 
-                    <strong>
-                        {% if player.date_of_birth %}
-                            {{ player.date_of_birth|date:"d/m/Y" }}
-                        {% else %}
-                            Not provided
-                        {% endif %}
-                    </strong>
-                </div>
+            <div>
 
-                <div class="profile-info-item">
-                    <span>Playing hand</span>
-                    <strong>{{ player.get_hand_display }}</strong>
-                </div>
+                <span class="profile-stat-label">
+                    Current ranking
+                </span>
+
+
+                <strong class="profile-stat-value">
+
+                    {% if player.ranking %}
+
+                        #{{ player.ranking }}
+
+                    {% else %}
+
+                        —
+
+                    {% endif %}
+
+                </strong>
+
+
+                <span class="profile-stat-description">
+
+                    {% if player.ranking %}
+
+                        Current competitive position
+
+                    {% else %}
+
+                        Ranking not assigned
+
+                    {% endif %}
+
+                </span>
 
             </div>
 
         </article>
 
+
+        <article class="profile-stat-card">
+
+
+            <span class="profile-stat-icon">
+                🎯
+            </span>
+
+
+            <div>
+
+                <span class="profile-stat-label">
+                    Playing style
+                </span>
+
+
+                <strong class="profile-stat-value">
+
+                    {{ player.get_hand_display }}
+
+                </strong>
+
+
+                <span class="profile-stat-description">
+                    Dominant playing hand
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <article class="profile-stat-card">
+
+
+            <span class="profile-stat-icon">
+                📅
+            </span>
+
+
+            <div>
+
+                <span class="profile-stat-label">
+                    Date of birth
+                </span>
+
+
+                <strong class="profile-stat-value">
+
+                    {% if player.date_of_birth %}
+
+                        {{ player.date_of_birth|date:"d/m/Y" }}
+
+                    {% else %}
+
+                        —
+
+                    {% endif %}
+
+                </strong>
+
+
+                <span class="profile-stat-description">
+                    Player information
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <article class="profile-stat-card">
+
+
+            <span class="profile-stat-icon">
+                📊
+            </span>
+
+
+            <div>
+
+                <span class="profile-stat-label">
+                    Performance
+                </span>
+
+
+                <strong class="profile-stat-value">
+                    —
+                </strong>
+
+
+                <span class="profile-stat-description">
+                    Analytics coming soon
+                </span>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+
+    <!-- ==============================
+         MAIN PROFILE GRID
+    =============================== -->
+
+    <div class="profile-grid">
+
+
+        <!-- ==============================
+             PERSONAL INFORMATION
+        =============================== -->
+
         <article class="profile-card">
 
+
             <div class="profile-card-heading">
-                <span class="profile-card-icon">🏆</span>
+
+
+                <span class="profile-card-icon">
+                    👤
+                </span>
+
 
                 <div>
-                    <h2>Competitive profile</h2>
+
+                    <h2>
+                        Personal information
+                    </h2>
+
+
+                    <p>
+                        Basic information about this athlete.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-info-list">
+
+
+                <div class="profile-info-item">
+
+                    <span>
+                        First name
+                    </span>
+
+
+                    <strong>
+                        {{ player.first_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-info-item">
+
+                    <span>
+                        Last name
+                    </span>
+
+
+                    <strong>
+                        {{ player.last_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-info-item">
+
+                    <span>
+                        Date of birth
+                    </span>
+
+
+                    <strong>
+
+                        {% if player.date_of_birth %}
+
+                            {{ player.date_of_birth|date:"d/m/Y" }}
+
+                        {% else %}
+
+                            Not provided
+
+                        {% endif %}
+
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-info-item">
+
+                    <span>
+                        Playing hand
+                    </span>
+
+
+                    <strong>
+                        {{ player.get_hand_display }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </article>
+
+
+        <!-- ==============================
+             COMPETITIVE PROFILE
+        =============================== -->
+
+        <article class="profile-card">
+
+
+            <div class="profile-card-heading">
+
+
+                <span class="profile-card-icon">
+                    🏆
+                </span>
+
+
+                <div>
+
+                    <h2>
+                        Competitive profile
+                    </h2>
+
 
                     <p>
                         Current competitive information.
                     </p>
+
                 </div>
+
             </div>
 
+
             <div class="ranking-highlight">
+
 
                 <span class="ranking-label">
                     Current ranking
                 </span>
 
+
                 <strong>
+
                     {% if player.ranking %}
+
                         #{{ player.ranking }}
+
                     {% else %}
+
                         Not ranked
+
                     {% endif %}
+
                 </strong>
+
 
             </div>
 
-            <div class="coming-feature">
-                <span>📈</span>
+
+            <div class="competitive-status">
+
+
+                <span class="competitive-status-icon">
+                    📈
+                </span>
+
 
                 <div>
-                    <strong>Performance analytics</strong>
+
+                    <strong>
+                        Performance analytics
+                    </strong>
+
 
                     <p>
-                        Match statistics, rating evolution and performance
-                        insights will appear here.
+                        Match statistics, rating evolution,
+                        win rate and competitive trends will
+                        appear here as match data becomes available.
                     </p>
+
                 </div>
+
             </div>
 
         </article>
+
+
+        <!-- ==============================
+             PLAYER WORKSPACE
+        =============================== -->
 
         <article class="profile-card profile-card-wide">
 
+
             <div class="profile-card-heading">
-                <span class="profile-card-icon">🏓</span>
+
+
+                <span class="profile-card-icon">
+                    🏓
+                </span>
+
 
                 <div>
-                    <h2>Player workspace</h2>
+
+                    <h2>
+                        Player workspace
+                    </h2>
+
 
                     <p>
-                        Everything related to this athlete in one place.
+                        Manage every aspect of this athlete
+                        from one central workspace.
                     </p>
+
                 </div>
+
             </div>
+
 
             <div class="feature-preview-grid">
 
-                <div class="feature-preview">
-                    <span>🎯</span>
 
-                    <h3>Matches</h3>
+                <!-- MATCHES -->
+
+                <div class="feature-preview">
+
+
+                    <span class="feature-preview-icon">
+                        🎯
+                    </span>
+
+
+                    <h3>
+                        Matches
+                    </h3>
+
 
                     <p>
-                        Track opponents, scores, results and match history.
+                        Track opponents, scores, results
+                        and complete match history.
                     </p>
+
 
                     <span class="coming-soon">
                         Coming soon
                     </span>
+
                 </div>
 
-                <div class="feature-preview">
-                    <span>📅</span>
 
-                    <h3>Training</h3>
+                <!-- TRAINING -->
+
+                <div class="feature-preview">
+
+
+                    <span class="feature-preview-icon">
+                        📅
+                    </span>
+
+
+                    <h3>
+                        Training
+                    </h3>
+
 
                     <p>
-                        Organize training sessions and monitor development.
+                        Organize training sessions,
+                        workload and player development.
                     </p>
+
 
                     <span class="coming-soon">
                         Coming soon
                     </span>
+
                 </div>
 
-                <div class="feature-preview">
-                    <span>📊</span>
 
-                    <h3>Statistics</h3>
+                <!-- STATISTICS -->
+
+                <div class="feature-preview">
+
+
+                    <span class="feature-preview-icon">
+                        📊
+                    </span>
+
+
+                    <h3>
+                        Statistics
+                    </h3>
+
 
                     <p>
-                        Analyze wins, losses and long-term performance.
+                        Analyze wins, losses, trends
+                        and long-term performance.
                     </p>
+
 
                     <span class="coming-soon">
                         Coming soon
                     </span>
+
                 </div>
+
+
+                <!-- RANKING -->
+
+                <div class="feature-preview">
+
+
+                    <span class="feature-preview-icon">
+                        🏆
+                    </span>
+
+
+                    <h3>
+                        Ranking
+                    </h3>
+
+
+                    <p>
+                        Monitor competitive position
+                        and ranking progression.
+                    </p>
+
+
+                    <span class="coming-soon">
+                        Coming soon
+                    </span>
+
+                </div>
+
 
             </div>
 
         </article>
 
+
+        <!-- ==============================
+             RECENT ACTIVITY
+        =============================== -->
+
+        <article class="profile-card profile-card-wide">
+
+
+            <div class="profile-card-heading">
+
+
+                <span class="profile-card-icon">
+                    ⚡
+                </span>
+
+
+                <div>
+
+                    <h2>
+                        Recent activity
+                    </h2>
+
+
+                    <p>
+                        Latest competitive and training activity
+                        for this athlete.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-empty-activity">
+
+
+                <div class="profile-empty-activity-icon">
+                    📋
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        No activity recorded yet
+                    </h3>
+
+
+                    <p>
+                        Match results, training sessions and
+                        performance events will appear here once
+                        the player starts building their activity history.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </article>
+
+
     </div>
 
-</section>
-{% endblock %}
 
+</section>
+
+{% endblock %}

@@ -2,9 +2,8 @@
 
     <div class="container header-content">
 
-
         <a
-            href="{% url 'home' %}"
+            href="{% if user.is_authenticated %}{% url 'dashboard:home' %}{% else %}{% url 'accounts:login' %}{% endif %}"
             class="logo"
         >
             <span class="logo-icon">
@@ -14,70 +13,52 @@
             <span>
                 Table Tennis Manager
             </span>
-
         </a>
-
-
 
         <nav class="main-nav">
 
-
             {% if user.is_authenticated %}
-
 
                 <a href="{% url 'dashboard:home' %}">
                     Dashboard
                 </a>
 
-
                 <a href="{% url 'players:list' %}">
                     Players
                 </a>
-
 
                 <a href="{% url 'matches:list' %}">
                     Matches
                 </a>
 
-
                 <a href="{% url 'performance:dashboard' %}">
                     Performance
                 </a>
 
-
-
+                <a href="{% url 'planning:calendar' %}">
+                    Calendar
+                </a>
 
                 <form
                     method="post"
                     action="{% url 'accounts:logout' %}"
                     class="logout-form"
                 >
-
                     {% csrf_token %}
-
 
                     <button
                         type="submit"
                         class="nav-button"
                     >
-
                         Logout
-
                     </button>
-
-
                 </form>
 
-
-
             {% else %}
-
 
                 <a href="{% url 'accounts:login' %}">
                     Login
                 </a>
-
-
 
                 <a
                     href="{% url 'accounts:register' %}"
@@ -86,17 +67,10 @@
                     Create account
                 </a>
 
-
-
             {% endif %}
-
-
 
         </nav>
 
-
-
     </div>
-
 
 </header>

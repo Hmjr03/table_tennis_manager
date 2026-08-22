@@ -1,72 +1,218 @@
 {% extends "base.html" %}
 
-{% block title %}Players | Table Tennis Manager{% endblock %}
+{% block title %}
+    Players | Table Tennis Manager
+{% endblock %}
+
 
 {% block content %}
+
 <section class="players-page">
 
-    <div class="page-header">
-        <div>
-            <p class="eyebrow">Players</p>
+    <div class="players-page-header">
 
-            <h1>My Players</h1>
+        <div class="players-heading">
+
+            <p class="eyebrow">
+                Athlete management
+            </p>
+
+            <h1>
+                Players
+            </h1>
 
             <p class="page-subtitle">
-                Manage your table tennis athletes and keep their profiles
-                organized in one place.
+                Manage your athletes, competitive profiles and
+                player development from one professional workspace.
             </p>
+
         </div>
 
-        <a
-            href="{% url 'players:create' %}"
-            class="primary-button"
-        >
-            Add player
-        </a>
+
+        <div class="players-header-actions">
+
+            <div class="players-count">
+
+                <span class="players-count-label">
+                    Total players
+                </span>
+
+                <strong>
+                    {{ players|length }}
+                </strong>
+
+            </div>
+
+
+            <a
+                href="{% url 'players:create' %}"
+                class="primary-button"
+            >
+                <span aria-hidden="true">+</span>
+                Add player
+            </a>
+
+        </div>
+
     </div>
 
+
     {% if players %}
+
+        <div class="players-summary">
+
+            <div class="players-summary-item">
+
+                <span class="players-summary-icon">
+                    🏓
+                </span>
+
+                <div>
+
+                    <span class="players-summary-label">
+                        Registered athletes
+                    </span>
+
+                    <strong>
+                        {{ players|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="players-summary-item">
+
+                <span class="players-summary-icon">
+                    🏆
+                </span>
+
+                <div>
+
+                    <span class="players-summary-label">
+                        Player database
+                    </span>
+
+                    <strong>
+                        Active
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="players-summary-item">
+
+                <span class="players-summary-icon">
+                    📊
+                </span>
+
+                <div>
+
+                    <span class="players-summary-label">
+                        Performance tracking
+                    </span>
+
+                    <strong>
+                        Available
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="players-section-header">
+
+            <div>
+
+                <h2>
+                    Your athletes
+                </h2>
+
+                <p>
+                    Select a player to view their complete profile.
+                </p>
+
+            </div>
+
+        </div>
+
+
         <div class="players-grid">
 
             {% for player in players %}
+
                 <article class="player-card">
 
                     <div class="player-card-header">
 
                         <div class="player-avatar">
+
                             {{ player.first_name|first|upper }}{{ player.last_name|first|upper }}
+
                         </div>
 
-                        <div>
+
+                        <div class="player-card-identity">
+
                             <h2>
                                 {{ player.first_name }}
                                 {{ player.last_name }}
                             </h2>
 
                             <p class="player-role">
-                                Table tennis player
+                                Table tennis athlete
                             </p>
+
                         </div>
 
                     </div>
 
+
+                    <div class="player-status">
+
+                        <span class="player-status-dot"></span>
+
+                        <span>
+                            Active profile
+                        </span>
+
+                    </div>
+
+
                     <div class="player-details">
 
+
                         <div class="player-detail">
+
                             <span class="detail-label">
                                 Ranking
                             </span>
 
                             <strong>
+
                                 {% if player.ranking %}
+
                                     #{{ player.ranking }}
+
                                 {% else %}
+
                                     Not ranked
+
                                 {% endif %}
+
                             </strong>
+
                         </div>
 
+
                         <div class="player-detail">
+
                             <span class="detail-label">
                                 Playing hand
                             </span>
@@ -74,23 +220,35 @@
                             <strong>
                                 {{ player.get_hand_display }}
                             </strong>
+
                         </div>
 
+
                         <div class="player-detail">
+
                             <span class="detail-label">
                                 Date of birth
                             </span>
 
                             <strong>
+
                                 {% if player.date_of_birth %}
+
                                     {{ player.date_of_birth|date:"d/m/Y" }}
+
                                 {% else %}
+
                                     Not provided
+
                                 {% endif %}
+
                             </strong>
+
                         </div>
 
+
                     </div>
+
 
                     <div class="player-card-footer">
 
@@ -101,34 +259,54 @@
                             View profile
                         </a>
 
+
                         <a
                             href="{% url 'players:edit' player.pk %}"
                             class="text-link"
                         >
                             Edit
+                            <span aria-hidden="true">→</span>
                         </a>
 
                     </div>
 
                 </article>
+
             {% endfor %}
 
         </div>
 
+
     {% else %}
 
-        <div class="empty-state">
 
-            <div class="empty-state-icon">
-                🏓
+        <div class="players-empty-state">
+
+            <div class="empty-state-visual">
+
+                <div class="empty-state-icon">
+                    🏓
+                </div>
+
             </div>
 
-            <h2>No players yet</h2>
+
+            <p class="eyebrow">
+                Player database
+            </p>
+
+
+            <h2>
+                No players yet
+            </h2>
+
 
             <p>
-                Start building your player database by adding your first
-                table tennis athlete.
+                Your athlete database is ready to be built.
+                Create your first player profile to start
+                tracking competitive development.
             </p>
+
 
             <a
                 href="{% url 'players:create' %}"
@@ -139,8 +317,9 @@
 
         </div>
 
+
     {% endif %}
 
 </section>
-{% endblock %}
 
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delete {{ event.title }} | Table Tennis Manager
+{% endblock %}
+
+{% block content %}
+<section class="danger-page">
+
+    <div class="danger-card">
+
+        <div class="danger-icon">
+            ⚠️
+        </div>
+
+        <p class="eyebrow">
+            Calendar management
+        </p>
+
+        <h1>
+            Delete this event?
+        </h1>
+
+        <p class="danger-description">
+
+            You are about to permanently remove:
+
+        </p>
+
+        <div class="delete-event-preview">
+
+            <strong>
+                {{ event.title }}
+            </strong>
+
+            <span>
+                {{ event.start_datetime|date:"d/m/Y H:i" }}
+                →
+                {{ event.end_datetime|date:"d/m/Y H:i" }}
+            </span>
+
+            {% if event.location %}
+
+                <span>
+                    📍 {{ event.location }}
+                </span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="danger-warning">
+
+            <strong>
+                This action cannot be undone.
+            </strong>
+
+            <span>
+                The event will be permanently removed from
+                your calendar.
+            </span>
+
+        </div>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="form-actions">
+
+                <a
+                    href="{% url 'planning:detail' event.pk %}"
+                    class="secondary-button"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="danger-button"
+                >
+                    Delete event
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+{% endblock %}

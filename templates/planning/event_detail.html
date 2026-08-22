@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ event.title }} | Table Tennis Manager
+{% endblock %}
+
+{% block content %}
+<section class="event-detail-page">
+
+    <div class="profile-navigation">
+
+        <a
+            href="{% url 'planning:list' %}"
+            class="back-link"
+        >
+            ← Back to calendar
+        </a>
+
+    </div>
+
+    <div class="event-detail-header">
+
+        <div>
+
+            <p class="eyebrow">
+                {{ event.get_event_type_display }}
+            </p>
+
+            <h1>
+                {{ event.title }}
+            </h1>
+
+            <p class="page-subtitle">
+                {{ event.start_datetime|date:"l, d F Y" }}
+            </p>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <a
+                href="{% url 'planning:edit' event.pk %}"
+                class="secondary-button"
+            >
+                Edit event
+            </a>
+
+            <a
+                href="{% url 'planning:delete' event.pk %}"
+                class="danger-button"
+            >
+                Delete
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="profile-grid">
+
+        <article class="profile-card">
+
+            <div class="profile-card-heading">
+
+                <span class="profile-card-icon">
+                    📅
+                </span>
+
+                <div>
+
+                    <h2>Schedule</h2>
+
+                    <p>
+                        Date and time information.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="profile-info-list">
+
+                <div class="profile-info-item">
+
+                    <span>Starts</span>
+
+                    <strong>
+                        {{ event.start_datetime|date:"d/m/Y H:i" }}
+                    </strong>
+
+                </div>
+
+                <div class="profile-info-item">
+
+                    <span>Ends</span>
+
+                    <strong>
+                        {{ event.end_datetime|date:"d/m/Y H:i" }}
+                    </strong>
+
+                </div>
+
+                <div class="profile-info-item">
+
+                    <span>Location</span>
+
+                    <strong>
+                        {% if event.location %}
+                            {{ event.location }}
+                        {% else %}
+                            Not specified
+                        {% endif %}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="profile-card">
+
+            <div class="profile-card-heading">
+
+                <span class="profile-card-icon">
+                    🎯
+                </span>
+
+                <div>
+
+                    <h2>Classification</h2>
+
+                    <p>
+                        Event organization information.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="profile-info-list">
+
+                <div class="profile-info-item">
+
+                    <span>Type</span>
+
+                    <strong>
+                        {{ event.get_event_type_display }}
+                    </strong>
+
+                </div>
+
+                <div class="profile-info-item">
+
+                    <span>Priority</span>
+
+                    <strong>
+                        {{ event.get_priority_display }}
+                    </strong>
+
+                </div>
+
+                <div class="profile-info-item">
+
+                    <span>Created</span>
+
+                    <strong>
+                        {{ event.created_at|date:"d/m/Y H:i" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="profile-card profile-card-wide">
+
+            <div class="profile-card-heading">
+
+                <span class="profile-card-icon">
+                    📝
+                </span>
+
+                <div>
+
+                    <h2>Description</h2>
+
+                    <p>
+                        Additional information about this activity.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% if event.description %}
+
+                <div class="event-description-full">
+
+                    {{ event.description|linebreaks }}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <h2>No description</h2>
+
+                    <p>
+                        No additional information was provided
+                        for this event.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </article>
+
+    </div>
+
+</section>
+{% endblock %}

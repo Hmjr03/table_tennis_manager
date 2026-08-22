@@ -1,13 +1,21 @@
 {% extends "base.html" %}
 
+
 {% block title %}
     {{ page_title }} | Table Tennis Manager
 {% endblock %}
 
+
 {% block content %}
+
 <section class="form-page">
 
-    <div class="form-page-header">
+
+    <!-- ==============================
+         NAVIGATION
+    =============================== -->
+
+    <div class="form-page-navigation">
 
         <a
             href="{% url 'players:list' %}"
@@ -16,131 +24,447 @@
             ← Back to players
         </a>
 
-        <p class="eyebrow">Player management</p>
-
-        <h1>{{ page_title }}</h1>
-
-        <p class="page-subtitle">
-            Create and maintain an accurate player profile.
-        </p>
-
     </div>
+
+
+    <!-- ==============================
+         PAGE HEADER
+    =============================== -->
+
+    <header class="form-page-header">
+
+        <div>
+
+            <p class="eyebrow">
+                Player management
+            </p>
+
+
+            <h1>
+                {{ page_title }}
+            </h1>
+
+
+            <p class="page-subtitle">
+                Create and maintain an accurate competitive profile
+                for your table tennis athlete.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==============================
+         FORM CARD
+    =============================== -->
 
     <div class="form-card">
 
-        <form method="post" novalidate>
+
+        <form
+            method="post"
+            novalidate
+        >
 
             {% csrf_token %}
 
+
+            <!-- ==============================
+                 FORM ERRORS
+            =============================== -->
+
             {% if form.non_field_errors %}
-                <div class="form-errors">
-                    {{ form.non_field_errors }}
+
+                <div
+                    class="form-errors"
+                    role="alert"
+                >
+
+                    <div class="form-error-icon">
+                        ⚠️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Please review the information below.
+                        </strong>
+
+                        {% for error in form.non_field_errors %}
+
+                            <p>
+                                {{ error }}
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
                 </div>
+
             {% endif %}
 
-            <div class="form-section">
+
+            <!-- ==============================
+                 PERSONAL INFORMATION
+            =============================== -->
+
+            <section class="form-section">
+
 
                 <div class="form-section-heading">
-                    <h2>Personal information</h2>
 
-                    <p>
-                        Tell us the basic information about this athlete.
-                    </p>
+                    <div class="form-section-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Personal information
+                        </h2>
+
+                        <p>
+                            Enter the athlete's basic identification
+                            and personal information.
+                        </p>
+
+                    </div>
+
                 </div>
+
+
+                <!-- NAME -->
 
                 <div class="form-row">
 
+
                     <div class="form-group">
 
-                        <label for="{{ form.first_name.id_for_label }}">
+                        <label
+                            for="{{ form.first_name.id_for_label }}"
+                        >
                             First name
                         </label>
 
+
                         {{ form.first_name }}
 
+
                         {% if form.first_name.errors %}
+
                             {% for error in form.first_name.errors %}
-                                <p class="field-error">
+
+                                <p
+                                    class="field-error"
+                                    role="alert"
+                                >
                                     {{ error }}
                                 </p>
+
                             {% endfor %}
+
                         {% endif %}
+
+
+                        <span class="field-help">
+                            Use the athlete's official first name.
+                        </span>
 
                     </div>
 
+
                     <div class="form-group">
 
-                        <label for="{{ form.last_name.id_for_label }}">
+                        <label
+                            for="{{ form.last_name.id_for_label }}"
+                        >
                             Last name
                         </label>
 
+
                         {{ form.last_name }}
 
+
                         {% if form.last_name.errors %}
+
                             {% for error in form.last_name.errors %}
-                                <p class="field-error">
+
+                                <p
+                                    class="field-error"
+                                    role="alert"
+                                >
                                     {{ error }}
                                 </p>
+
                             {% endfor %}
+
                         {% endif %}
+
+
+                        <span class="field-help">
+                            Use the athlete's official surname.
+                        </span>
 
                     </div>
 
+
                 </div>
+
+
+                <!-- DATE / HAND -->
 
                 <div class="form-row">
 
+
                     <div class="form-group">
 
-                        <label for="{{ form.date_of_birth.id_for_label }}">
+                        <label
+                            for="{{ form.date_of_birth.id_for_label }}"
+                        >
                             Date of birth
                         </label>
 
+
                         {{ form.date_of_birth }}
 
+
                         {% if form.date_of_birth.errors %}
+
                             {% for error in form.date_of_birth.errors %}
-                                <p class="field-error">
+
+                                <p
+                                    class="field-error"
+                                    role="alert"
+                                >
                                     {{ error }}
                                 </p>
+
                             {% endfor %}
+
                         {% endif %}
+
+
+                        <span class="field-help">
+                            This information helps maintain an accurate
+                            athlete profile.
+                        </span>
 
                     </div>
 
+
                     <div class="form-group">
 
-                        <label for="{{ form.hand.id_for_label }}">
+                        <label
+                            for="{{ form.hand.id_for_label }}"
+                        >
                             Playing hand
                         </label>
 
+
                         {{ form.hand }}
 
+
                         {% if form.hand.errors %}
+
                             {% for error in form.hand.errors %}
-                                <p class="field-error">
+
+                                <p
+                                    class="field-error"
+                                    role="alert"
+                                >
                                     {{ error }}
                                 </p>
+
                             {% endfor %}
+
                         {% endif %}
+
+
+                        <span class="field-help">
+                            Select the athlete's dominant playing hand.
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- ==============================
+                 COMPETITIVE INFORMATION
+            =============================== -->
+
+            <section class="form-section">
+
+
+                <div class="form-section-heading">
+
+                    <div class="form-section-icon">
+                        🏆
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Competitive information
+                        </h2>
+
+                        <p>
+                            Ranking and performance metrics will be
+                            managed by the platform as competitive
+                            data becomes available.
+                        </p>
 
                     </div>
 
                 </div>
 
-            </div>
 
-            <div class="form-information">
-                <span>💡</span>
+                <div class="form-information">
 
-                <p>
-                    Ranking and performance data will be calculated and
-                    managed by the platform as the player records matches
-                    and competitive activity.
-                </p>
-            </div>
+                    <span class="form-information-icon">
+                        📊
+                    </span>
+
+
+                    <div>
+
+                        <strong>
+                            Ranking management
+                        </strong>
+
+
+                        <p>
+                            Player ranking is intentionally managed
+                            separately from this basic profile form.
+                            Future match and ranking modules will use
+                            competitive activity to calculate and display
+                            performance progression.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- ==============================
+                 DATA QUALITY NOTICE
+            =============================== -->
+
+            <section class="form-section">
+
+
+                <div class="form-section-heading">
+
+                    <div class="form-section-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Profile quality
+                        </h2>
+
+                        <p>
+                            Accurate player information is important for
+                            reliable performance analysis.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-quality-list">
+
+
+                    <div class="profile-quality-item">
+
+                        <span class="quality-check">
+                            ✓
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Use official player information
+                            </strong>
+
+                            <p>
+                                Keep names and personal information
+                                consistent throughout the system.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-quality-item">
+
+                        <span class="quality-check">
+                            ✓
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Keep competitive data accurate
+                            </strong>
+
+                            <p>
+                                Match and ranking information will form
+                                the foundation of future analytics.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-quality-item">
+
+                        <span class="quality-check">
+                            ✓
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Build the athlete profile progressively
+                            </strong>
+
+                            <p>
+                                Additional performance information can be
+                                connected as the platform evolves.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- ==============================
+                 FORM ACTIONS
+            =============================== -->
 
             <div class="form-actions">
+
 
                 <a
                     href="{% url 'players:list' %}"
@@ -149,6 +473,7 @@
                     Cancel
                 </a>
 
+
                 <button
                     type="submit"
                     class="primary-button"
@@ -156,12 +481,16 @@
                     {{ submit_label }}
                 </button>
 
+
             </div>
+
 
         </form>
 
+
     </div>
 
-</section>
-{% endblock %}
 
+</section>
+
+{% endblock %}

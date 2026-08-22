@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load planning_tags %}
+
+{% block title %}
+    Calendar | Table Tennis Manager
+{% endblock %}
+
+{% block content %}
+<section class="calendar-page">
+
+    <div class="page-header">
+
+        <div>
+            <p class="eyebrow">
+                Annual planning
+            </p>
+
+            <h1>
+                Calendar
+            </h1>
+
+            <p class="page-subtitle">
+                Organize training, competitions, travel, recovery
+                and professional activities throughout the season.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'planning:create' %}"
+            class="primary-button"
+        >
+            Add event
+        </a>
+
+    </div>
+
+
+    <div class="calendar-toolbar">
+
+        <div class="calendar-navigation">
+
+            <a
+                href="?year={{ previous_year }}&month={{ previous_month }}"
+                class="secondary-button"
+            >
+                ← Previous
+            </a>
+
+            <a
+                href="{% url 'planning:calendar' %}"
+                class="secondary-button"
+            >
+                Today
+            </a>
+
+            <a
+                href="?year={{ next_year }}&month={{ next_month }}"
+                class="secondary-button"
+            >
+                Next →
+            </a>
+
+        </div>
+
+
+        <div class="calendar-current-month">
+
+            <h2>
+                {{ month_name }} {{ year }}
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="calendar-card">
+
+        <div class="calendar-weekdays">
+
+            <div>Monday</div>
+            <div>Tuesday</div>
+            <div>Wednesday</div>
+            <div>Thursday</div>
+            <div>Friday</div>
+            <div>Saturday</div>
+            <div>Sunday</div>
+
+        </div>
+
+
+        <div class="calendar-grid">
+
+            {% for week in calendar_weeks %}
+
+                {% for day in week %}
+
+                    <div
+                        class="
+                            calendar-day
+                            {% if day.month != current_month.month %}
+                                calendar-day-muted
+                            {% endif %}
+                            {% if day == current_date %}
+                                calendar-day-today
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="calendar-day-header">
+
+                            <span class="calendar-day-number">
+                                {{ day.day }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="calendar-events">
+
+                            {% for event in events_by_date|get_item:day %}
+
+                                <a
+                                    href="{% url 'planning:detail' event.pk %}"
+                                    class="
+                                        calendar-event
+                                        calendar-event-{{ event.event_type|lower }}
+                                        calendar-event-priority-{{ event.priority|lower }}
+                                    "
+                                    title="{{ event.title }}"
+                                >
+
+                                    <div class="calendar-event-title">
+
+                                        <strong>
+                                            {{ event.title }}
+                                        </strong>
+
+                                        <span
+                                            class="calendar-event-priority-dot"
+                                            aria-label="{{ event.get_priority_display }} priority"
+                                            title="{{ event.get_priority_display }} priority"
+                                        ></span>
+
+                                    </div>
+
+
+                                    <span class="calendar-event-time">
+                                        {{ event.start_datetime|date:"H:i" }}
+                                        –
+                                        {{ event.end_datetime|date:"H:i" }}
+                                    </span>
+
+
+                                    {% if event.location %}
+
+                                        <span class="calendar-event-location">
+                                            {{ event.location }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </a>
+
+                            {% empty %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}
