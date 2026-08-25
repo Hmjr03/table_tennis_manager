@@ -304,6 +304,20 @@ DEFAULT_FROM_EMAIL = os.getenv(
     "Table Tennis Manager <noreply@localhost>",
 )
 
+EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
+EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv(
+    "DJANGO_EMAIL_HOST_PASSWORD",
+    "",
+)
+EMAIL_USE_TLS = env_bool("DJANGO_EMAIL_USE_TLS", True)
+EMAIL_TIMEOUT = int(os.getenv("DJANGO_EMAIL_TIMEOUT", "10"))
+
+PASSWORD_RESET_TIMEOUT = int(
+    os.getenv("DJANGO_PASSWORD_RESET_TIMEOUT", "3600")
+)
+
 
 # =====================================================
 # LOGGING

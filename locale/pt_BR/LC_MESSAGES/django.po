@@ -1599,3 +1599,84 @@ msgstr "Nenhuma nota vinculada até o momento."
 
 msgid "No transactions linked yet."
 msgstr "Nenhuma transação vinculada até o momento."
+
+msgid "Forgot your password?"
+msgstr "Esqueceu sua senha?"
+
+msgid "Recover password"
+msgstr "Recuperar senha"
+
+msgid "Account security"
+msgstr "Segurança da conta"
+
+msgid "Recover your password"
+msgstr "Recupere sua senha"
+
+msgid "Enter your account email and we will send you a secure recovery link."
+msgstr "Informe o e-mail da sua conta e enviaremos um link seguro de recuperação."
+
+msgid "Email address"
+msgstr "Endereço de e-mail"
+
+msgid "Send recovery link"
+msgstr "Enviar link de recuperação"
+
+msgid "Return to sign in"
+msgstr "Voltar para entrar"
+
+msgid "Check your email"
+msgstr "Verifique seu e-mail"
+
+msgid "If an active account exists for that email, a password recovery link has been sent. Also check your spam folder."
+msgstr "Se existir uma conta ativa para esse e-mail, um link de recuperação foi enviado. Verifique também a pasta de spam."
+
+msgid "Create new password"
+msgstr "Criar nova senha"
+
+msgid "Create a new password"
+msgstr "Crie uma nova senha"
+
+msgid "Choose a strong password that you do not use on another service."
+msgstr "Escolha uma senha forte que você não utilize em outro serviço."
+
+msgid "New password"
+msgstr "Nova senha"
+
+msgid "Confirm new password"
+msgstr "Confirmar nova senha"
+
+msgid "Save new password"
+msgstr "Salvar nova senha"
+
+msgid "This recovery link is no longer valid"
+msgstr "Este link de recuperação não é mais válido"
+
+msgid "For your security, recovery links can expire or be used only once."
+msgstr "Para sua segurança, os links de recuperação podem expirar ou ser utilizados apenas uma vez."
+
+msgid "Request another link"
+msgstr "Solicitar outro link"
+
+msgid "Password updated"
+msgstr "Senha atualizada"
+
+msgid "Your new password is active. You can now sign in securely."
+msgstr "Sua nova senha está ativa. Agora você pode entrar com segurança."
+
+msgid "Hello %(username)s,"
+msgstr "Olá, %(username)s,"
+
+msgid "We received a request to reset the password for your Table Tennis Manager account."
+msgstr "Recebemos uma solicitação para redefinir a senha da sua conta no Table Tennis Manager."
+
+msgid "Use the secure link below to create a new password:"
+msgstr "Use o link seguro abaixo para criar uma nova senha:"
+
+msgid "This link expires in one hour and can be used only once. If you did not request this change, you can safely ignore this email."
+msgstr "Este link expira em uma hora e pode ser usado apenas uma vez. Se você não solicitou esta alteração, pode ignorar este e-mail com segurança."
+
+msgid "Table Tennis Manager team"
+msgstr "Equipe Table Tennis Manager"
+
+msgid "Reset your Table Tennis Manager password"
+msgstr "Redefina sua senha do Table Tennis Manager"

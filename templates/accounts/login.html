@@ -47,6 +47,13 @@
         <button type="submit" class="primary-button">
             {% translate "Sign in" %}
         </button>
+
+        <a
+            href="{% url 'accounts:password_reset' %}"
+            class="auth-help-link"
+        >
+            {% translate "Forgot your password?" %}
+        </a>
     </form>
 
     <p class="auth-footer">

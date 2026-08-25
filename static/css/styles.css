@@ -6339,6 +6339,70 @@ p {
 
 }
 
+.auth-eyebrow {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.auth-help-link {
+    display: block;
+    margin-top: 20px;
+    color: var(--primary);
+    font-weight: 800;
+    text-align: center;
+}
+
+.auth-help-text {
+    margin-top: 10px;
+    color: var(--text-light);
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.auth-help-text ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+}
+
+.auth-card--status {
+    text-align: center;
+}
+
+.auth-status-icon {
+    display: grid;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 22px;
+    place-items: center;
+    border-radius: 20px;
+    background: #e8f0ff;
+    color: var(--primary);
+    font-size: 1.75rem;
+    font-weight: 900;
+}
+
+.auth-status-icon--success {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.auth-status-icon--warning {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.auth-button-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
 
 
 

@@ -1,4 +1,9 @@
+import re
+
+from django.core import mail
+from django.conf import settings
 from django.test import TestCase
+from django.test import override_settings
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
@@ -130,3 +135,97 @@ class AuthenticationTests(TestCase):
 
         self.assertRedirects(response, reverse("accounts:login"))
         self.assertNotIn("_auth_user_id", self.client.session)
+
+
+@override_settings(
+    EMAIL_BACKEND=(
+        "django.core.mail.backends.locmem.EmailBackend"
+    ),
+)
+class PasswordRecoveryTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="maria-athlete",
+            email="maria@example.com",
+            password="OriginalPass123!",
+        )
+
+    def test_login_page_links_to_password_recovery(self):
+        response = self.client.get(reverse("accounts:login"))
+
+        self.assertContains(
+            response,
+            reverse("accounts:password_reset"),
+        )
+
+    def test_recovery_page_is_translated(self):
+        expected_text = {
+            "pt-br": "Recupere sua senha",
+            "es": "Recupera tu contraseña",
+        }
+
+        for language, heading in expected_text.items():
+            with self.subTest(language=language):
+                self.client.cookies[
+                    settings.LANGUAGE_COOKIE_NAME
+                ] = language
+                response = self.client.get(
+                    reverse("accounts:password_reset")
+                )
+                self.assertContains(response, heading)
+
+    def test_password_recovery_sends_email_for_active_user(self):
+        response = self.client.post(
+            reverse("accounts:password_reset"),
+            {"email": "MARIA@example.com"},
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("accounts:password_reset_done"),
+        )
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, ["maria@example.com"])
+        self.assertIn("/accounts/reset/", mail.outbox[0].body)
+
+    def test_unknown_email_uses_same_confirmation_without_sending(self):
+        response = self.client.post(
+            reverse("accounts:password_reset"),
+            {"email": "unknown@example.com"},
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("accounts:password_reset_done"),
+        )
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_user_can_set_new_password_from_recovery_link(self):
+        self.client.post(
+            reverse("accounts:password_reset"),
+            {"email": self.user.email},
+        )
+        reset_path = re.search(
+            r"https?://[^/]+(/accounts/reset/[^\s]+)",
+            mail.outbox[0].body,
+        ).group(1)
+
+        response = self.client.get(reset_path)
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.post(
+            response.url,
+            {
+                "new_password1": "NewSecurePass456!",
+                "new_password2": "NewSecurePass456!",
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("accounts:password_reset_complete"),
+        )
+        self.user.refresh_from_db()
+        self.assertTrue(
+            self.user.check_password("NewSecurePass456!")
+        )
