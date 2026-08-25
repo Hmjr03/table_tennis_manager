@@ -2,11 +2,13 @@ from django.contrib import admin
 from django.urls import include, path
 
 from accounts import views
-from config.views import health_check
+from config.views import health_check, liveness_check, readiness_check
 
 
 urlpatterns = [
     path("health/", health_check, name="health-check"),
+    path("health/live/", liveness_check, name="liveness-check"),
+    path("health/ready/", readiness_check, name="readiness-check"),
     path("i18n/", include("django.conf.urls.i18n")),
     path(
         "admin/",

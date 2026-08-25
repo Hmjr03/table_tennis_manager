@@ -11,6 +11,8 @@ env/
 # Django
 db.sqlite3
 media/
+backups/
+*.partial
 
 # Environment variables
 .env

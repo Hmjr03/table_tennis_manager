@@ -35,8 +35,20 @@ Table Tennis Manager aims to provide tools for:
 3. Run migrations with `python manage.py migrate`.
 4. Start the development server with `python manage.py runserver 8001`.
 
-The operational health endpoint is available at `/health/` and verifies both
-the web application and its database connection.
+Operational endpoints:
+
+- `/health/live/` confirms that the web process is responding.
+- `/health/ready/` confirms that the application can reach its database.
+- `/health/` remains the backward-compatible readiness endpoint.
+
+Create and verify a local backup:
+
+```bash
+python manage.py backup_database
+python manage.py verify_backup /absolute/path/to/backup-file
+```
+
+See `operations/BACKUP_AND_RECOVERY.md` for storage and restore procedures.
 
 ## Production readiness
 

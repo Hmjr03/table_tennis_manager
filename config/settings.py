@@ -277,6 +277,23 @@ LEGAL_COUNTRY = os.getenv(
 
 
 # =====================================================
+# OPERATIONAL RESILIENCE
+# =====================================================
+
+BACKUP_ROOT = Path(
+    os.getenv("DJANGO_BACKUP_ROOT", BASE_DIR / "backups")
+)
+PG_DUMP_BINARY = os.getenv(
+    "DJANGO_PG_DUMP_BINARY",
+    "pg_dump",
+)
+PG_RESTORE_BINARY = os.getenv(
+    "DJANGO_PG_RESTORE_BINARY",
+    "pg_restore",
+)
+
+
+# =====================================================
 # STATIC FILES
 # =====================================================
 
