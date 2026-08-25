@@ -30,3 +30,10 @@ class UserRegistrationForm(UserCreationForm):
             )
 
         return email
+
+
+class ActivationResendForm(forms.Form):
+    email = forms.EmailField(
+        required=True,
+        label=_("Email"),
+    )

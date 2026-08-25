@@ -1680,3 +1680,72 @@ msgstr "Equipe Table Tennis Manager"
 
 msgid "Reset your Table Tennis Manager password"
 msgstr "Redefina sua senha do Table Tennis Manager"
+
+msgid "Did not receive the verification email?"
+msgstr "Não recebeu o e-mail de verificação?"
+
+msgid "Send it again"
+msgstr "Enviar novamente"
+
+msgid "Verify your email"
+msgstr "Verifique seu e-mail"
+
+msgid "We sent a secure verification link to your email. Open it to activate your account."
+msgstr "Enviamos um link seguro de verificação para o seu e-mail. Abra-o para ativar sua conta."
+
+msgid "The link is valid for one hour. Also check your spam folder."
+msgstr "O link é válido por uma hora. Verifique também a pasta de spam."
+
+msgid "Go to sign in"
+msgstr "Ir para entrar"
+
+msgid "Send verification email again"
+msgstr "Enviar e-mail de verificação novamente"
+
+msgid "Account verified"
+msgstr "Conta verificada"
+
+msgid "Your email has been confirmed and your account is ready to use."
+msgstr "Seu e-mail foi confirmado e sua conta está pronta para uso."
+
+msgid "Open my dashboard"
+msgstr "Abrir meu painel"
+
+msgid "Invalid verification link"
+msgstr "Link de verificação inválido"
+
+msgid "This verification link is no longer valid"
+msgstr "Este link de verificação não é mais válido"
+
+msgid "The link may have expired or already been used. Request a new verification email to continue."
+msgstr "O link pode ter expirado ou já ter sido utilizado. Solicite um novo e-mail de verificação para continuar."
+
+msgid "Request new verification link"
+msgstr "Solicitar novo link de verificação"
+
+msgid "Resend verification email"
+msgstr "Reenviar e-mail de verificação"
+
+msgid "Enter the email used during registration and we will send a new secure link."
+msgstr "Informe o e-mail utilizado no cadastro e enviaremos um novo link seguro."
+
+msgid "Send verification email"
+msgstr "Enviar e-mail de verificação"
+
+msgid "Verification email requested"
+msgstr "E-mail de verificação solicitado"
+
+msgid "If a pending account exists for that email, a new verification link has been sent."
+msgstr "Se existir uma conta pendente para esse e-mail, um novo link de verificação foi enviado."
+
+msgid "Welcome to Table Tennis Manager. Confirm your email to activate your account securely."
+msgstr "Boas-vindas ao Table Tennis Manager. Confirme seu e-mail para ativar sua conta com segurança."
+
+msgid "Use the verification link below:"
+msgstr "Use o link de verificação abaixo:"
+
+msgid "This link expires in one hour and can be used only once. If you did not create this account, you can ignore this email."
+msgstr "Este link expira em uma hora e pode ser usado apenas uma vez. Se você não criou esta conta, pode ignorar este e-mail."
+
+msgid "Verify your Table Tennis Manager account"
+msgstr "Verifique sua conta do Table Tennis Manager"

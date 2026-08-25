@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Invalid verification link" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="auth-card auth-card--status">
+    <div class="auth-status-icon auth-status-icon--warning" aria-hidden="true">!</div>
+    <h1>{% translate "This verification link is no longer valid" %}</h1>
+    <p class="auth-subtitle">
+        {% translate "The link may have expired or already been used. Request a new verification email to continue." %}
+    </p>
+    <a href="{% url 'accounts:resend_activation' %}" class="primary-button auth-button-link">
+        {% translate "Request new verification link" %}
+    </a>
+</section>
+{% endblock %}

@@ -24,7 +24,12 @@ class HomePageTests(TestCase):
 
 
 class RegistrationTests(TestCase):
-    def test_user_can_register_and_is_logged_in(self):
+    @override_settings(
+        EMAIL_BACKEND=(
+            "django.core.mail.backends.locmem.EmailBackend"
+        ),
+    )
+    def test_user_can_register_and_receives_verification_email(self):
         response = self.client.post(
             reverse("accounts:register"),
             {
@@ -38,15 +43,18 @@ class RegistrationTests(TestCase):
             },
         )
 
-        self.assertRedirects(response, reverse("dashboard:home"))
+        self.assertRedirects(
+            response,
+            reverse("accounts:activation_sent"),
+        )
 
         user = User.objects.get(username="maria-athlete")
         self.assertEqual(user.email, "maria@example.com")
         self.assertEqual(user.role, User.Role.ATHLETE)
-        self.assertEqual(
-            str(self.client.session["_auth_user_id"]),
-            str(user.pk),
-        )
+        self.assertFalse(user.is_active)
+        self.assertNotIn("_auth_user_id", self.client.session)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn("/accounts/activate/", mail.outbox[0].body)
 
     def test_registration_rejects_duplicate_email(self):
         User.objects.create_user(
@@ -229,3 +237,119 @@ class PasswordRecoveryTests(TestCase):
         self.assertTrue(
             self.user.check_password("NewSecurePass456!")
         )
+
+
+@override_settings(
+    EMAIL_BACKEND=(
+        "django.core.mail.backends.locmem.EmailBackend"
+    ),
+)
+class EmailVerificationTests(TestCase):
+    def registration_data(self):
+        return {
+            "username": "new-athlete",
+            "email": "new@example.com",
+            "role": User.Role.ATHLETE,
+            "password1": "SecurePass123!",
+            "password2": "SecurePass123!",
+        }
+
+    def register_user(self):
+        self.client.post(
+            reverse("accounts:register"),
+            self.registration_data(),
+        )
+        return User.objects.get(username="new-athlete")
+
+    def test_valid_link_activates_and_logs_user_in(self):
+        user = self.register_user()
+        activation_path = re.search(
+            r"https?://[^/]+(/accounts/activate/[^\s]+)",
+            mail.outbox[0].body,
+        ).group(1)
+
+        response = self.client.get(activation_path)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response,
+            "accounts/activation_complete.html",
+        )
+        user.refresh_from_db()
+        self.assertTrue(user.is_active)
+        self.assertEqual(
+            str(self.client.session["_auth_user_id"]),
+            str(user.pk),
+        )
+
+    def test_activation_link_can_be_used_only_once(self):
+        self.register_user()
+        activation_path = re.search(
+            r"https?://[^/]+(/accounts/activate/[^\s]+)",
+            mail.outbox[0].body,
+        ).group(1)
+
+        self.client.get(activation_path)
+        response = self.client.get(activation_path)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertTemplateUsed(
+            response,
+            "accounts/activation_invalid.html",
+        )
+
+    def test_inactive_user_can_request_new_activation_link(self):
+        user = User.objects.create_user(
+            username="pending-athlete",
+            email="pending@example.com",
+            password="SecurePass123!",
+            is_active=False,
+        )
+
+        response = self.client.post(
+            reverse("accounts:resend_activation"),
+            {"email": "PENDING@example.com"},
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("accounts:activation_resent"),
+        )
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, [user.email])
+
+    def test_resend_does_not_reveal_unknown_or_active_email(self):
+        User.objects.create_user(
+            username="active-athlete",
+            email="active@example.com",
+            password="SecurePass123!",
+        )
+
+        for email in ("active@example.com", "unknown@example.com"):
+            with self.subTest(email=email):
+                response = self.client.post(
+                    reverse("accounts:resend_activation"),
+                    {"email": email},
+                )
+                self.assertRedirects(
+                    response,
+                    reverse("accounts:activation_resent"),
+                )
+
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_verification_page_is_translated(self):
+        expected_text = {
+            "pt-br": "Verifique seu e-mail",
+            "es": "Verifica tu correo",
+        }
+
+        for language, heading in expected_text.items():
+            with self.subTest(language=language):
+                self.client.cookies[
+                    settings.LANGUAGE_COOKIE_NAME
+                ] = language
+                response = self.client.get(
+                    reverse("accounts:activation_sent")
+                )
+                self.assertContains(response, heading)

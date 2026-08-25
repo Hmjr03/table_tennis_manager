@@ -62,5 +62,12 @@
             {% translate "Create one" %}
         </a>
     </p>
+
+    <p class="auth-footer auth-footer--compact">
+        {% translate "Did not receive the verification email?" %}
+        <a href="{% url 'accounts:resend_activation' %}">
+            {% translate "Send it again" %}
+        </a>
+    </p>
 </section>
 {% endblock %}

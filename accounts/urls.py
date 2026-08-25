@@ -8,6 +8,26 @@ app_name = "accounts"
 
 urlpatterns = [
     path("register/", views.register, name="register"),
+    path(
+        "activation/sent/",
+        views.activation_sent,
+        name="activation_sent",
+    ),
+    path(
+        "activate/<uidb64>/<token>/",
+        views.activate,
+        name="activate",
+    ),
+    path(
+        "activation/resend/",
+        views.resend_activation,
+        name="resend_activation",
+    ),
+    path(
+        "activation/resent/",
+        views.activation_resent,
+        name="activation_resent",
+    ),
     path("dashboard/", views.dashboard, name="dashboard"),
     path(
         "login/",

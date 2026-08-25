@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Verify your email" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="auth-card auth-card--status">
+    <div class="auth-status-icon" aria-hidden="true">✉</div>
+    <h1>{% translate "Verify your email" %}</h1>
+    <p class="auth-subtitle">
+        {% translate "We sent a secure verification link to your email. Open it to activate your account." %}
+    </p>
+    <p class="auth-security-note">
+        {% translate "The link is valid for one hour. Also check your spam folder." %}
+    </p>
+    <a href="{% url 'accounts:login' %}" class="primary-button auth-button-link">
+        {% translate "Go to sign in" %}
+    </a>
+    <p class="auth-footer">
+        <a href="{% url 'accounts:resend_activation' %}">{% translate "Send verification email again" %}</a>
+    </p>
+</section>
+{% endblock %}

@@ -6403,6 +6403,21 @@ p {
     text-decoration: none;
 }
 
+.auth-footer--compact {
+    margin-top: 12px;
+    font-size: 0.9rem;
+}
+
+.auth-security-note {
+    margin: -14px 0 28px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    background: #f8fafc;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
 
 
 
