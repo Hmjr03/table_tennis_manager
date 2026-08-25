@@ -458,6 +458,26 @@ p {
 
 }
 
+.logo-icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    padding: 6px;
+    background: linear-gradient(145deg, #123db7, #081c57);
+    border: 1px solid rgba(199, 167, 66, .42);
+    border-radius: 11px;
+    box-shadow: 0 7px 18px rgba(15, 47, 139, .16);
+}
+
+.logo-icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 
 
 
@@ -9663,6 +9683,134 @@ p {
     .profile-panel-heading { flex-direction: column; }
     .profile-result-split { grid-template-columns: 1fr; }
     .profile-recent-match { align-items: flex-start; flex-direction: column; }
+}
+
+/* INSTALLABLE APP EXPERIENCE */
+
+.pwa-install-button[hidden],
+.pwa-install-dialog[hidden],
+.pwa-install-dialog button[hidden] {
+    display: none !important;
+}
+
+.pwa-install-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 8px 13px;
+    color: #1d4ed8;
+    background: #edf3ff;
+    border: 1px solid #cddcff;
+    border-radius: 11px;
+    font: inherit;
+    font-size: .82rem;
+    font-weight: 850;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.pwa-install-button:hover {
+    color: #fff;
+    background: #2563eb;
+    border-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.pwa-install-button:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, .22);
+    outline-offset: 3px;
+}
+
+.pwa-install-dialog {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    width: min(680px, calc(100% - 32px));
+    height: fit-content;
+    margin: auto auto max(24px, env(safe-area-inset-bottom));
+    padding: 18px 58px 18px 18px;
+    color: #172033;
+    background: rgba(255, 255, 255, .98);
+    border: 1px solid #dbe5f2;
+    border-radius: 20px;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, .24);
+}
+
+.pwa-install-dialog::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(15, 23, 42, .42);
+    backdrop-filter: blur(3px);
+}
+
+.pwa-install-dialog__icon img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    border-radius: 17px;
+    box-shadow: 0 8px 22px rgba(37, 99, 235, .18);
+}
+
+.pwa-install-dialog__content strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 1rem;
+}
+
+.pwa-install-dialog__content p {
+    margin: 0;
+    color: #64748b;
+    font-size: .88rem;
+    line-height: 1.55;
+}
+
+.pwa-install-dialog__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    color: #64748b;
+    background: #f1f5f9;
+    border: 0;
+    border-radius: 10px;
+    font-size: 1.35rem;
+    cursor: pointer;
+}
+
+.pwa-dialog-open {
+    overflow: hidden;
+}
+
+@media (max-width: 700px) {
+    .pwa-install-dialog {
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 13px;
+        width: calc(100% - 24px);
+        margin-bottom: max(12px, env(safe-area-inset-bottom));
+        padding: 17px 48px 17px 15px;
+        border-radius: 18px;
+    }
+
+    .pwa-install-dialog .primary-button {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .pwa-install-dialog__icon img {
+        width: 54px;
+        height: 54px;
+        border-radius: 14px;
+    }
 }
 
 /* =====================================================

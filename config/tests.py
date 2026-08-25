@@ -2,6 +2,7 @@ from io import StringIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
+import struct
 
 from django.core.management import call_command
 from django.core.management.base import CommandError
@@ -9,8 +10,80 @@ from django.db.utils import OperationalError
 from django.test import TestCase
 from django.test import override_settings
 from django.urls import reverse
+from django.contrib.staticfiles import finders
 
 from config.backup import create_postgresql_backup
+
+
+class ProgressiveWebAppTests(TestCase):
+    def test_manifest_has_stable_identity_and_installable_assets(self):
+        response = self.client.get(reverse("pwa-manifest"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "application/manifest+json")
+        manifest = response.json()
+        self.assertEqual(manifest["id"], "/")
+        self.assertEqual(manifest["start_url"], reverse("dashboard:home"))
+        self.assertEqual(manifest["scope"], "/")
+        self.assertEqual(manifest["display"], "standalone")
+        self.assertEqual(
+            {icon["sizes"] for icon in manifest["icons"]},
+            {"192x192", "512x512"},
+        )
+        self.assertIn(
+            "maskable",
+            {icon["purpose"] for icon in manifest["icons"]},
+        )
+
+    def test_manifest_is_localized(self):
+        with self.settings(LANGUAGE_CODE="pt-br"):
+            response = self.client.get(
+                reverse("pwa-manifest"),
+                HTTP_ACCEPT_LANGUAGE="pt-BR",
+            )
+
+        self.assertEqual(
+            response.json()["description"],
+            "Gerencie atletas, partidas, competições e desempenho.",
+        )
+
+    def test_service_worker_only_caches_public_static_assets(self):
+        response = self.client.get(reverse("service-worker"))
+        content = response.content.decode()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Service-Worker-Allowed"], "/")
+        self.assertIn("no-store", response["Cache-Control"])
+        self.assertIn('request.mode === "navigate"', content)
+        self.assertIn('url.pathname.startsWith("/static/")', content)
+        self.assertIn("fetch(request).catch", content)
+
+    def test_offline_page_explains_data_protection(self):
+        response = self.client.get(
+            reverse("offline"),
+            HTTP_ACCEPT_LANGUAGE="pt-BR",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Suas informações privadas")
+
+    def test_required_icons_have_exact_dimensions(self):
+        expected = {
+            "icons/icon-192.png": (192, 192),
+            "icons/icon-512.png": (512, 512),
+            "icons/icon-maskable-512.png": (512, 512),
+            "icons/apple-touch-icon.png": (180, 180),
+            "icons/brand-mark.png": (256, 256),
+        }
+
+        for asset, dimensions in expected.items():
+            with self.subTest(asset=asset):
+                path = finders.find(asset)
+                self.assertIsNotNone(path)
+                with Path(path).open("rb") as icon_file:
+                    header = icon_file.read(24)
+                self.assertEqual(header[:8], b"\x89PNG\r\n\x1a\n")
+                self.assertEqual(struct.unpack(">II", header[16:24]), dimensions)
 
 
 class HealthCheckTests(TestCase):

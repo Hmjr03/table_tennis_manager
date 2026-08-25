@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 <header class="site-header">
 
     <div class="container header-content">
@@ -7,8 +7,8 @@
             href="{% if user.is_authenticated %}{% url 'dashboard:home' %}{% else %}{% url 'accounts:login' %}{% endif %}"
             class="logo"
         >
-            <span class="logo-icon">
-                🏓
+            <span class="logo-icon" aria-hidden="true">
+                <img src="{% static 'icons/brand-mark.png' %}" alt="">
             </span>
 
             <span>
@@ -17,6 +17,17 @@
         </a>
 
         <nav class="main-nav">
+
+            <button
+                type="button"
+                id="pwa-install-button"
+                class="pwa-install-button"
+                data-ios-message="{% translate 'On iPhone or iPad, tap Share and then Add to Home Screen.' %}"
+                hidden
+            >
+                <span aria-hidden="true">↓</span>
+                {% translate "Install app" %}
+            </button>
 
             {% if user.is_authenticated %}
 

@@ -1923,3 +1923,30 @@ msgstr "Este link expira em uma hora. Se você não solicitou a exclusão, ignor
 
 msgid "Confirm deletion of your Table Tennis Manager account"
 msgstr "Confirme a exclusão da sua conta do Table Tennis Manager"
+
+msgid "Manage athletes, matches, competitions and performance."
+msgstr "Gerencie atletas, partidas, competições e desempenho."
+
+msgid "Install Table Tennis Manager"
+msgstr "Instale o Table Tennis Manager"
+
+msgid "Install the app for faster access from your home screen."
+msgstr "Instale o aplicativo para acessá-lo mais rapidamente pela tela inicial."
+
+msgid "Install app"
+msgstr "Instalar aplicativo"
+
+msgid "Close"
+msgstr "Fechar"
+
+msgid "On iPhone or iPad, tap Share and then Add to Home Screen."
+msgstr "No iPhone ou iPad, toque em Compartilhar e depois em Adicionar à Tela de Início."
+
+msgid "You are offline"
+msgstr "Você está sem conexão"
+
+msgid "Your private information was not stored offline. Reconnect to the internet to securely access your account."
+msgstr "Suas informações privadas não foram armazenadas offline. Reconecte-se à internet para acessar sua conta com segurança."
+
+msgid "Try again"
+msgstr "Tentar novamente"
