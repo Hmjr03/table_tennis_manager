@@ -8,6 +8,16 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from accounts.models import User
+from competitions.models import Competition
+from finances.models import Transaction
+from matches.models import Match
+from notes.models import Note
+from planning.models import CalendarEvent
+from players.models import Player
+
+from datetime import timedelta
+from decimal import Decimal
+from django.utils import timezone
 
 
 class HomePageTests(TestCase):
@@ -396,3 +406,231 @@ class EmailVerificationTests(TestCase):
                     reverse("accounts:activation_sent")
                 )
                 self.assertContains(response, heading)
+
+
+class AccountDataExportTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="data-owner",
+            email="owner@example.com",
+            password="SecurePass123!",
+        )
+        self.other_user = User.objects.create_user(
+            username="other-owner",
+            email="other@example.com",
+            password="SecurePass123!",
+        )
+        self.player = Player.objects.create(
+            user=self.user,
+            first_name="Maria",
+            last_name="Silva",
+        )
+        Player.objects.create(
+            user=self.other_user,
+            first_name="Private",
+            last_name="Player",
+        )
+        self.competition = Competition.objects.create(
+            owner=self.user,
+            name="National Cup",
+            start_date=timezone.localdate(),
+        )
+        Match.objects.create(
+            owner=self.user,
+            player=self.player,
+            opponent_name="Ana",
+            played_at=timezone.now(),
+        )
+        CalendarEvent.objects.create(
+            owner=self.user,
+            title="Training",
+            start_datetime=timezone.now(),
+            end_datetime=timezone.now() + timedelta(hours=1),
+        )
+        Transaction.objects.create(
+            owner=self.user,
+            transaction_type=Transaction.TransactionType.EXPENSE,
+            area=Transaction.Area.PROFESSIONAL,
+            category=Transaction.Category.TRAINING,
+            amount=Decimal("25.50"),
+            date=timezone.localdate(),
+            description="Training fee",
+        )
+        Note.objects.create(
+            owner=self.user,
+            title="Strategy",
+            content="Serve short",
+        )
+
+    def test_export_requires_authentication_and_post(self):
+        url = reverse("accounts:export_account_data")
+
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 302)
+
+        self.client.force_login(self.user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 405)
+
+    def test_export_contains_complete_owned_data_only(self):
+        self.client.force_login(self.user)
+
+        response = self.client.post(
+            reverse("accounts:export_account_data")
+        )
+        payload = response.json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("attachment", response["Content-Disposition"])
+        self.assertEqual(payload["account"]["email"], self.user.email)
+        self.assertNotIn("password", payload["account"])
+        self.assertEqual(len(payload["players"]), 1)
+        self.assertEqual(payload["players"][0]["first_name"], "Maria")
+        self.assertEqual(len(payload["competitions"]), 1)
+        self.assertEqual(len(payload["matches"]), 1)
+        self.assertEqual(len(payload["calendar_events"]), 1)
+        self.assertEqual(payload["transactions"][0]["amount"], "25.50")
+        self.assertEqual(payload["notes"][0]["title"], "Strategy")
+
+
+class AccountDeletionTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="delete-me",
+            email="delete@example.com",
+            password="SecurePass123!",
+        )
+        self.player = Player.objects.create(
+            user=self.user,
+            first_name="Delete",
+            last_name="Me",
+        )
+        self.competition = Competition.objects.create(
+            owner=self.user,
+            name="Delete Cup",
+            start_date=timezone.localdate(),
+        )
+        self.match = Match.objects.create(
+            owner=self.user,
+            player=self.player,
+            opponent_name="Delete Opponent",
+            played_at=timezone.now(),
+        )
+        self.event = CalendarEvent.objects.create(
+            owner=self.user,
+            title="Delete Event",
+            start_datetime=timezone.now(),
+            end_datetime=timezone.now() + timedelta(hours=1),
+        )
+        self.transaction = Transaction.objects.create(
+            owner=self.user,
+            transaction_type=Transaction.TransactionType.EXPENSE,
+            area=Transaction.Area.PERSONAL,
+            category=Transaction.Category.OTHER,
+            amount=Decimal("10.00"),
+            date=timezone.localdate(),
+            description="Delete transaction",
+        )
+        Note.objects.create(
+            owner=self.user,
+            title="Private note",
+            content="Delete this",
+        )
+        self.client.force_login(self.user)
+
+    def test_wrong_password_does_not_delete_account(self):
+        response = self.client.post(
+            reverse("accounts:delete_account"),
+            {
+                "current_password": "WrongPassword!",
+                "confirm_deletion": "on",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(pk=self.user.pk).exists())
+        self.assertContains(response, "The password entered is incorrect.")
+
+    def test_confirmed_deletion_removes_account_and_related_data(self):
+        response = self.client.post(
+            reverse("accounts:delete_account"),
+            {
+                "current_password": "SecurePass123!",
+                "confirm_deletion": "on",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/account_deleted.html")
+        self.assertFalse(User.objects.filter(username="delete-me").exists())
+        self.assertFalse(Player.objects.filter(pk=self.player.pk).exists())
+        self.assertFalse(
+            Competition.objects.filter(pk=self.competition.pk).exists()
+        )
+        self.assertFalse(Match.objects.filter(pk=self.match.pk).exists())
+        self.assertFalse(
+            CalendarEvent.objects.filter(pk=self.event.pk).exists()
+        )
+        self.assertFalse(
+            Transaction.objects.filter(pk=self.transaction.pk).exists()
+        )
+        self.assertFalse(Note.objects.filter(title="Private note").exists())
+        self.assertNotIn("_auth_user_id", self.client.session)
+
+
+@override_settings(
+    EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+)
+class ExternalAccountDeletionTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="external-delete",
+            email="external@example.com",
+            password="SecurePass123!",
+        )
+
+    def test_public_request_sends_generic_response_and_secure_link(self):
+        response = self.client.post(
+            reverse("accounts:request_account_deletion"),
+            {"email": "EXTERNAL@example.com"},
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("accounts:deletion_requested"),
+        )
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn("/accounts/delete-confirm/", mail.outbox[0].body)
+
+    def test_unknown_email_uses_same_response_without_email(self):
+        response = self.client.post(
+            reverse("accounts:request_account_deletion"),
+            {"email": "unknown@example.com"},
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("accounts:deletion_requested"),
+        )
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_email_link_can_permanently_delete_account(self):
+        self.client.post(
+            reverse("accounts:request_account_deletion"),
+            {"email": self.user.email},
+        )
+        deletion_path = re.search(
+            r"https?://[^/]+(/accounts/delete-confirm/[^\s]+)",
+            mail.outbox[0].body,
+        ).group(1)
+
+        response = self.client.post(
+            deletion_path,
+            {"confirm_deletion": "on"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/account_deleted.html")
+        self.assertFalse(
+            User.objects.filter(username="external-delete").exists()
+        )

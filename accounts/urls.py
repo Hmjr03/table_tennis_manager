@@ -30,6 +30,36 @@ urlpatterns = [
     ),
     path("dashboard/", views.dashboard, name="dashboard"),
     path(
+        "privacy/",
+        views.privacy_center,
+        name="privacy_center",
+    ),
+    path(
+        "privacy/export/",
+        views.export_account_data,
+        name="export_account_data",
+    ),
+    path(
+        "delete/",
+        views.delete_account,
+        name="delete_account",
+    ),
+    path(
+        "delete-request/",
+        views.request_account_deletion,
+        name="request_account_deletion",
+    ),
+    path(
+        "delete-request/sent/",
+        views.deletion_requested,
+        name="deletion_requested",
+    ),
+    path(
+        "delete-confirm/<uidb64>/<token>/",
+        views.delete_via_email,
+        name="delete_via_email",
+    ),
+    path(
         "login/",
         auth_views.LoginView.as_view(
             template_name="accounts/login.html"

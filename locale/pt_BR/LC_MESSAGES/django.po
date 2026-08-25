@@ -1788,3 +1788,138 @@ msgstr "Versão"
 
 msgid "Effective date"
 msgstr "Data de vigência"
+
+msgid "My privacy"
+msgstr "Minha privacidade"
+
+msgid "Delete account"
+msgstr "Excluir conta"
+
+msgid "Current password"
+msgstr "Senha atual"
+
+msgid "I understand that this action is permanent."
+msgstr "Entendo que esta ação é permanente."
+
+msgid "The password entered is incorrect."
+msgstr "A senha informada está incorreta."
+
+msgid "Account and data"
+msgstr "Conta e dados"
+
+msgid "Access a copy of your information or permanently remove your account."
+msgstr "Acesse uma cópia das suas informações ou remova sua conta permanentemente."
+
+msgid "Data portability"
+msgstr "Portabilidade de dados"
+
+msgid "Download my data"
+msgstr "Baixar meus dados"
+
+msgid "Receive a structured JSON copy of your account, athletes, competitions, matches, calendar, finances and notes."
+msgstr "Receba uma cópia estruturada em JSON da sua conta, atletas, competições, partidas, calendário, finanças e notas."
+
+msgid "Download secure copy"
+msgstr "Baixar cópia segura"
+
+msgid "Permanent action"
+msgstr "Ação permanente"
+
+msgid "Delete my account"
+msgstr "Excluir minha conta"
+
+msgid "Permanently remove your account and all associated data. This action cannot be undone."
+msgstr "Remova permanentemente sua conta e todos os dados associados. Esta ação não pode ser desfeita."
+
+msgid "Review account deletion"
+msgstr "Revisar exclusão da conta"
+
+msgid "Need help?"
+msgstr "Precisa de ajuda?"
+
+msgid "Read the Privacy Policy to understand retention obligations or contact our privacy channel."
+msgstr "Leia a Política de Privacidade para entender as obrigações de retenção ou contate nosso canal de privacidade."
+
+msgid "Open Privacy Policy"
+msgstr "Abrir Política de Privacidade"
+
+msgid "Delete your account?"
+msgstr "Excluir sua conta?"
+
+msgid "Your athletes, matches, competitions, events, transactions and notes will be permanently deleted."
+msgstr "Seus atletas, partidas, competições, eventos, transações e notas serão excluídos permanentemente."
+
+msgid "Before continuing"
+msgstr "Antes de continuar"
+
+msgid "Download a copy of your data if you want to keep it."
+msgstr "Baixe uma cópia dos seus dados caso queira conservá-los."
+
+msgid "Account deletion cannot be reversed."
+msgstr "A exclusão da conta não pode ser revertida."
+
+msgid "Certain minimal records may be retained only when required by law or security obligations."
+msgstr "Determinados registros mínimos poderão ser mantidos somente quando exigidos por lei ou por obrigações de segurança."
+
+msgid "Keep my account"
+msgstr "Manter minha conta"
+
+msgid "Permanently delete account"
+msgstr "Excluir conta permanentemente"
+
+msgid "Request account deletion"
+msgstr "Solicitar exclusão da conta"
+
+msgid "Privacy request"
+msgstr "Solicitação de privacidade"
+
+msgid "Enter your account email. We will send a secure confirmation link if a matching account exists."
+msgstr "Informe o e-mail da sua conta. Enviaremos um link seguro de confirmação caso exista uma conta correspondente."
+
+msgid "Send deletion confirmation"
+msgstr "Enviar confirmação de exclusão"
+
+msgid "Deletion request received"
+msgstr "Solicitação de exclusão recebida"
+
+msgid "If an account exists for that email, we sent a secure link to review and confirm its deletion."
+msgstr "Se existir uma conta para esse e-mail, enviamos um link seguro para revisar e confirmar sua exclusão."
+
+msgid "Return to home"
+msgstr "Voltar ao início"
+
+msgid "Confirm account deletion"
+msgstr "Confirmar exclusão da conta"
+
+msgid "You are about to permanently delete the account associated with %(account_email)s and all of its data."
+msgstr "Você está prestes a excluir permanentemente a conta associada a %(account_email)s e todos os seus dados."
+
+msgid "Invalid deletion link"
+msgstr "Link de exclusão inválido"
+
+msgid "This deletion link is no longer valid"
+msgstr "Este link de exclusão não é mais válido"
+
+msgid "The link may have expired or already been used. Request a new secure link to continue."
+msgstr "O link pode ter expirado ou já ter sido utilizado. Solicite um novo link seguro para continuar."
+
+msgid "Request another deletion link"
+msgstr "Solicitar outro link de exclusão"
+
+msgid "Account deleted"
+msgstr "Conta excluída"
+
+msgid "Your account and associated application data have been permanently removed."
+msgstr "Sua conta e os dados associados ao aplicativo foram removidos permanentemente."
+
+msgid "We received a request to permanently delete your Table Tennis Manager account and associated data."
+msgstr "Recebemos uma solicitação para excluir permanentemente sua conta do Table Tennis Manager e os dados associados."
+
+msgid "Review and confirm the request using the secure link below:"
+msgstr "Revise e confirme a solicitação usando o link seguro abaixo:"
+
+msgid "This link expires in one hour. If you did not request deletion, ignore this email and your account will remain active."
+msgstr "Este link expira em uma hora. Se você não solicitou a exclusão, ignore este e-mail e sua conta permanecerá ativa."
+
+msgid "Confirm deletion of your Table Tennis Manager account"
+msgstr "Confirme a exclusão da sua conta do Table Tennis Manager"

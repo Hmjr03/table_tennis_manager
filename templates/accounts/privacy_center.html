@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "My privacy" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="privacy-center">
+    <div class="page-header">
+        <p class="eyebrow">{% translate "Account and data" %}</p>
+        <h1>{% translate "My privacy" %}</h1>
+        <p class="page-subtitle">{% translate "Access a copy of your information or permanently remove your account." %}</p>
+    </div>
+
+    <div class="privacy-action-grid">
+        <article class="privacy-action-card">
+            <div class="privacy-action-icon" aria-hidden="true">↓</div>
+            <div>
+                <p class="eyebrow">{% translate "Data portability" %}</p>
+                <h2>{% translate "Download my data" %}</h2>
+                <p>{% translate "Receive a structured JSON copy of your account, athletes, competitions, matches, calendar, finances and notes." %}</p>
+            </div>
+            <form method="post" action="{% url 'accounts:export_account_data' %}">
+                {% csrf_token %}
+                <button type="submit" class="primary-button">{% translate "Download secure copy" %}</button>
+            </form>
+        </article>
+
+        <article class="privacy-action-card privacy-action-card--danger">
+            <div class="privacy-action-icon privacy-action-icon--danger" aria-hidden="true">!</div>
+            <div>
+                <p class="eyebrow">{% translate "Permanent action" %}</p>
+                <h2>{% translate "Delete my account" %}</h2>
+                <p>{% translate "Permanently remove your account and all associated data. This action cannot be undone." %}</p>
+            </div>
+            <a href="{% url 'accounts:delete_account' %}" class="danger-button privacy-action-link">{% translate "Review account deletion" %}</a>
+        </article>
+    </div>
+
+    <aside class="privacy-information-note">
+        <strong>{% translate "Need help?" %}</strong>
+        <p>{% translate "Read the Privacy Policy to understand retention obligations or contact our privacy channel." %}</p>
+        <a href="{% url 'legal:privacy' %}">{% translate "Open Privacy Policy" %}</a>
+    </aside>
+</section>
+{% endblock %}

@@ -45,3 +45,45 @@ class ActivationResendForm(forms.Form):
         required=True,
         label=_("Email"),
     )
+
+
+class AccountDeletionForm(forms.Form):
+    current_password = forms.CharField(
+        label=_("Current password"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={"autocomplete": "current-password"}
+        ),
+    )
+    confirm_deletion = forms.BooleanField(
+        label=_("I understand that this action is permanent."),
+        required=True,
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def clean_current_password(self):
+        password = self.cleaned_data["current_password"]
+
+        if not self.user.check_password(password):
+            raise forms.ValidationError(
+                _("The password entered is incorrect.")
+            )
+
+        return password
+
+
+class AccountDeletionRequestForm(forms.Form):
+    email = forms.EmailField(
+        required=True,
+        label=_("Email"),
+    )
+
+
+class EmailDeletionConfirmationForm(forms.Form):
+    confirm_deletion = forms.BooleanField(
+        label=_("I understand that this action is permanent."),
+        required=True,
+    )

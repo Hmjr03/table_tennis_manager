@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Invalid deletion link" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="auth-card auth-card--status">
+    <div class="auth-status-icon auth-status-icon--warning" aria-hidden="true">!</div>
+    <h1>{% translate "This deletion link is no longer valid" %}</h1>
+    <p class="auth-subtitle">{% translate "The link may have expired or already been used. Request a new secure link to continue." %}</p>
+    <a href="{% url 'accounts:request_account_deletion' %}" class="primary-button auth-button-link">{% translate "Request another deletion link" %}</a>
+</section>
+{% endblock %}

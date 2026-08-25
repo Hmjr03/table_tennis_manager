@@ -118,6 +118,11 @@
                 {% translate "Built for competitive athletes." %}
             </p>
             <nav class="footer-legal-nav" aria-label="{% translate 'Legal information' %}">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:privacy_center' %}">{% translate "My privacy" %}</a>
+                {% else %}
+                    <a href="{% url 'accounts:request_account_deletion' %}">{% translate "Delete account" %}</a>
+                {% endif %}
                 <a href="{% url 'legal:privacy' %}">{% translate "Privacy Policy" %}</a>
                 <a href="{% url 'legal:terms' %}">{% translate "Terms of Use" %}</a>
             </nav>

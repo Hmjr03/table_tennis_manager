@@ -36,3 +36,30 @@ def send_account_activation_email(request, user):
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
     )
+
+
+def send_account_deletion_email(request, user):
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    token = default_token_generator.make_token(user)
+    deletion_path = reverse(
+        "accounts:delete_via_email",
+        kwargs={"uidb64": uid, "token": token},
+    )
+    deletion_url = request.build_absolute_uri(deletion_path)
+    language = getattr(request, "LANGUAGE_CODE", settings.LANGUAGE_CODE)
+
+    with override(language):
+        subject = render_to_string(
+            "accounts/account_deletion_subject.txt"
+        ).strip()
+        message = render_to_string(
+            "accounts/account_deletion_email.txt",
+            {"deletion_url": deletion_url, "user": user},
+        )
+
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[user.email],
+    )

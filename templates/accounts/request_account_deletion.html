@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Request account deletion" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="auth-card">
+    <span class="auth-eyebrow">{% translate "Privacy request" %}</span>
+    <h1>{% translate "Request account deletion" %}</h1>
+    <p class="auth-subtitle">{% translate "Enter your account email. We will send a secure confirmation link if a matching account exists." %}</p>
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">{% translate "Email address" %}</label>
+            {{ form.email }}
+            {% if form.email.errors %}<div class="field-errors">{{ form.email.errors }}</div>{% endif %}
+        </div>
+        <button type="submit" class="primary-button">{% translate "Send deletion confirmation" %}</button>
+    </form>
+    <p class="auth-footer"><a href="{% url 'accounts:login' %}">{% translate "Return to sign in" %}</a></p>
+</section>
+{% endblock %}
