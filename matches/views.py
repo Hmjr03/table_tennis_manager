@@ -3,9 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from matches.forms import MatchForm
 from matches.models import Match
+from competitions.models import Competition
 
 
 @login_required
@@ -19,6 +22,42 @@ def match_list(request):
     status = request.GET.get("status", "").strip()
     player_id = request.GET.get("player", "").strip()
     query = request.GET.get("q", "").strip()
+
+    performance_matches = Match.objects.filter(
+        owner=request.user,
+        status=Match.Status.COMPLETED,
+    ).order_by("-played_at")
+
+    if player_id:
+        performance_matches = performance_matches.filter(
+            player_id=player_id
+        )
+
+    performance_total = performance_matches.count()
+    performance_wins = sum(
+        1 for match in performance_matches if match.result == "Win"
+    )
+    performance_losses = performance_total - performance_wins
+    performance_sets_won = sum(
+        match.player_sets_won or 0 for match in performance_matches
+    )
+    performance_sets_lost = sum(
+        match.opponent_sets_won or 0 for match in performance_matches
+    )
+    performance_sets_difference = (
+        performance_sets_won - performance_sets_lost
+    )
+    performance_win_rate = (
+        round((performance_wins / performance_total) * 100, 1)
+        if performance_total
+        else 0
+    )
+
+    performance_current_streak = 0
+    for match in performance_matches:
+        if match.result != "Win":
+            break
+        performance_current_streak += 1
 
     if status:
         matches = matches.filter(status=status)
@@ -54,6 +93,14 @@ def match_list(request):
             "current_status": status,
             "current_player": player_id,
             "current_query": query,
+            "performance_total": performance_total,
+            "performance_wins": performance_wins,
+            "performance_losses": performance_losses,
+            "performance_win_rate": performance_win_rate,
+            "performance_sets_won": performance_sets_won,
+            "performance_sets_lost": performance_sets_lost,
+            "performance_sets_difference": performance_sets_difference,
+            "performance_current_streak": performance_current_streak,
         },
     )
 
@@ -89,7 +136,7 @@ def match_create(request):
 
             messages.success(
                 request,
-                "Match created successfully.",
+                _("Match created successfully."),
             )
 
             return redirect(
@@ -97,8 +144,23 @@ def match_create(request):
                 pk=match.pk,
             )
     else:
+        suggested_datetime = timezone.localtime().replace(
+            second=0,
+            microsecond=0,
+        )
+        competition_id = request.GET.get("competition", "").strip()
+        selected_competition = None
+        if competition_id.isdigit():
+            selected_competition = Competition.objects.filter(
+                owner=request.user,
+                pk=competition_id,
+            ).first()
         form = MatchForm(
             owner=request.user,
+            initial={
+                "played_at": suggested_datetime,
+                "competition_record": selected_competition,
+            },
         )
 
     return render(
@@ -106,8 +168,8 @@ def match_create(request):
         "matches/match_form.html",
         {
             "form": form,
-            "page_title": "Add match",
-            "submit_label": "Create match",
+            "page_title": _("Add match"),
+            "submit_label": _("Create match"),
         },
     )
 
@@ -135,7 +197,7 @@ def match_update(request, pk):
 
             messages.success(
                 request,
-                "Match updated successfully.",
+                _("Match updated successfully."),
             )
 
             return redirect(
@@ -153,8 +215,8 @@ def match_update(request, pk):
         "matches/match_form.html",
         {
             "form": form,
-            "page_title": "Edit match",
-            "submit_label": "Save changes",
+            "page_title": _("Edit match"),
+            "submit_label": _("Save changes"),
             "match": match,
         },
     )
@@ -173,7 +235,7 @@ def match_delete(request, pk):
 
         messages.success(
             request,
-            "Match deleted successfully.",
+            _("Match deleted successfully."),
         )
 
         return redirect("matches:list")

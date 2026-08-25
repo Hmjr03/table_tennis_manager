@@ -1,12 +1,23 @@
 import calendar
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
+from django.utils.formats import date_format
+from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 
-from planning.forms import CalendarEventForm
+from planning.forms import (
+    CalendarEventForm,
+    EventClassificationForm,
+    EventDescriptionForm,
+    EventScheduleForm,
+)
 from planning.models import CalendarEvent
+from competitions.models import Competition
 
 
 @login_required
@@ -121,7 +132,7 @@ def calendar_view(request):
             "events_by_date": events_by_date,
             "current_date": today,
             "current_month": requested_date,
-            "month_name": requested_date.strftime("%B"),
+            "month_name": date_format(requested_date, "F"),
             "year": year,
             "previous_month": previous_month,
             "previous_year": previous_year,
@@ -131,27 +142,93 @@ def calendar_view(request):
     )
 
 
+def _event_detail_context(event, *, active_section="", invalid_form=None):
+    forms = {
+        "schedule": EventScheduleForm(instance=event),
+        "classification": EventClassificationForm(
+            instance=event,
+            owner=event.owner,
+        ),
+        "description": EventDescriptionForm(instance=event),
+    }
+    if invalid_form is not None and active_section in forms:
+        forms[active_section] = invalid_form
+    return {
+        "event": event,
+        "schedule_form": forms["schedule"],
+        "classification_form": forms["classification"],
+        "description_form": forms["description"],
+        "active_section": active_section,
+    }
+
+
 @login_required
 def event_detail(request, pk):
-    event = get_object_or_404(
-        CalendarEvent,
-        pk=pk,
-        owner=request.user,
-    )
+    event = get_object_or_404(CalendarEvent, pk=pk, owner=request.user)
 
     return render(
         request,
         "planning/event_detail.html",
-        {
-            "event": event,
-        },
+        _event_detail_context(event),
+    )
+
+
+@login_required
+@require_POST
+def event_quick_update(request, pk, section):
+    event = get_object_or_404(CalendarEvent, pk=pk, owner=request.user)
+    form_classes = {
+        "schedule": EventScheduleForm,
+        "classification": EventClassificationForm,
+        "description": EventDescriptionForm,
+    }
+    form_class = form_classes.get(section)
+    if form_class is None:
+        return redirect("planning:detail", pk=event.pk)
+
+    form_kwargs = {"instance": event}
+    if section == "classification":
+        form_kwargs["owner"] = request.user
+    form = form_class(request.POST, **form_kwargs)
+    if form.is_valid():
+        form.save()
+        messages.success(request, _("Event section updated successfully."))
+        return redirect(
+            f"{reverse('planning:detail', kwargs={'pk': event.pk})}"
+            f"#event-{section}"
+        )
+
+    return render(
+        request,
+        "planning/event_detail.html",
+        _event_detail_context(
+            event,
+            active_section=section,
+            invalid_form=form,
+        ),
+        status=400,
     )
 
 
 @login_required
 def event_create(request):
+    selected_date = None
+
+    selected_date_value = request.GET.get(
+        "date",
+        "",
+    ).strip()
+
+    if selected_date_value:
+        try:
+            selected_date = date.fromisoformat(
+                selected_date_value
+            )
+        except ValueError:
+            selected_date = None
+
     if request.method == "POST":
-        form = CalendarEventForm(request.POST)
+        form = CalendarEventForm(request.POST, owner=request.user)
 
         if form.is_valid():
             event = form.save(commit=False)
@@ -163,15 +240,81 @@ def event_create(request):
                 pk=event.pk,
             )
     else:
-        form = CalendarEventForm()
+        suggested_start = timezone.localtime().replace(
+            minute=0,
+            second=0,
+            microsecond=0,
+        ) + timedelta(hours=1)
+        initial = {
+            "start_datetime": suggested_start,
+            "end_datetime": suggested_start + timedelta(hours=1),
+        }
+
+        competition_id = request.GET.get("competition", "").strip()
+        selected_competition = None
+        if competition_id.isdigit():
+            selected_competition = Competition.objects.filter(
+                owner=request.user,
+                pk=competition_id,
+            ).first()
+        if selected_competition:
+            initial.update(
+                {
+                    "competition_record": selected_competition,
+                    "event_type": CalendarEvent.EventType.COMPETITION,
+                    "title": selected_competition.name,
+                    "location": selected_competition.location,
+                }
+            )
+
+        if selected_date:
+            current_timezone = (
+                timezone.get_current_timezone()
+            )
+
+            start_datetime = timezone.make_aware(
+                datetime.combine(
+                    selected_date,
+                    time(hour=9),
+                ),
+                current_timezone,
+            )
+
+            end_datetime = timezone.make_aware(
+                datetime.combine(
+                    selected_date,
+                    time(hour=10),
+                ),
+                current_timezone,
+            )
+
+            initial = {
+                "start_datetime": start_datetime,
+                "end_datetime": end_datetime,
+            }
+            if selected_competition:
+                initial.update(
+                    {
+                        "competition_record": selected_competition,
+                        "event_type": CalendarEvent.EventType.COMPETITION,
+                        "title": selected_competition.name,
+                        "location": selected_competition.location,
+                    }
+                )
+
+        form = CalendarEventForm(
+            initial=initial,
+            owner=request.user,
+        )
 
     return render(
         request,
         "planning/event_form.html",
         {
             "form": form,
-            "page_title": "Add event",
-            "submit_label": "Create event",
+            "page_title": _("Add event"),
+            "submit_label": _("Create event"),
+            "selected_date": selected_date,
         },
     )
 
@@ -188,6 +331,7 @@ def event_update(request, pk):
         form = CalendarEventForm(
             request.POST,
             instance=event,
+            owner=request.user,
         )
 
         if form.is_valid():
@@ -199,7 +343,8 @@ def event_update(request, pk):
             )
     else:
         form = CalendarEventForm(
-            instance=event
+            instance=event,
+            owner=request.user,
         )
 
     return render(
@@ -208,8 +353,8 @@ def event_update(request, pk):
         {
             "form": form,
             "event": event,
-            "page_title": "Edit event",
-            "submit_label": "Save changes",
+            "page_title": _("Edit event"),
+            "submit_label": _("Save changes"),
         },
     )
 

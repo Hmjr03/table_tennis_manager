@@ -91,6 +91,9 @@ INSTALLED_APPS = [
     "performance",
     "dashboard",
     "planning",
+    "finances",
+    "notes",
+    "competitions",
 ]
 
 
@@ -102,6 +105,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -213,7 +217,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LOGIN_URL = "/accounts/login/"
-LOGIN_REDIRECT_URL = "accounts:dashboard"
+LOGIN_REDIRECT_URL = "dashboard:home"
 LOGOUT_REDIRECT_URL = "accounts:login"
 
 
@@ -225,6 +229,14 @@ LANGUAGE_CODE = os.getenv(
     "DJANGO_LANGUAGE_CODE",
     "en-us",
 )
+
+LANGUAGES = [
+    ("en", "English"),
+    ("pt-br", "Português"),
+    ("es", "Español"),
+]
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 
 TIME_ZONE = os.getenv(
@@ -261,8 +273,9 @@ STORAGES = {
     },
     "staticfiles": {
         "BACKEND": (
-            "whitenoise.storage."
-            "CompressedManifestStaticFilesStorage"
+            "django.contrib.staticfiles.storage.StaticFilesStorage"
+            if DEBUG
+            else "whitenoise.storage.CompressedManifestStaticFilesStorage"
         ),
     },
 }
@@ -290,6 +303,52 @@ DEFAULT_FROM_EMAIL = os.getenv(
     "DJANGO_DEFAULT_FROM_EMAIL",
     "Table Tennis Manager <noreply@localhost>",
 )
+
+
+# =====================================================
+# LOGGING
+# =====================================================
+
+LOG_LEVEL = os.getenv(
+    "DJANGO_LOG_LEVEL",
+    "INFO",
+).upper()
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": (
+                "{asctime} {levelname} "
+                "{name}: {message}"
+            ),
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": LOG_LEVEL,
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.security": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}
 
 
 # =====================================================

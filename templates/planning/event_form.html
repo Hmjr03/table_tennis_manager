@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}
     {{ page_title }} | Table Tennis Manager
@@ -7,21 +8,18 @@
 {% block content %}
 <section class="form-page">
 
+    {% url 'planning:calendar' as back_url %}
+    {% translate "Calendar management" as area_label %}
+    {% translate "Back to calendar" as back_label %}
+    {% include "includes/context_navigation.html" with back_url=back_url area_label=area_label back_label=back_label current_label=page_title %}
+
     <div class="form-page-header">
-
-        <a
-            href="{% url 'planning:list' %}"
-            class="back-link"
-        >
-            ← Back to calendar
-        </a>
-
-        <p class="eyebrow">Calendar management</p>
+        <p class="eyebrow">{% translate "Calendar management" %}</p>
 
         <h1>{{ page_title }}</h1>
 
         <p class="page-subtitle">
-            Plan and organize your personal and professional activities.
+            {% translate "Plan and organize your personal and professional activities." %}
         </p>
 
     </div>
@@ -44,10 +42,10 @@
 
                 <div class="form-section-heading">
 
-                    <h2>Event information</h2>
+                    <h2>{% translate "Event information" %}</h2>
 
                     <p>
-                        Define the main details of your activity.
+                        {% translate "Define the main details of your activity." %}
                     </p>
 
                 </div>
@@ -55,7 +53,7 @@
                 <div class="form-group">
 
                     <label for="{{ form.title.id_for_label }}">
-                        Event title
+                            {% translate "Event title" %}
                     </label>
 
                     {{ form.title }}
@@ -71,7 +69,7 @@
                 <div class="form-group">
 
                     <label for="{{ form.description.id_for_label }}">
-                        Description
+                        {% translate "Description" %}
                     </label>
 
                     {{ form.description }}
@@ -89,7 +87,7 @@
                     <div class="form-group">
 
                         <label for="{{ form.event_type.id_for_label }}">
-                            Event type
+                            {% translate "Event type" %}
                         </label>
 
                         {{ form.event_type }}
@@ -105,7 +103,7 @@
                     <div class="form-group">
 
                         <label for="{{ form.priority.id_for_label }}">
-                            Priority
+                            {% translate "Priority" %}
                         </label>
 
                         {{ form.priority }}
@@ -126,10 +124,10 @@
 
                 <div class="form-section-heading">
 
-                    <h2>Schedule</h2>
+                    <h2>{% translate "Schedule" %}</h2>
 
                     <p>
-                        Define when this activity starts and ends.
+                        {% translate "Define when this activity starts and ends." %}
                     </p>
 
                 </div>
@@ -139,7 +137,7 @@
                     <div class="form-group">
 
                         <label for="{{ form.start_datetime.id_for_label }}">
-                            Start date and time
+                            {% translate "Start date and time" %}
                         </label>
 
                         {{ form.start_datetime }}
@@ -155,7 +153,7 @@
                     <div class="form-group">
 
                         <label for="{{ form.end_datetime.id_for_label }}">
-                            End date and time
+                            {% translate "End date and time" %}
                         </label>
 
                         {{ form.end_datetime }}
@@ -173,7 +171,7 @@
                 <div class="form-group">
 
                     <label for="{{ form.location.id_for_label }}">
-                        Location
+                        {% translate "Location" %}
                     </label>
 
                     {{ form.location }}
@@ -193,9 +191,7 @@
                 <span>📅</span>
 
                 <p>
-                    Use this calendar to organize training, competitions,
-                    travel, recovery, evaluations, meetings and personal
-                    commitments.
+                    {% translate "Use this calendar to organize training, competitions, travel, recovery, evaluations, meetings and personal commitments." %}
                 </p>
 
             </div>
@@ -206,7 +202,7 @@
                     href="{% url 'planning:list' %}"
                     class="secondary-button"
                 >
-                    Cancel
+                    {% translate "Cancel" %}
                 </a>
 
                 <button

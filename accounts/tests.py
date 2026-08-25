@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from accounts.models import User
 
@@ -32,7 +33,7 @@ class RegistrationTests(TestCase):
             },
         )
 
-        self.assertRedirects(response, reverse("accounts:dashboard"))
+        self.assertRedirects(response, reverse("dashboard:home"))
 
         user = User.objects.get(username="maria-athlete")
         self.assertEqual(user.email, "maria@example.com")
@@ -65,7 +66,7 @@ class RegistrationTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response,
-            "An account with this email already exists.",
+            _("An account with this email already exists."),
         )
         self.assertEqual(User.objects.count(), 1)
 
@@ -80,7 +81,7 @@ class RegistrationTests(TestCase):
 
         response = self.client.get(reverse("accounts:register"))
 
-        self.assertRedirects(response, reverse("accounts:dashboard"))
+        self.assertRedirects(response, reverse("dashboard:home"))
 
 
 class AuthenticationTests(TestCase):
@@ -110,11 +111,17 @@ class AuthenticationTests(TestCase):
             },
         )
 
-        self.assertRedirects(response, reverse("accounts:dashboard"))
+        self.assertRedirects(response, reverse("dashboard:home"))
+
+        response = self.client.get(reverse("dashboard:home"))
+        self.assertContains(response, "club-manager")
+
+    def test_legacy_account_dashboard_redirects_to_current_dashboard(self):
+        self.client.force_login(self.user)
 
         response = self.client.get(reverse("accounts:dashboard"))
-        self.assertContains(response, "Welcome, club-manager!")
-        self.assertContains(response, "Club")
+
+        self.assertRedirects(response, reverse("dashboard:home"))
 
     def test_user_can_log_out(self):
         self.client.force_login(self.user)

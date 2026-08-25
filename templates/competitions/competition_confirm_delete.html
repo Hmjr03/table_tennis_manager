@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Delete competition" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="form-page">
+    {% url 'competitions:detail' competition.pk as back_url %}
+    {% translate "Competitions" as area_label %}
+    {% translate "Back to competition" as back_label %}
+    {% translate "Delete competition" as current_label %}
+    {% include "includes/context_navigation.html" with back_url=back_url area_label=area_label back_label=back_label current_label=current_label %}
+    <div class="form-card match-delete-card">
+        <div class="match-delete-warning"><span>!</span><div><strong>{% translate "This action cannot be undone" %}</strong><p>{% translate "The competition will be removed, but linked matches and calendar events will be preserved." %}</p></div></div>
+        <div class="delete-summary"><h1>{{ competition.name }}</h1><p>{{ competition.start_date|date:"DATE_FORMAT" }}{% if competition.location %} · {{ competition.location }}{% endif %}</p></div>
+        <form method="post" class="form-actions">{% csrf_token %}<button type="submit" class="danger-button">{% translate "Delete competition" %}</button><a href="{% url 'competitions:detail' competition.pk %}" class="secondary-button">{% translate "Cancel" %}</a></form>
+    </div>
+</section>
+{% endblock %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 
 {% block title %}
@@ -19,17 +20,17 @@ Register | Table Tennis Manager
         <div class="page-header">
 
             <p class="eyebrow">
-                Account
+                {% translate "Account" %}
             </p>
 
 
             <h1>
-                Create account
+                {% translate "Create account" %}
             </h1>
 
 
             <p class="page-subtitle">
-                Join Table Tennis Manager and start managing your journey.
+                {% translate "Join Table Tennis Manager and start managing your journey." %}
             </p>
 
         </div>
@@ -121,7 +122,7 @@ Register | Table Tennis Manager
                 class="primary-button"
             >
 
-                Create account
+                {% translate "Create account" %}
 
             </button>
 

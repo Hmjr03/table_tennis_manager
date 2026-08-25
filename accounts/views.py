@@ -11,7 +11,7 @@ def home(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect("accounts:dashboard")
+        return redirect("dashboard:home")
 
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
@@ -19,7 +19,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("accounts:dashboard")
+            return redirect("dashboard:home")
     else:
         form = UserRegistrationForm()
 
@@ -32,8 +32,4 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    return render(
-        request,
-        "accounts/dashboard.html",
-        {"user": request.user},
-    )
+    return redirect("dashboard:home")

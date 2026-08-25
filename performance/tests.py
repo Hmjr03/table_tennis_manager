@@ -88,6 +88,20 @@ class PerformanceDashboardTests(TestCase):
             ),
         )
 
+    def test_analysis_is_available_inside_matches_section(self):
+        response = self.client.get(reverse("matches:analysis"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "matches/match_analysis.html")
+        self.assertContains(response, reverse("matches:list"))
+        self.assertContains(response, "Performance analysis")
+
+    def test_main_navigation_has_no_standalone_performance_link(self):
+        response = self.client.get(reverse("matches:list"))
+
+        self.assertNotContains(response, 'href="/performance/"')
+        self.assertContains(response, reverse("matches:analysis"))
+
     def test_dashboard_calculates_match_statistics(self):
         self.create_match(
             player=self.player,

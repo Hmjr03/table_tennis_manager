@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 
 {% block title %}
@@ -17,23 +18,21 @@ Table Tennis Manager | Professional Sports Management
 
 
         <p class="eyebrow">
-            TABLE TENNIS MANAGEMENT PLATFORM
+            {% translate "TABLE TENNIS MANAGEMENT PLATFORM" %}
         </p>
 
 
 
         <h1>
-            Manage your game.<br>
-            Improve your performance.<br>
-            Reach your next level.
+            {% translate "Manage your game." %}<br>
+            {% translate "Improve your performance." %}<br>
+            {% translate "Reach your next level." %}
         </h1>
 
 
 
         <p class="home-intro">
-            A professional workspace designed for athletes,
-            coaches and clubs to track performance,
-            matches and evolution.
+            {% translate "A professional workspace designed for athletes, coaches and clubs to track performance, matches and evolution." %}
         </p>
 
 
@@ -45,7 +44,7 @@ Table Tennis Manager | Professional Sports Management
                 class="primary-button hero-button"
                 href="{% url 'accounts:dashboard' %}"
             >
-                Open dashboard
+                {% translate "Open dashboard" %}
             </a>
 
 
@@ -59,7 +58,7 @@ Table Tennis Manager | Professional Sports Management
                     class="primary-button"
                     href="{% url 'accounts:register' %}"
                 >
-                    Create account
+                    {% translate "Create account" %}
                 </a>
 
 
@@ -68,7 +67,7 @@ Table Tennis Manager | Professional Sports Management
                     class="secondary-button"
                     href="{% url 'accounts:login' %}"
                 >
-                    Sign in
+                    {% translate "Sign in" %}
                 </a>
 
 
@@ -98,13 +97,12 @@ Table Tennis Manager | Professional Sports Management
 
 
             <h2>
-                Performance Tracking
+                {% translate "Performance Tracking" %}
             </h2>
 
 
             <p>
-                Analyze wins, losses, statistics and
-                competitive evolution.
+                {% translate "Analyze wins, losses, statistics and competitive evolution." %}
             </p>
 
 
@@ -118,13 +116,12 @@ Table Tennis Manager | Professional Sports Management
 
 
             <h2>
-                Match Management
+                {% translate "Match Management" %}
             </h2>
 
 
             <p>
-                Register matches, results and
-                create your competitive history.
+                {% translate "Register matches, results and create your competitive history." %}
             </p>
 
 
@@ -138,13 +135,12 @@ Table Tennis Manager | Professional Sports Management
 
 
             <h2>
-                Athlete Development
+                {% translate "Athlete Development" %}
             </h2>
 
 
             <p>
-                Build a complete profile and follow
-                your progression over time.
+                {% translate "Build a complete profile and follow your progression over time." %}
             </p>
 
 

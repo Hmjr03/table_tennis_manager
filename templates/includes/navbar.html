@@ -1,3 +1,4 @@
+{% load i18n %}
 <header class="site-header">
 
     <div class="container header-content">
@@ -20,24 +21,44 @@
             {% if user.is_authenticated %}
 
                 <a href="{% url 'dashboard:home' %}">
-                    Dashboard
+                    {% translate "Dashboard" %}
                 </a>
 
                 <a href="{% url 'players:list' %}">
-                    Players
+                    {% translate "Players" %}
                 </a>
 
                 <a href="{% url 'matches:list' %}">
-                    Matches
+                    {% translate "Matches" %}
                 </a>
 
-                <a href="{% url 'performance:dashboard' %}">
-                    Performance
+                <a href="{% url 'competitions:list' %}">
+                    {% translate "Competitions" %}
                 </a>
 
                 <a href="{% url 'planning:calendar' %}">
-                    Calendar
+                    {% translate "Calendar" %}
                 </a>
+
+                <a href="{% url 'finances:list' %}">
+                    {% translate "Finances" %}
+                </a>
+
+                <a href="{% url 'notes:list' %}">
+                    {% translate "Notes" %}
+                </a>
+
+                <form action="{% url 'set_language' %}" method="post" class="language-switcher">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    {% get_current_language as CURRENT_LANGUAGE %}
+                    <label for="language-select" class="sr-only">{% translate "Language" %}</label>
+                    <select id="language-select" name="language" onchange="this.form.submit()" aria-label="{% translate 'Language' %}">
+                        <option value="en" {% if CURRENT_LANGUAGE == 'en' %}selected{% endif %}>EN</option>
+                        <option value="pt-br" {% if CURRENT_LANGUAGE == 'pt-br' %}selected{% endif %}>PT</option>
+                        <option value="es" {% if CURRENT_LANGUAGE == 'es' %}selected{% endif %}>ES</option>
+                    </select>
+                </form>
 
                 <form
                     method="post"
@@ -50,21 +71,21 @@
                         type="submit"
                         class="nav-button"
                     >
-                        Logout
+                        {% translate "Logout" %}
                     </button>
                 </form>
 
             {% else %}
 
                 <a href="{% url 'accounts:login' %}">
-                    Login
+                    {% translate "Login" %}
                 </a>
 
                 <a
                     href="{% url 'accounts:register' %}"
                     class="nav-register"
                 >
-                    Create account
+                    {% translate "Create account" %}
                 </a>
 
             {% endif %}

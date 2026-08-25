@@ -1,20 +1,20 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Login | Table Tennis Manager{% endblock %}
 
 {% block content %}
 <section class="auth-card">
-    <h1>Welcome back</h1>
+    <h1>{% translate "Welcome back" %}</h1>
 
     <p class="auth-subtitle">
-        Sign in to your Table Tennis Manager account.
+        {% translate "Sign in to your Table Tennis Manager account." %}
     </p>
 
     {% if form.errors %}
         <div class="form-errors">
             <p>
-                Your username or password is incorrect.
-                Please try again.
+                {% translate "Your username or password is incorrect. Please try again." %}
             </p>
         </div>
     {% endif %}
@@ -24,7 +24,7 @@
 
         <div class="form-group">
             <label for="{{ form.username.id_for_label }}">
-                Username
+                {% translate "Username" %}
             </label>
 
             {{ form.username }}
@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label for="{{ form.password.id_for_label }}">
-                Password
+                {% translate "Password" %}
             </label>
 
             {{ form.password }}
@@ -45,14 +45,14 @@
         >
 
         <button type="submit" class="primary-button">
-            Sign in
+            {% translate "Sign in" %}
         </button>
     </form>
 
     <p class="auth-footer">
-        Don't have an account?
+        {% translate "Don't have an account?" %}
         <a href="{% url 'accounts:register' %}">
-            Create one
+            {% translate "Create one" %}
         </a>
     </p>
 </section>

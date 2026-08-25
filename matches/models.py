@@ -1,18 +1,19 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Match(models.Model):
     class Status(models.TextChoices):
-        SCHEDULED = "SCHEDULED", "Scheduled"
-        COMPLETED = "COMPLETED", "Completed"
-        CANCELLED = "CANCELLED", "Cancelled"
+        SCHEDULED = "SCHEDULED", _("Scheduled")
+        COMPLETED = "COMPLETED", _("Completed")
+        CANCELLED = "CANCELLED", _("Cancelled")
 
     class BestOf(models.IntegerChoices):
-        THREE = 3, "Best of 3"
-        FIVE = 5, "Best of 5"
-        SEVEN = 7, "Best of 7"
+        THREE = 3, _("Best of 3")
+        FIVE = 5, _("Best of 5")
+        SEVEN = 7, _("Best of 7")
 
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -33,6 +34,14 @@ class Match(models.Model):
     competition = models.CharField(
         max_length=200,
         blank=True,
+    )
+
+    competition_record = models.ForeignKey(
+        "competitions.Competition",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="matches",
     )
 
     played_at = models.DateTimeField()
@@ -96,7 +105,13 @@ class Match(models.Model):
         if self.player_id and self.owner_id:
             if self.player.user_id != self.owner_id:
                 errors["player"] = (
-                    "The selected player does not belong to this account."
+                    _("The selected player does not belong to this account.")
+                )
+
+        if self.competition_record_id and self.owner_id:
+            if self.competition_record.owner_id != self.owner_id:
+                errors["competition_record"] = _(
+                    "The selected competition does not belong to this account."
                 )
 
         if self.status == self.Status.COMPLETED:
@@ -105,7 +120,7 @@ class Match(models.Model):
                 or self.opponent_sets_won is None
             ):
                 errors["player_sets_won"] = (
-                    "Both scores are required for a completed match."
+                    _("Both scores are required for a completed match.")
                 )
             else:
                 target = self.best_of // 2 + 1
@@ -121,10 +136,10 @@ class Match(models.Model):
                 )
 
                 if not player_won and not opponent_won:
-                    errors["player_sets_won"] = (
-                        f"For Best of {self.best_of}, "
-                        f"the winner must have exactly {target} sets."
-                    )
+                    errors["player_sets_won"] = _(
+                        "For Best of %(best_of)s, the winner must have "
+                        "exactly %(target)s sets."
+                    ) % {"best_of": self.best_of, "target": target}
 
         else:
             if (
@@ -132,7 +147,7 @@ class Match(models.Model):
                 or self.opponent_sets_won is not None
             ):
                 errors["player_sets_won"] = (
-                    "Scores can only be recorded for completed matches."
+                    _("Scores can only be recorded for completed matches.")
                 )
 
         if errors:

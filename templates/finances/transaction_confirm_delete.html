@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Delete transaction | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="page-section form-page">
+    <div class="page-header"><div><p class="eyebrow">{% translate "Financial management" %}</p><h1>{% translate "Delete transaction" %}</h1><p class="page-subtitle">{% translate "This action permanently removes the financial record." %}</p></div></div>
+    <div class="professional-form-card delete-confirmation-card">
+        <div class="delete-event-preview"><strong>{{ transaction.description }}</strong><span>{{ transaction.date|date:"DATE_FORMAT" }} · € {{ transaction.amount|floatformat:2 }} · {{ transaction.get_area_display }}</span></div>
+        <form method="post">{% csrf_token %}<div class="form-actions"><button type="submit" class="danger-button">{% translate "Delete transaction" %}</button><a href="{% url 'finances:list' %}" class="secondary-button">{% translate "Cancel" %}</a></div></form>
+    </div>
+</section>
+{% endblock %}

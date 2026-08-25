@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from matches.models import Match
 from players.models import Player
@@ -14,6 +15,7 @@ class MatchForm(forms.ModelForm):
             format="%Y-%m-%dT%H:%M",
             attrs={
                 "type": "datetime-local",
+                "step": 60,
             },
         ),
     )
@@ -23,6 +25,7 @@ class MatchForm(forms.ModelForm):
         fields = (
             "player",
             "opponent_name",
+            "competition_record",
             "competition",
             "played_at",
             "best_of",
@@ -35,12 +38,12 @@ class MatchForm(forms.ModelForm):
         widgets = {
             "opponent_name": forms.TextInput(
                 attrs={
-                    "placeholder": "Opponent's name",
+                    "placeholder": _("Opponent's name"),
                 }
             ),
             "competition": forms.TextInput(
                 attrs={
-                    "placeholder": "Tournament, league, club...",
+                    "placeholder": _("Tournament, league, club..."),
                 }
             ),
             "player_sets_won": forms.NumberInput(
@@ -59,7 +62,7 @@ class MatchForm(forms.ModelForm):
                 attrs={
                     "rows": 5,
                     "placeholder": (
-                        "Tactics, observations, key moments..."
+                        _("Tactics, observations, key moments...")
                     ),
                 }
             ),
@@ -77,16 +80,24 @@ class MatchForm(forms.ModelForm):
                 "last_name",
                 "first_name",
             )
+            self.fields["competition_record"].queryset = (
+                owner.competitions.all().order_by("start_date", "name")
+            )
+        else:
+            self.fields["competition_record"].queryset = (
+                self.fields["competition_record"].queryset.none()
+            )
 
-        self.fields["player"].label = "Player"
-        self.fields["opponent_name"].label = "Opponent"
-        self.fields["competition"].label = "Competition / Event"
-        self.fields["played_at"].label = "Date and time"
-        self.fields["best_of"].label = "Match format"
-        self.fields["status"].label = "Status"
-        self.fields["player_sets_won"].label = "Player sets won"
-        self.fields["opponent_sets_won"].label = "Opponent sets won"
-        self.fields["notes"].label = "Match notes"
+        self.fields["player"].label = _("Player")
+        self.fields["opponent_name"].label = _("Opponent")
+        self.fields["competition_record"].label = _("Registered competition")
+        self.fields["competition"].label = _("Competition name (optional)")
+        self.fields["played_at"].label = _("Date and time")
+        self.fields["best_of"].label = _("Match format")
+        self.fields["status"].label = _("Status")
+        self.fields["player_sets_won"].label = _("Player sets won")
+        self.fields["opponent_sets_won"].label = _("Opponent sets won")
+        self.fields["notes"].label = _("Match notes")
 
     def clean(self):
         cleaned_data = super().clean()
@@ -94,19 +105,23 @@ class MatchForm(forms.ModelForm):
         status = cleaned_data.get("status")
         player_sets = cleaned_data.get("player_sets_won")
         opponent_sets = cleaned_data.get("opponent_sets_won")
+        competition_record = cleaned_data.get("competition_record")
+
+        if competition_record is not None:
+            cleaned_data["competition"] = competition_record.name
 
         if status == Match.Status.COMPLETED:
             if player_sets is None or opponent_sets is None:
                 self.add_error(
                     "player_sets_won",
-                    "Enter both scores for a completed match.",
+                    _("Enter both scores for a completed match."),
                 )
 
         else:
             if player_sets is not None or opponent_sets is not None:
                 self.add_error(
                     "player_sets_won",
-                    "Remove the score because the match is not completed.",
+                    _("Remove the score because the match is not completed."),
                 )
 
         return cleaned_data

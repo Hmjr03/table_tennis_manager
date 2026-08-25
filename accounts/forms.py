@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext_lazy as _
 
 from accounts.models import User
 
@@ -7,7 +8,7 @@ from accounts.models import User
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
-        label="Email",
+        label=_("Email"),
     )
 
     class Meta:
@@ -25,7 +26,7 @@ class UserRegistrationForm(UserCreationForm):
 
         if User.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError(
-                "An account with this email already exists."
+                _("An account with this email already exists.")
             )
 
         return email

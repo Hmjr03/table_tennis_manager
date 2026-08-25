@@ -10,7 +10,8 @@ class PlayerAdmin(admin.ModelAdmin):
         "last_name",
         "user",
         "hand",
-        "ranking",
+        "world_ranking",
+        "national_ranking",
         "created_at",
     )
     list_filter = (
@@ -21,4 +22,3 @@ class PlayerAdmin(admin.ModelAdmin):
         "last_name",
         "user__username",
     )
-

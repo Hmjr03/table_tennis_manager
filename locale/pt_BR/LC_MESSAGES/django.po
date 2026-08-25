@@ -1,0 +1,1601 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "A clear note title"
+msgstr "Um título claro para a nota"
+
+msgid "A professional workspace designed for athletes, coaches and clubs to track performance, matches and evolution."
+msgstr "Um espaço profissional criado para atletas, treinadores e clubes acompanharem desempenho, partidas e evolução."
+
+msgid "Account"
+msgstr "Conta"
+
+msgid "Accurate player information is important for reliable performance analysis."
+msgstr "Informações precisas do atleta são importantes para uma análise de desempenho confiável."
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "Active profile"
+msgstr "Perfil ativo"
+
+msgid "Add commitment"
+msgstr "Adicionar compromisso"
+
+msgid "Add completed matches with a competition name to build this analysis."
+msgstr "Adicione partidas concluídas com o nome da competição para criar esta análise."
+
+msgid "Add event"
+msgstr "Adicionar evento"
+
+msgid "Add event on %(event_date)s"
+msgstr "Adicionar evento em %(event_date)s"
+
+msgid "Add match"
+msgstr "Adicionar partida"
+
+msgid "Add note"
+msgstr "Adicionar nota"
+
+msgid "Add personal event"
+msgstr "Adicionar evento pessoal"
+
+msgid "Add player"
+msgstr "Adicionar jogador"
+
+msgid "Add the athlete's official world and national ranking positions."
+msgstr "Adicione as posições oficiais do atleta nos rankings mundial e nacional."
+
+msgid "Add transaction"
+msgstr "Adicionar transação"
+
+msgid "Add your first match"
+msgstr "Adicionar primeira partida"
+
+msgid "Add your first player"
+msgstr "Adicionar primeiro atleta"
+
+msgid "Add your first transaction or adjust the selected filters."
+msgstr "Adicione sua primeira transação ou ajuste os filtros."
+
+msgid "Add your next tournament to start the countdown."
+msgstr "Adicione seu próximo torneio para iniciar a contagem regressiva."
+
+msgid "Additional information about this activity."
+msgstr "Informações adicionais sobre esta atividade."
+
+msgid "Additional performance information can be connected as the platform evolves."
+msgstr "Informações adicionais de desempenho poderão ser integradas conforme a plataforma evoluir."
+
+msgid "All areas"
+msgstr "Todas as áreas"
+
+msgid "All categories"
+msgstr "Todas as categorias"
+
+msgid "All players"
+msgstr "Todos os atletas"
+
+msgid "All statuses"
+msgstr "Todos os status"
+
+msgid "All types"
+msgstr "Todos os tipos"
+
+msgid "Amount"
+msgstr "Valor"
+
+msgid "An account with this email already exists."
+msgstr "Já existe uma conta com este e-mail."
+
+msgid "Analyze"
+msgstr "Analisar"
+
+msgid "Analyze completed matches, competitive evolution and progress."
+msgstr "Analise partidas concluídas, evolução competitiva e progresso."
+
+msgid "Analyze wins, losses, statistics and competitive evolution."
+msgstr "Analise vitórias, derrotas, estatísticas e evolução competitiva."
+
+msgid "Analyze wins, losses, trends and sporting performance using your match history."
+msgstr "Analise vitórias, derrotas, tendências e desempenho esportivo usando seu histórico de partidas."
+
+msgid "Analyze your competitive evolution and track your progress."
+msgstr "Analise sua evolução competitiva e acompanhe seu progresso."
+
+msgid "Annual planning"
+msgstr "Planejamento anual"
+
+msgid "Area"
+msgstr "Área"
+
+msgid "As the platform evolves, player profiles may become connected to matches, training sessions, rankings and performance records. Deletion rules will be extended accordingly to protect the integrity of those records."
+msgstr "Conforme a plataforma evoluir, os perfis poderão ser conectados a partidas, treinos, rankings e registros de desempenho. As regras de exclusão serão ampliadas para proteger a integridade desses dados."
+
+msgid "At a glance"
+msgstr "Visão rápida"
+
+msgid "Athlete"
+msgstr "Atleta"
+
+msgid "Athlete Development"
+msgstr "Desenvolvimento de atletas"
+
+msgid "Athlete management"
+msgstr "Gestão de atletas"
+
+msgid "Back to calendar"
+msgstr "Voltar ao calendário"
+
+msgid "Back to matches"
+msgstr "Voltar às partidas"
+
+msgid "Back to finances"
+msgstr "Voltar às finanças"
+
+msgid "Back to notes"
+msgstr "Voltar às notas"
+
+msgid "Back to players"
+msgstr "Voltar aos atletas"
+
+msgid "Balance"
+msgstr "Saldo"
+
+msgid "Bank transfer"
+msgstr "Transferência bancária"
+
+msgid "Best of 3"
+msgstr "Melhor de 3"
+
+msgid "Best of 5"
+msgstr "Melhor de 5"
+
+msgid "Best of 7"
+msgstr "Melhor de 7"
+
+msgid "Both scores are required for a completed match."
+msgstr "Os dois placares são obrigatórios para uma partida concluída."
+
+msgid "Build a complete profile and follow your progression over time."
+msgstr "Crie um perfil completo e acompanhe sua evolução ao longo do tempo."
+
+msgid "Build the athlete profile progressively"
+msgstr "Desenvolva o perfil do atleta progressivamente"
+
+msgid "Built for competitive athletes."
+msgstr "Criado para atletas competitivos."
+
+msgid "Calendar"
+msgstr "Calendário"
+
+msgid "Calendar management"
+msgstr "Gestão do calendário"
+
+msgid "Calendar month navigation"
+msgstr "Navegação entre meses do calendário"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Cancelled"
+msgstr "Cancelada"
+
+msgid "Capture your first idea, decision or reminder."
+msgstr "Registre sua primeira ideia, decisão ou lembrete."
+
+msgid "Cash"
+msgstr "Dinheiro"
+
+msgid "Category"
+msgstr "Categoria"
+
+msgid "Classification"
+msgstr "Classificação"
+
+msgid "Clear"
+msgstr "Limpar"
+
+msgid "Club fees"
+msgstr "Mensalidades do clube"
+
+msgid "Coaching"
+msgstr "Treinamento técnico"
+
+msgid "Coming soon"
+msgstr "Em breve"
+
+msgid "Competition"
+msgstr "Competição"
+
+msgid "Competition / Event"
+msgstr "Competição / evento"
+
+msgid "Competitive information"
+msgstr "Informações competitivas"
+
+msgid "Complete matches to unlock performance statistics."
+msgstr "Conclua partidas para liberar as estatísticas de desempenho."
+
+msgid "Completed"
+msgstr "Concluída"
+
+msgid "Completed matches"
+msgstr "Partidas concluídas"
+
+msgid "Consecutive wins"
+msgstr "Vitórias consecutivas"
+
+msgid "Content"
+msgstr "Conteúdo"
+
+msgid "Courses"
+msgstr "Cursos"
+
+msgid "Create a note"
+msgstr "Criar uma nota"
+
+msgid "Create account"
+msgstr "Criar conta"
+
+msgid "Create and maintain an accurate competitive profile for your table tennis athlete."
+msgstr "Crie e mantenha um perfil competitivo preciso para seu atleta de tênis de mesa."
+
+msgid "Create event"
+msgstr "Criar evento"
+
+msgid "Create match"
+msgstr "Criar partida"
+
+msgid "Create one"
+msgstr "Criar conta"
+
+msgid "Create player"
+msgstr "Criar jogador"
+
+msgid "Create your first event"
+msgstr "Criar seu primeiro evento"
+
+msgid "Created"
+msgstr "Criado"
+
+msgid "Credit card"
+msgstr "Cartão de crédito"
+
+msgid "Current balance"
+msgstr "Saldo atual"
+
+msgid "Current streak"
+msgstr "Sequência atual"
+
+msgid "Danger zone"
+msgstr "Zona de risco"
+
+msgid "Dashboard"
+msgstr "Painel"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Date and time"
+msgstr "Data e horário"
+
+msgid "Date and time information."
+msgstr "Informações de data e horário."
+
+msgid "Date of birth"
+msgstr "Data de nascimento"
+
+msgid "Date of birth cannot be in the future."
+msgstr "A data de nascimento não pode estar no futuro."
+
+msgid "Debit card"
+msgstr "Cartão de débito"
+
+msgid "Defeats"
+msgstr "Derrotas"
+
+msgid "Define the main details of your activity."
+msgstr "Defina os principais detalhes da sua atividade."
+
+msgid "Define when this activity starts and ends."
+msgstr "Defina quando esta atividade começa e termina."
+
+msgid "Delete"
+msgstr "Excluir"
+
+msgid "Delete event"
+msgstr "Excluir evento"
+
+msgid "Delete match"
+msgstr "Excluir partida"
+
+msgid "Delete note"
+msgstr "Excluir nota"
+
+msgid "Delete note permanently"
+msgstr "Excluir nota permanentemente"
+
+msgid "Delete player"
+msgstr "Excluir atleta"
+
+msgid "Delete player?"
+msgstr "Excluir atleta?"
+
+msgid "Delete this event?"
+msgstr "Excluir este evento?"
+
+msgid "Delete this match?"
+msgstr "Excluir esta partida?"
+
+msgid "Delete transaction"
+msgstr "Excluir transação"
+
+msgid "Describe this event..."
+msgstr "Descreva este evento..."
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Description must contain at least 3 characters."
+msgstr "A descrição deve conter pelo menos 3 caracteres."
+
+msgid "Description or notes"
+msgstr "Descrição ou observações"
+
+msgid "Digital wallet"
+msgstr "Carteira digital"
+
+msgid "Don't have an account?"
+msgstr "Ainda não tem uma conta?"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Edit event"
+msgstr "Editar evento"
+
+msgid "Edit match"
+msgstr "Editar partida"
+
+msgid "Edit note"
+msgstr "Editar nota"
+
+msgid "Edit player"
+msgstr "Editar jogador"
+
+msgid "Edit profile"
+msgstr "Editar perfil"
+
+msgid "Edit transaction"
+msgstr "Editar transação"
+
+msgid "Education"
+msgstr "Educação"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "End date and time"
+msgstr "Data e hora de término"
+
+msgid "Ends"
+msgstr "Término"
+
+msgid "Enter 0 when the athlete does not have a national ranking."
+msgstr "Informe 0 quando o atleta não possuir ranking nacional."
+
+msgid "Enter 0 when the athlete does not have a world ranking."
+msgstr "Informe 0 quando o atleta não possuir ranking mundial."
+
+msgid "Enter both scores for a completed match."
+msgstr "Informe os dois placares para uma partida concluída."
+
+msgid "Enter the athlete's basic identification and personal information."
+msgstr "Informe os dados básicos de identificação e as informações pessoais do atleta."
+
+msgid "Equipment"
+msgstr "Equipamento"
+
+msgid "Evaluation"
+msgstr "Avaliação"
+
+msgid "Event information"
+msgstr "Informações do evento"
+
+msgid "Event organization information."
+msgstr "Informações de organização do evento."
+
+msgid "Event title"
+msgstr "Título do evento"
+
+msgid "Event title must contain at least 3 characters."
+msgstr "O título do evento deve conter pelo menos 3 caracteres."
+
+msgid "Event type"
+msgstr "Tipo de evento"
+
+msgid "Expense"
+msgstr "Despesa"
+
+msgid "Expenses"
+msgstr "Despesas"
+
+msgid "Federation fees"
+msgstr "Taxas da federação"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "Finance"
+msgstr "Finanças"
+
+msgid "Finance pagination"
+msgstr "Paginação financeira"
+
+msgid "Finance workspace"
+msgstr "Área financeira"
+
+msgid "Finances"
+msgstr "Finanças"
+
+msgid "Financial management"
+msgstr "Gestão financeira"
+
+msgid "Financial overview"
+msgstr "Visão financeira"
+
+msgid "First name"
+msgstr "Nome"
+
+msgid "First name must contain at least 2 characters."
+msgstr "O nome deve conter pelo menos 2 caracteres."
+
+msgid "Food"
+msgstr "Alimentação"
+
+msgid "For Best of %(best_of)s, the winner must have exactly %(target)s sets."
+msgstr "Em uma melhor de %(best_of)s, o vencedor deve ter exatamente %(target)s sets."
+
+msgid "Format"
+msgstr "Formato"
+
+msgid "Fri"
+msgstr "Sex"
+
+msgid "Friday"
+msgstr "Sexta"
+
+msgid "General"
+msgstr "Geral"
+
+msgid "Good afternoon"
+msgstr "Boa tarde"
+
+msgid "Good evening"
+msgstr "Boa noite"
+
+msgid "Good morning"
+msgstr "Bom dia"
+
+msgid "Health"
+msgstr "Saúde"
+
+msgid "High"
+msgstr "Alta"
+
+msgid "Hotel"
+msgstr "Hotel"
+
+msgid "Housing"
+msgstr "Moradia"
+
+msgid "Important notes"
+msgstr "Notas importantes"
+
+msgid "Improve your performance."
+msgstr "Melhore seu desempenho."
+
+msgid "Income"
+msgstr "Receitas"
+
+msgid "Income minus expenses"
+msgstr "Receitas menos despesas"
+
+msgid "Join Table Tennis Manager and start managing your journey."
+msgstr "Entre no Table Tennis Manager e comece a gerenciar sua jornada."
+
+msgid "Keep competitive data accurate"
+msgstr "Mantenha os dados competitivos precisos"
+
+msgid "Keep every personal and professional transaction accurate."
+msgstr "Mantenha todas as transações pessoais e profissionais corretas."
+
+msgid "Keep names and personal information consistent throughout the system."
+msgstr "Mantenha nomes e informações pessoais consistentes em todo o sistema."
+
+msgid "Keep tactical ideas, reminders and important decisions easy to find."
+msgstr "Mantenha ideias táticas, lembretes e decisões importantes fáceis de encontrar."
+
+msgid "Knowledge and decisions"
+msgstr "Conhecimento e decisões"
+
+msgid "LOSS"
+msgstr "DERROTA"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Last name"
+msgstr "Sobrenome"
+
+msgid "Last name must contain at least 2 characters."
+msgstr "O sobrenome deve conter pelo menos 2 caracteres."
+
+msgid "Latest completed matches"
+msgstr "Últimas partidas concluídas"
+
+msgid "League / competition"
+msgstr "Liga / competição"
+
+msgid "League performance"
+msgstr "Desempenho por liga"
+
+msgid "Left-handed"
+msgstr "Canhoto"
+
+msgid "Leisure"
+msgstr "Lazer"
+
+msgid "Location"
+msgstr "Local"
+
+msgid "Login"
+msgstr "Entrar"
+
+msgid "Logout"
+msgstr "Sair"
+
+msgid "Loss"
+msgstr "Derrota"
+
+msgid "Loss rate"
+msgstr "Percentual de derrotas"
+
+msgid "Losses"
+msgstr "Derrotas"
+
+msgid "Low"
+msgstr "Baixa"
+
+msgid "Manage your athletes, competitive profiles and player development from one professional workspace."
+msgstr "Gerencie seus atletas, perfis competitivos e desenvolvimento em um espaço profissional."
+
+msgid "Manage your athletes, player profiles, rankings and playing characteristics."
+msgstr "Gerencie atletas, perfis, rankings e características de jogo."
+
+msgid "Manage your game."
+msgstr "Gerencie seu jogo."
+
+msgid "Marketing"
+msgstr "Marketing"
+
+msgid "Match Management"
+msgstr "Gestão de partidas"
+
+msgid "Match and ranking information will form the foundation of future analytics."
+msgstr "As informações de partidas e rankings formarão a base das análises futuras."
+
+msgid "Match created successfully."
+msgstr "Partida criada com sucesso."
+
+msgid "Match deleted successfully."
+msgstr "Partida excluída com sucesso."
+
+msgid "Match details"
+msgstr "Detalhes da partida"
+
+msgid "Match format"
+msgstr "Formato da partida"
+
+msgid "Match history"
+msgstr "Histórico de partidas"
+
+msgid "Match notes"
+msgstr "Observações da partida"
+
+msgid "Match pagination"
+msgstr "Paginação de partidas"
+
+msgid "Match updated successfully."
+msgstr "Partida atualizada com sucesso."
+
+msgid "Matches"
+msgstr "Partidas"
+
+msgid "Matches played"
+msgstr "Jogos realizados"
+
+msgid "Matches section"
+msgstr "Seção de partidas"
+
+msgid "Medical / recovery"
+msgstr "Médico / recuperação"
+
+msgid "Medium"
+msgstr "Média"
+
+msgid "Meeting"
+msgstr "Reunião"
+
+msgid "Mon"
+msgstr "Seg"
+
+msgid "Monday"
+msgstr "Segunda"
+
+msgid "Month"
+msgstr "Mês"
+
+msgid "National ranking"
+msgstr "Ranking nacional"
+
+msgid "Next"
+msgstr "Próximo"
+
+msgid "Next commitment"
+msgstr "Próximo compromisso"
+
+msgid "Next competition"
+msgstr "Próxima competição"
+
+msgid "Next month"
+msgstr "Próximo mês"
+
+msgid "Next personal event"
+msgstr "Próximo evento pessoal"
+
+msgid "No additional information was provided for this event."
+msgstr "Nenhuma informação adicional foi fornecida para este evento."
+
+msgid "No competition scheduled"
+msgstr "Nenhuma competição agendada"
+
+msgid "No completed matches yet."
+msgstr "Ainda não há partidas concluídas."
+
+msgid "No description"
+msgstr "Sem descrição"
+
+msgid "No league statistics yet"
+msgstr "Ainda não há estatísticas de liga"
+
+msgid "No matches found"
+msgstr "Nenhuma partida encontrada"
+
+msgid "No personal event scheduled"
+msgstr "Nenhum evento pessoal agendado"
+
+msgid "No pinned notes"
+msgstr "Nenhuma nota fixada"
+
+msgid "No players yet"
+msgstr "Nenhum atleta cadastrado"
+
+msgid "No transactions found"
+msgstr "Nenhuma transação encontrada"
+
+msgid "No upcoming commitments."
+msgstr "Nenhum compromisso futuro."
+
+msgid "Not provided"
+msgstr "Não informado"
+
+msgid "Not ranked"
+msgstr "Sem ranking"
+
+msgid "Not specified"
+msgstr "Não informado"
+
+msgid "Note archived."
+msgstr "Nota arquivada."
+
+msgid "Note content cannot be empty."
+msgstr "O conteúdo da nota não pode ficar vazio."
+
+msgid "Note created successfully."
+msgstr "Nota criada com sucesso."
+
+msgid "Note deleted successfully."
+msgstr "Nota excluída com sucesso."
+
+msgid "Note pinned to dashboard."
+msgstr "Nota fixada no painel."
+
+msgid "Note restored."
+msgstr "Nota restaurada."
+
+msgid "Note title must contain at least 3 characters."
+msgstr "O título da nota deve conter pelo menos 3 caracteres."
+
+msgid "Note unpinned."
+msgstr "Nota desafixada."
+
+msgid "Note updated successfully."
+msgstr "Nota atualizada com sucesso."
+
+msgid "Notes"
+msgstr "Notas"
+
+msgid "Notes pagination"
+msgstr "Paginação de notas"
+
+msgid "Notes workspace"
+msgstr "Área de notas"
+
+msgid "Official national position"
+msgstr "Posição nacional oficial"
+
+msgid "Official world and national ranking positions."
+msgstr "Posições oficiais nos rankings mundial e nacional."
+
+msgid "Official world position"
+msgstr "Posição mundial oficial"
+
+msgid "Once this player profile is deleted, it will no longer be available through your player database."
+msgstr "Após a exclusão, este perfil não estará mais disponível na sua base de atletas."
+
+msgid "Open dashboard"
+msgstr "Abrir painel"
+
+msgid "Open finance workspace"
+msgstr "Abrir área financeira"
+
+msgid "Open full calendar"
+msgstr "Abrir calendário completo"
+
+msgid "Open matches →"
+msgstr "Abrir partidas →"
+
+msgid "Open note"
+msgstr "Abrir nota"
+
+msgid "Open notes workspace"
+msgstr "Abrir área de notas"
+
+msgid "Open players →"
+msgstr "Abrir atletas →"
+
+msgid "Opponent"
+msgstr "Adversário"
+
+msgid "Opponent advantage"
+msgstr "Vantagem do adversário"
+
+msgid "Opponent sets won"
+msgstr "Sets vencidos pelo adversário"
+
+msgid "Opponent's name"
+msgstr "Nome do adversário"
+
+msgid "Opponent, player or competition"
+msgstr "Adversário, atleta ou competição"
+
+msgid "Optional details"
+msgstr "Detalhes opcionais"
+
+msgid "Organize training, competitions, travel, recovery and professional activities throughout the season."
+msgstr "Organize treinos, competições, viagens, recuperação e atividades profissionais durante a temporada."
+
+msgid "Organize your training, competitions, travel, recovery and professional activities throughout the year."
+msgstr "Organize treinos, competições, viagens, recuperação e atividades profissionais durante o ano."
+
+msgid "Other"
+msgstr "Outro"
+
+msgid "Overall performance"
+msgstr "Desempenho geral"
+
+msgid "Page %(current)s of %(total)s"
+msgstr "Página %(current)s de %(total)s"
+
+msgid "Paid"
+msgstr "Pago"
+
+msgid "Password"
+msgstr "Senha"
+
+msgid "Payment method"
+msgstr "Forma de pagamento"
+
+msgid "Pending"
+msgstr "Pendente"
+
+msgid "Pending payments"
+msgstr "Pagamentos pendentes"
+
+msgid "Performance"
+msgstr "Desempenho"
+
+msgid "Performance Tracking"
+msgstr "Acompanhamento de desempenho"
+
+msgid "Performance analysis"
+msgstr "Análise de desempenho"
+
+msgid "Performance dashboard"
+msgstr "Painel de desempenho"
+
+msgid "Performance overview"
+msgstr "Visão geral do desempenho"
+
+msgid "Permanent action"
+msgstr "Ação permanente"
+
+msgid "Personal"
+msgstr "Pessoal"
+
+msgid "Personal and professional finances in one organized view."
+msgstr "Finanças pessoais e profissionais em uma visão organizada."
+
+msgid "Personal expenses"
+msgstr "Despesas pessoais"
+
+msgid "Personal information"
+msgstr "Informações pessoais"
+
+msgid "Pin important decisions or reminders to keep them visible here."
+msgstr "Fixe decisões ou lembretes importantes para mantê-los visíveis aqui."
+
+msgid "Pin this note to the dashboard"
+msgstr "Fixar esta nota no painel"
+
+msgid "Pinned"
+msgstr "Fixada"
+
+msgid "Plan and organize your personal and professional activities."
+msgstr "Planeje e organize suas atividades pessoais e profissionais."
+
+msgid "Plan training sessions, exercises, workload and your sporting calendar."
+msgstr "Planeje treinos, exercícios, carga de trabalho e calendário esportivo."
+
+msgid "Planning"
+msgstr "Planejamento"
+
+msgid "Played"
+msgstr "Jogos"
+
+msgid "Player"
+msgstr "Atleta"
+
+msgid "Player database"
+msgstr "Base de atletas"
+
+msgid "Player management"
+msgstr "Gestão de atletas"
+
+msgid "Player profile"
+msgstr "Perfil do atleta"
+
+msgid "Player sets won"
+msgstr "Sets vencidos pelo atleta"
+
+msgid "Players"
+msgstr "Jogadores"
+
+msgid "Playing hand"
+msgstr "Mão dominante"
+
+msgid "Please review the information below."
+msgstr "Revise as informações abaixo."
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Previous month"
+msgstr "Mês anterior"
+
+msgid "Priority"
+msgstr "Prioridade"
+
+msgid "Prize money"
+msgstr "Premiação"
+
+msgid "Professional"
+msgstr "Profissional"
+
+msgid "Professional expenses"
+msgstr "Despesas profissionais"
+
+msgid "Profile quality"
+msgstr "Qualidade do perfil"
+
+msgid "Profiles to complete"
+msgstr "Perfis a completar"
+
+msgid "Ranked athletes"
+msgstr "Atletas ranqueados"
+
+msgid "Ranking"
+msgstr "Ranking"
+
+msgid "Rankings"
+msgstr "Rankings"
+
+msgid "Reach your next level."
+msgstr "Alcance seu próximo nível."
+
+msgid "Recent activity"
+msgstr "Atividade recente"
+
+msgid "Recent form"
+msgstr "Forma recente"
+
+msgid "Recent matches"
+msgstr "Partidas recentes"
+
+msgid "Record match information accurately so your future performance analytics remain reliable."
+msgstr "Registre as informações da partida com precisão para manter confiáveis as análises futuras."
+
+msgid "Record matches, opponents, scores and results. Build the foundation for future performance analytics."
+msgstr "Registre partidas, adversários, placares e resultados. Construa a base para futuras análises de desempenho."
+
+msgid "Record, review and manage every competitive match."
+msgstr "Registre, revise e gerencie todas as partidas competitivas."
+
+msgid "Recorded"
+msgstr "Registrada"
+
+msgid "Recovery"
+msgstr "Recuperação"
+
+msgid "Recurring"
+msgstr "Recorrente"
+
+msgid "Recurring transaction"
+msgstr "Transação recorrente"
+
+msgid "Register matches, results and create your competitive history."
+msgstr "Registre partidas e resultados para criar seu histórico competitivo."
+
+msgid "Registered athletes"
+msgstr "Atletas cadastrados"
+
+msgid "Remove the score because the match is not completed."
+msgstr "Remova o placar porque a partida não está concluída."
+
+msgid "Results calculated automatically from completed matches."
+msgstr "Resultados calculados automaticamente a partir das partidas concluídas."
+
+msgid "Results overview"
+msgstr "Visão geral dos resultados"
+
+msgid "Review the note before permanently removing it."
+msgstr "Revise a nota antes de removê-la permanentemente."
+
+msgid "Right-handed"
+msgstr "Destro"
+
+msgid "Salary"
+msgstr "Salário"
+
+msgid "Sat"
+msgstr "Sáb"
+
+msgid "Saturday"
+msgstr "Sábado"
+
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+msgid "Save note"
+msgstr "Salvar nota"
+
+msgid "Save transaction"
+msgstr "Salvar transação"
+
+msgid "Schedule"
+msgstr "Agenda"
+
+msgid "Schedule competition"
+msgstr "Agendar competição"
+
+msgid "Scheduled"
+msgstr "Agendada"
+
+msgid "Score: %(score)s"
+msgstr "Placar: %(score)s"
+
+msgid "Scores can only be recorded for completed matches."
+msgstr "Os placares só podem ser registrados em partidas concluídas."
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Season snapshot"
+msgstr "Resumo da temporada"
+
+msgid "Select a player to view their complete profile."
+msgstr "Selecione um atleta para visualizar seu perfil completo."
+
+msgid "Select the athlete's dominant playing hand."
+msgstr "Selecione a mão dominante do atleta."
+
+msgid "Sets difference"
+msgstr "Diferença de sets"
+
+msgid "Sets lost"
+msgstr "Sets perdidos"
+
+msgid "Sets won"
+msgstr "Sets vencidos"
+
+msgid "Show archived notes"
+msgstr "Mostrar notas arquivadas"
+
+msgid "Sign in"
+msgstr "Entrar"
+
+msgid "Sign in to your Table Tennis Manager account."
+msgstr "Entre na sua conta do Table Tennis Manager."
+
+msgid "Sponsorship"
+msgstr "Patrocínio"
+
+msgid "Start building your match history by recording your first table tennis match."
+msgstr "Comece seu histórico registrando a primeira partida de tênis de mesa."
+
+msgid "Start date and time"
+msgstr "Data e hora de início"
+
+msgid "Start organizing your season by adding your first training session, competition, travel or personal event."
+msgstr "Comece a organizar sua temporada adicionando o primeiro treino, competição, viagem ou evento pessoal."
+
+msgid "Starts"
+msgstr "Início"
+
+msgid "Statistics by league"
+msgstr "Estatísticas por liga"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Subscriptions"
+msgstr "Assinaturas"
+
+msgid "Sun"
+msgstr "Dom"
+
+msgid "Sunday"
+msgstr "Domingo"
+
+msgid "TABLE TENNIS MANAGEMENT PLATFORM"
+msgstr "PLATAFORMA DE GESTÃO DO TÊNIS DE MESA"
+
+msgid "Table Tennis Manager - Track players, matches and performance."
+msgstr "Table Tennis Manager — acompanhe atletas, partidas e desempenho."
+
+msgid "Table tennis athlete"
+msgstr "Atleta de tênis de mesa"
+
+msgid "Tactics"
+msgstr "Tática"
+
+msgid "Tactics, observations, key moments..."
+msgstr "Táticas, observações, momentos decisivos..."
+
+msgid "Taxes"
+msgstr "Impostos"
+
+msgid "The end date and time must be after the start date and time."
+msgstr "A data e o horário de término devem ser posteriores ao início."
+
+msgid "The event will be permanently removed from your calendar."
+msgstr "O evento será removido permanentemente do seu calendário."
+
+msgid "The note will be permanently removed from your workspace and dashboard."
+msgstr "A nota será removida permanentemente do seu espaço de trabalho e do painel."
+
+msgid "The selected player does not belong to this account."
+msgstr "O atleta selecionado não pertence a esta conta."
+
+msgid "This action cannot be undone."
+msgstr "Esta ação não pode ser desfeita."
+
+msgid "This action permanently removes the financial record."
+msgstr "Esta ação remove permanentemente o registro financeiro."
+
+msgid "This information helps maintain an accurate athlete profile."
+msgstr "Esta informação ajuda a manter um perfil preciso do atleta."
+
+msgid "Thu"
+msgstr "Qui"
+
+msgid "Thursday"
+msgstr "Quinta"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Title or note content"
+msgstr "Título ou conteúdo da nota"
+
+msgid "Today"
+msgstr "Hoje"
+
+msgid "Total players"
+msgstr "Total de jogadores"
+
+msgid "Total sets"
+msgstr "Total de sets"
+
+msgid "Tournament fees"
+msgstr "Taxas de torneios"
+
+msgid "Tournament, league, club..."
+msgstr "Torneio, liga, clube..."
+
+msgid "Track ranking progression and competitive position over time."
+msgstr "Acompanhe a evolução do ranking e da posição competitiva ao longo do tempo."
+
+msgid "Training"
+msgstr "Treinamento"
+
+msgid "Transaction created successfully."
+msgstr "Transação criada com sucesso."
+
+msgid "Transaction deleted successfully."
+msgstr "Transação excluída com sucesso."
+
+msgid "Transaction updated successfully."
+msgstr "Transação atualizada com sucesso."
+
+msgid "Transport"
+msgstr "Transporte"
+
+msgid "Travel"
+msgstr "Viagem"
+
+msgid "Tue"
+msgstr "Ter"
+
+msgid "Tuesday"
+msgstr "Terça"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Unspecified league"
+msgstr "Liga não informada"
+
+msgid "Upcoming activities"
+msgstr "Próximas atividades"
+
+msgid "Upcoming schedule"
+msgstr "Próximos compromissos"
+
+msgid "Updated %(elapsed)s ago"
+msgstr "Atualizada há %(elapsed)s"
+
+msgid "Use official player information"
+msgstr "Use informações oficiais do atleta"
+
+msgid "Use the athlete's official first name."
+msgstr "Use o nome oficial do atleta."
+
+msgid "Use the athlete's official surname."
+msgstr "Use o sobrenome oficial do atleta."
+
+msgid "Use this calendar to organize training, competitions, travel, recovery, evaluations, meetings and personal commitments."
+msgstr "Use este calendário para organizar treinos, competições, viagens, recuperação, avaliações, reuniões e compromissos pessoais."
+
+msgid "Username"
+msgstr "Usuário"
+
+msgid "Victories"
+msgstr "Vitórias"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "View commitment"
+msgstr "Ver compromisso"
+
+msgid "View competition"
+msgstr "Ver competição"
+
+msgid "View event"
+msgstr "Ver evento"
+
+msgid "View full analysis"
+msgstr "Ver análise completa"
+
+msgid "View matches"
+msgstr "Ver partidas"
+
+msgid "View profile"
+msgstr "Ver perfil"
+
+msgid "WIN"
+msgstr "VITÓRIA"
+
+msgid "Wed"
+msgstr "Qua"
+
+msgid "Wednesday"
+msgstr "Quarta"
+
+msgid "Welcome back"
+msgstr "Bem-vindo de volta"
+
+msgid "Welcome, %(username)s!"
+msgstr "Bem-vindo, %(username)s!"
+
+msgid "What was this transaction for?"
+msgstr "Qual foi a finalidade desta transação?"
+
+msgid "Win"
+msgstr "Vitória"
+
+msgid "Win and loss percentage"
+msgstr "Percentual de vitórias e derrotas"
+
+msgid "Win rate"
+msgstr "Percentual de vitórias"
+
+msgid "Winner"
+msgstr "Vencedor"
+
+msgid "Wins"
+msgstr "Vitórias"
+
+msgid "Won minus lost"
+msgstr "Vencidos menos perdidos"
+
+msgid "World ranking"
+msgstr "Ranking mundial"
+
+msgid "Write clearly so the note remains useful when you need it."
+msgstr "Escreva com clareza para que a nota continue útil quando você precisar."
+
+msgid "Write decisions, ideas, reminders or observations..."
+msgstr "Escreva decisões, ideias, lembretes ou observações..."
+
+msgid "Yes, delete match"
+msgstr "Sim, excluir partida"
+
+msgid "You are about to permanently delete:"
+msgstr "Você está prestes a excluir permanentemente:"
+
+msgid "You are about to permanently remove"
+msgstr "Você está prestes a remover permanentemente"
+
+msgid "You are about to permanently remove:"
+msgstr "Você está prestes a remover permanentemente:"
+
+msgid "Your Table Tennis Manager workspace."
+msgstr "Seu espaço de trabalho no Table Tennis Manager."
+
+msgid "Your athlete database is ready to be built. Create your first player profile to start tracking competitive development."
+msgstr "Sua base de atletas está pronta para ser criada. Cadastre o primeiro perfil para acompanhar o desenvolvimento competitivo."
+
+msgid "Your athletes"
+msgstr "Seus atletas"
+
+msgid "Your calendar is empty"
+msgstr "Seu calendário está vazio"
+
+msgid "Your daily overview"
+msgstr "Sua visão geral diária"
+
+msgid "Your performance story starts with your first match."
+msgstr "Sua trajetória de desempenho começa com a primeira partida."
+
+msgid "Your personal agenda has no upcoming events."
+msgstr "Sua agenda pessoal não possui eventos futuros."
+
+msgid "Your personal and professional schedule."
+msgstr "Sua agenda pessoal e profissional."
+
+msgid "Your schedule is clear"
+msgstr "Sua agenda está livre"
+
+msgid "Your season, schedule and performance at a glance."
+msgstr "Sua temporada, agenda e desempenho em uma visão rápida."
+
+msgid "Your username or password is incorrect. Please try again."
+msgstr "Seu usuário ou senha está incorreto. Tente novamente."
+
+msgid "day to go"
+msgstr "dia restante"
+
+msgid "days to go"
+msgstr "dias restantes"
+
+msgid "expenses"
+msgstr "despesas"
+
+msgid "from your player database."
+msgstr "da sua base de atletas."
+
+msgid "income"
+msgstr "receitas"
+
+msgid "Back to edit match"
+msgstr "Voltar à edição da partida"
+
+msgid "Match management"
+msgstr "Gestão de partidas"
+
+msgid "Review the match before permanently removing it from the athlete's history."
+msgstr "Revise a partida antes de removê-la permanentemente do histórico do atleta."
+
+msgid "The result will be removed from match history and all performance statistics will be recalculated."
+msgstr "O resultado será removido do histórico e todas as estatísticas de desempenho serão recalculadas."
+
+msgid "No competition specified"
+msgstr "Competição não informada"
+
+msgid "Final score"
+msgstr "Placar final"
+
+msgid "Remove match record"
+msgstr "Remover registro da partida"
+
+msgid "This permanently removes the result and recalculates performance statistics."
+msgstr "Remove permanentemente o resultado e recalcula as estatísticas de desempenho."
+
+msgid "Event section updated successfully."
+msgstr "Seção do evento atualizada com sucesso."
+
+msgid "Event navigation"
+msgstr "Navegação do evento"
+
+msgid "Back to event month"
+msgstr "Voltar ao mês do evento"
+
+msgid "Current location"
+msgstr "Localização atual"
+
+msgid "Event details"
+msgstr "Detalhes do evento"
+
+msgid "Edit full event"
+msgstr "Editar evento completo"
+
+msgid "Select a section below to update it directly."
+msgstr "Selecione uma seção abaixo para atualizá-la diretamente."
+
+msgid "Date, time and location"
+msgstr "Data, horário e local"
+
+msgid "Type and priority"
+msgstr "Tipo e prioridade"
+
+msgid "Notes and additional information"
+msgstr "Observações e informações adicionais"
+
+msgid "Save schedule"
+msgstr "Salvar agenda"
+
+msgid "Save classification"
+msgstr "Salvar classificação"
+
+msgid "Save description"
+msgstr "Salvar descrição"
+
+msgid "losses"
+msgstr "derrotas"
+
+msgid "registered"
+msgstr "cadastrados"
+
+msgid "vs"
+msgstr "vs"
+
+msgid "wins"
+msgstr "vitórias"
+
+msgid "← Back to matches"
+msgstr "← Voltar às partidas"
+
+msgid "← Back to player profile"
+msgstr "← Voltar ao perfil do atleta"
+
+msgid "← Back to players"
+msgstr "← Voltar aos atletas"
+
+msgid "Add competition"
+msgstr "Adicionar competição"
+
+msgid "Agenda"
+msgstr "Agenda"
+
+msgid "Athletes"
+msgstr "Atletas"
+
+msgid "Back to competition"
+msgstr "Voltar à competição"
+
+msgid "Back to competitions"
+msgstr "Voltar às competições"
+
+msgid "Centralize schedules, athletes, matches and results in one organized workspace."
+msgstr "Centralize agenda, atletas, partidas e resultados em um único espaço organizado."
+
+msgid "Championship"
+msgstr "Campeonato"
+
+msgid "City, venue or sports hall"
+msgstr "Cidade, local ou ginásio"
+
+msgid "Competition center"
+msgstr "Central de competições"
+
+msgid "Competition deleted successfully."
+msgstr "Competição excluída com sucesso."
+
+msgid "Competition matches"
+msgstr "Partidas da competição"
+
+msgid "Competition name"
+msgstr "Nome da competição"
+
+msgid "Competition name must contain at least 3 characters."
+msgstr "O nome da competição deve conter pelo menos 3 caracteres."
+
+msgid "Competition notes"
+msgstr "Observações da competição"
+
+msgid "Competition overview"
+msgstr "Visão geral da competição"
+
+msgid "Competition saved successfully."
+msgstr "Competição salva com sucesso."
+
+msgid "Competition type"
+msgstr "Tipo de competição"
+
+msgid "Competitions"
+msgstr "Competições"
+
+msgid "Competitive management"
+msgstr "Gestão competitiva"
+
+msgid "Create a competition to connect its calendar, participating athletes and match results."
+msgstr "Crie uma competição para conectar agenda, atletas participantes e resultados das partidas."
+
+msgid "Create competition"
+msgstr "Criar competição"
+
+msgid "Cup"
+msgstr "Copa"
+
+msgid "Delete competition"
+msgstr "Excluir competição"
+
+msgid "Edit competition"
+msgstr "Editar competição"
+
+msgid "End date"
+msgstr "Data de término"
+
+msgid "Example: 2026/27"
+msgstr "Exemplo: 2026/27"
+
+msgid "Important information"
+msgstr "Informações importantes"
+
+msgid "In progress"
+msgstr "Em andamento"
+
+msgid "Keep only the essential information needed to manage the competition."
+msgstr "Mantenha apenas as informações essenciais para administrar a competição."
+
+msgid "League"
+msgstr "Liga"
+
+msgid "Linked events"
+msgstr "Eventos vinculados"
+
+msgid "Name, season or location"
+msgstr "Nome, temporada ou local"
+
+msgid "No athletes linked yet."
+msgstr "Nenhum atleta vinculado até o momento."
+
+msgid "No events linked yet."
+msgstr "Nenhum evento vinculado até o momento."
+
+msgid "No matches linked yet."
+msgstr "Nenhuma partida vinculada até o momento."
+
+msgid "Not linked"
+msgstr "Não vinculada"
+
+msgid "Objectives, registration details and important information"
+msgstr "Objetivos, detalhes da inscrição e informações importantes"
+
+msgid "Official competition name"
+msgstr "Nome oficial da competição"
+
+msgid "Open competition center"
+msgstr "Abrir central da competição"
+
+msgid "Organize your first competition"
+msgstr "Organize sua primeira competição"
+
+msgid "Participating athletes"
+msgstr "Atletas participantes"
+
+msgid "Planned"
+msgstr "Planejada"
+
+msgid "Registered competitions"
+msgstr "Competições cadastradas"
+
+msgid "Register competition"
+msgstr "Cadastrar competição"
+
+msgid "Competition and calendar updated successfully."
+msgstr "Competição e calendário atualizados com sucesso."
+
+msgid "Synchronized with calendar"
+msgstr "Sincronizada com o calendário"
+
+msgid "Competition calendar event"
+msgstr "Evento de calendário da competição"
+
+msgid "Dates, title and location are synchronized from the competition center."
+msgstr "Datas, título e local são sincronizados pela central da competição."
+
+msgid "Open competition"
+msgstr "Abrir competição"
+
+msgid "Season"
+msgstr "Temporada"
+
+msgid "Start date"
+msgstr "Data de início"
+
+msgid "Team"
+msgstr "Equipe"
+
+msgid "The competition will be removed, but linked matches and calendar events will be preserved."
+msgstr "A competição será removida, mas as partidas e os eventos vinculados serão preservados."
+
+msgid "This action cannot be undone"
+msgstr "Esta ação não pode ser desfeita"
+
+msgid "Tournament"
+msgstr "Torneio"
+
+msgid "Upcoming"
+msgstr "Próximas"
+
+msgid "Competition balance"
+msgstr "Saldo da competição"
+
+msgid "Competition expenses"
+msgstr "Despesas da competição"
+
+msgid "Competition income"
+msgstr "Receitas da competição"
+
+msgid "Important note"
+msgstr "Nota importante"
+
+msgid "Knowledge"
+msgstr "Conhecimento"
+
+msgid "Linked notes"
+msgstr "Notas vinculadas"
+
+msgid "Linked transactions"
+msgstr "Transações vinculadas"
+
+msgid "No notes linked yet."
+msgstr "Nenhuma nota vinculada até o momento."
+
+msgid "No transactions linked yet."
+msgstr "Nenhuma transação vinculada até o momento."

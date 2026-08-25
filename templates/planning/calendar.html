@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% load planning_tags %}
+{% load i18n %}
+{% load i18n planning_tags %}
 
 {% block title %}
     Calendar | Table Tennis Manager
@@ -12,16 +13,15 @@
 
         <div>
             <p class="eyebrow">
-                Annual planning
+                {% translate "Annual planning" %}
             </p>
 
             <h1>
-                Calendar
+                {% translate "Calendar" %}
             </h1>
 
             <p class="page-subtitle">
-                Organize training, competitions, travel, recovery
-                and professional activities throughout the season.
+                {% translate "Organize training, competitions, travel, recovery and professional activities throughout the season." %}
             </p>
         </div>
 
@@ -29,7 +29,7 @@
             href="{% url 'planning:create' %}"
             class="primary-button"
         >
-            Add event
+            {% translate "Add event" %}
         </a>
 
     </div>
@@ -43,21 +43,21 @@
                 href="?year={{ previous_year }}&month={{ previous_month }}"
                 class="secondary-button"
             >
-                ← Previous
+                ← {% translate "Previous" %}
             </a>
 
             <a
                 href="{% url 'planning:calendar' %}"
                 class="secondary-button"
             >
-                Today
+                {% translate "Today" %}
             </a>
 
             <a
                 href="?year={{ next_year }}&month={{ next_month }}"
                 class="secondary-button"
             >
-                Next →
+                {% translate "Next" %} →
             </a>
 
         </div>
@@ -78,13 +78,13 @@
 
         <div class="calendar-weekdays">
 
-            <div>Monday</div>
-            <div>Tuesday</div>
-            <div>Wednesday</div>
-            <div>Thursday</div>
-            <div>Friday</div>
-            <div>Saturday</div>
-            <div>Sunday</div>
+            <div>{% translate "Monday" %}</div>
+            <div>{% translate "Tuesday" %}</div>
+            <div>{% translate "Wednesday" %}</div>
+            <div>{% translate "Thursday" %}</div>
+            <div>{% translate "Friday" %}</div>
+            <div>{% translate "Saturday" %}</div>
+            <div>{% translate "Sunday" %}</div>
 
         </div>
 
@@ -98,6 +98,7 @@
                     <div
                         class="
                             calendar-day
+                            calendar-day-clickable
                             {% if day.month != current_month.month %}
                                 calendar-day-muted
                             {% endif %}
@@ -106,6 +107,14 @@
                             {% endif %}
                         "
                     >
+
+                        <a
+                            href="{% url 'planning:create' %}?date={{ day|date:'Y-m-d' }}"
+                            class="calendar-day-create-link"
+                            aria-label="{% blocktranslate with event_date=day|date:'DATE_FORMAT' %}Add event on {{ event_date }}{% endblocktranslate %}"
+                            title="{% blocktranslate with event_date=day|date:'DATE_FORMAT' %}Add event on {{ event_date }}{% endblocktranslate %}"
+                        ></a>
+
 
                         <div class="calendar-day-header">
 

@@ -1,4 +1,5 @@
-{% load static %}
+{% load i18n %}
+{% load i18n static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +18,7 @@
 
     <meta
         name="description"
-        content="Table Tennis Manager - Track players, matches and performance."
+        content="{% translate 'Table Tennis Manager - Track players, matches and performance.' %}"
     >
 
 
@@ -114,7 +115,7 @@
         <p>
 
             © 2026 Table Tennis Manager.
-            Built for competitive athletes.
+            {% translate "Built for competitive athletes." %}
 
         </p>
 

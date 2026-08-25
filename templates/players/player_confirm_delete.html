@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 
 {% block title %}
@@ -22,7 +23,7 @@
             href="{% url 'players:detail' player.pk %}"
             class="back-link"
         >
-            ← Back to player profile
+            {% translate "← Back to player profile" %}
         </a>
 
     </div>
@@ -44,25 +45,25 @@
 
 
             <p class="eyebrow danger-eyebrow">
-                Permanent action
+                {% translate "Permanent action" %}
             </p>
 
 
             <h1>
-                Delete player?
+                {% translate "Delete player?" %}
             </h1>
 
 
             <p class="danger-description">
 
-                You are about to permanently remove
+                {% translate "You are about to permanently remove" %}
 
                 <strong>
                     {{ player.first_name }}
                     {{ player.last_name }}
                 </strong>
 
-                from your player database.
+                {% translate "from your player database." %}
 
             </p>
 
@@ -93,7 +94,7 @@
 
 
                 <span>
-                    Table tennis athlete
+                    {% translate "Table tennis athlete" %}
                 </span>
 
             </div>
@@ -102,15 +103,15 @@
             <div class="danger-player-ranking">
 
                 <span>
-                    Ranking
+                    {% translate "National ranking" %}
                 </span>
 
 
                 <strong>
 
-                    {% if player.ranking %}
+                    {% if player.national_ranking %}
 
-                        #{{ player.ranking }}
+                        #{{ player.national_ranking }}
 
                     {% else %}
 
@@ -141,14 +142,12 @@
             <div>
 
                 <strong>
-                    This action cannot be undone.
+                    {% translate "This action cannot be undone." %}
                 </strong>
 
 
                 <p>
-                    Once this player profile is deleted,
-                    it will no longer be available through
-                    your player database.
+                    {% translate "Once this player profile is deleted, it will no longer be available through your player database." %}
                 </p>
 
             </div>
@@ -170,10 +169,7 @@
 
 
             <p>
-                As the platform evolves, player profiles may become
-                connected to matches, training sessions, rankings and
-                performance records. Deletion rules will be extended
-                accordingly to protect the integrity of those records.
+                {% translate "As the platform evolves, player profiles may become connected to matches, training sessions, rankings and performance records. Deletion rules will be extended accordingly to protect the integrity of those records." %}
             </p>
 
         </div>
@@ -198,7 +194,7 @@
                     href="{% url 'players:detail' player.pk %}"
                     class="secondary-button"
                 >
-                    Cancel
+                    {% translate "Cancel" %}
                 </a>
 
 
@@ -206,7 +202,7 @@
                     type="submit"
                     class="danger-button"
                 >
-                    Delete player
+                    {% translate "Delete player" %}
                 </button>
 
 

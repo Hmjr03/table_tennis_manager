@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}
     Delete {{ event.title }} | Table Tennis Manager
@@ -14,16 +15,16 @@
         </div>
 
         <p class="eyebrow">
-            Calendar management
+            {% translate "Calendar management" %}
         </p>
 
         <h1>
-            Delete this event?
+            {% translate "Delete this event?" %}
         </h1>
 
         <p class="danger-description">
 
-            You are about to permanently remove:
+            {% translate "You are about to permanently remove:" %}
 
         </p>
 
@@ -34,9 +35,9 @@
             </strong>
 
             <span>
-                {{ event.start_datetime|date:"d/m/Y H:i" }}
+                {{ event.start_datetime|date:"DATETIME_FORMAT" }}
                 →
-                {{ event.end_datetime|date:"d/m/Y H:i" }}
+                {{ event.end_datetime|date:"DATETIME_FORMAT" }}
             </span>
 
             {% if event.location %}
@@ -52,12 +53,11 @@
         <div class="danger-warning">
 
             <strong>
-                This action cannot be undone.
+                {% translate "This action cannot be undone." %}
             </strong>
 
             <span>
-                The event will be permanently removed from
-                your calendar.
+                {% translate "The event will be permanently removed from your calendar." %}
             </span>
 
         </div>
@@ -72,14 +72,14 @@
                     href="{% url 'planning:detail' event.pk %}"
                     class="secondary-button"
                 >
-                    Cancel
+                    {% translate "Cancel" %}
                 </a>
 
                 <button
                     type="submit"
                     class="danger-button"
                 >
-                    Delete event
+                    {% translate "Delete event" %}
                 </button>
 
             </div>

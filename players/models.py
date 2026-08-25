@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Player(models.Model):
     class Hand(models.TextChoices):
-        RIGHT = "RIGHT", "Right-handed"
-        LEFT = "LEFT", "Left-handed"
+        RIGHT = "RIGHT", _("Right-handed")
+        LEFT = "LEFT", _("Left-handed")
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -23,8 +24,13 @@ class Player(models.Model):
         choices=Hand.choices,
         default=Hand.RIGHT,
     )
-    ranking = models.PositiveIntegerField(
+    national_ranking = models.PositiveIntegerField(
         default=0,
+        verbose_name=_("National ranking"),
+    )
+    world_ranking = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("World ranking"),
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -35,4 +41,3 @@ class Player(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-

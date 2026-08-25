@@ -1,687 +1,120 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-
-{% block title %}
-    {{ player.first_name }} {{ player.last_name }} |
-    Table Tennis Manager
-{% endblock %}
-
+{% block title %}{{ player.first_name }} {{ player.last_name }} | Table Tennis Manager{% endblock %}
 
 {% block content %}
+<section class="player-profile-page player-profile-2">
+    <a href="{% url 'players:list' %}" class="back-link">← {% translate "Back to players" %}</a>
 
-<section class="player-profile-page">
-
-
-    <!-- ==============================
-         BACK NAVIGATION
-    =============================== -->
-
-    <div class="profile-navigation">
-
-        <a
-            href="{% url 'players:list' %}"
-            class="back-link"
-        >
-            ← Back to players
-        </a>
-
-    </div>
-
-
-    <!-- ==============================
-         PROFILE HEADER
-    =============================== -->
-
-    <header class="profile-header">
-
-
+    <header class="profile-hero">
         <div class="profile-identity">
-
-
-            <div class="profile-avatar">
-
-                {{ player.first_name|first|upper }}{{ player.last_name|first|upper }}
-
-            </div>
-
-
+            <div class="profile-avatar" aria-hidden="true">{{ player.first_name|first|upper }}{{ player.last_name|first|upper }}</div>
             <div class="profile-identity-content">
-
-                <p class="eyebrow">
-                    Player profile
-                </p>
-
-
-                <h1>
-
-                    {{ player.first_name }}
-                    {{ player.last_name }}
-
-                </h1>
-
-
+                <p class="eyebrow">{% translate "Player profile" %}</p>
+                <h1>{{ player.first_name }} {{ player.last_name }}</h1>
                 <div class="profile-meta">
-
-                    <span>
-                        🏓 Table tennis athlete
-                    </span>
-
-
-                    <span class="profile-meta-separator">
-                        •
-                    </span>
-
-
-                    <span class="profile-active-status">
-
-                        <span class="profile-status-dot"></span>
-
-                        Active profile
-
-                    </span>
-
+                    <span>{% translate "Table tennis athlete" %}</span>
+                    <span class="profile-meta-separator">•</span>
+                    <span class="profile-active-status"><span class="profile-status-dot"></span>{% translate "Active profile" %}</span>
                 </div>
-
             </div>
-
         </div>
-
-
         <div class="profile-actions">
-
-
-            <a
-                href="{% url 'players:edit' player.pk %}"
-                class="secondary-button"
-            >
-                Edit profile
-            </a>
-
-
-            <a
-                href="{% url 'players:delete' player.pk %}"
-                class="danger-button"
-            >
-                Delete
-            </a>
-
+            <a href="{% url 'players:edit' player.pk %}" class="secondary-button">{% translate "Edit profile" %}</a>
+            <a href="{% url 'players:delete' player.pk %}" class="profile-delete-link">{% translate "Delete" %}</a>
         </div>
-
-
     </header>
 
-
-    <!-- ==============================
-         PERFORMANCE OVERVIEW
-    =============================== -->
-
-    <div class="profile-overview-grid">
-
-
-        <article class="profile-stat-card">
-
-
-            <span class="profile-stat-icon">
-                🏆
-            </span>
-
-
-            <div>
-
-                <span class="profile-stat-label">
-                    Current ranking
-                </span>
-
-
-                <strong class="profile-stat-value">
-
-                    {% if player.ranking %}
-
-                        #{{ player.ranking }}
-
-                    {% else %}
-
-                        —
-
-                    {% endif %}
-
-                </strong>
-
-
-                <span class="profile-stat-description">
-
-                    {% if player.ranking %}
-
-                        Current competitive position
-
-                    {% else %}
-
-                        Ranking not assigned
-
-                    {% endif %}
-
-                </span>
-
-            </div>
-
+    <section class="profile-kpi-grid" aria-label="{% translate 'Performance overview' %}">
+        <article class="profile-kpi-card profile-kpi-card--world">
+            <span class="profile-kpi-label">{% translate "World ranking" %}</span>
+            <strong>{% if player.world_ranking %}#{{ player.world_ranking }}{% else %}—{% endif %}</strong>
+            <small>{% translate "Official world position" %}</small>
         </article>
-
-
-        <article class="profile-stat-card">
-
-
-            <span class="profile-stat-icon">
-                🎯
-            </span>
-
-
-            <div>
-
-                <span class="profile-stat-label">
-                    Playing style
-                </span>
-
-
-                <strong class="profile-stat-value">
-
-                    {{ player.get_hand_display }}
-
-                </strong>
-
-
-                <span class="profile-stat-description">
-                    Dominant playing hand
-                </span>
-
-            </div>
-
+        <article class="profile-kpi-card profile-kpi-card--national">
+            <span class="profile-kpi-label">{% translate "National ranking" %}</span>
+            <strong>{% if player.national_ranking %}#{{ player.national_ranking }}{% else %}—{% endif %}</strong>
+            <small>{% translate "Official national position" %}</small>
         </article>
-
-
-        <article class="profile-stat-card">
-
-
-            <span class="profile-stat-icon">
-                📅
-            </span>
-
-
-            <div>
-
-                <span class="profile-stat-label">
-                    Date of birth
-                </span>
-
-
-                <strong class="profile-stat-value">
-
-                    {% if player.date_of_birth %}
-
-                        {{ player.date_of_birth|date:"d/m/Y" }}
-
-                    {% else %}
-
-                        —
-
-                    {% endif %}
-
-                </strong>
-
-
-                <span class="profile-stat-description">
-                    Player information
-                </span>
-
-            </div>
-
+        <article class="profile-kpi-card">
+            <span class="profile-kpi-label">{% translate "Matches played" %}</span>
+            <strong>{{ total_matches }}</strong>
+            <small>{% translate "Completed matches" %}</small>
         </article>
-
-
-        <article class="profile-stat-card">
-
-
-            <span class="profile-stat-icon">
-                📊
-            </span>
-
-
-            <div>
-
-                <span class="profile-stat-label">
-                    Performance
-                </span>
-
-
-                <strong class="profile-stat-value">
-                    —
-                </strong>
-
-
-                <span class="profile-stat-description">
-                    Analytics coming soon
-                </span>
-
-            </div>
-
+        <article class="profile-kpi-card profile-kpi-card--success">
+            <span class="profile-kpi-label">{% translate "Win rate" %}</span>
+            <strong>{{ win_rate|floatformat:1 }}%</strong>
+            <small>{{ wins }} {% translate "wins" %} · {{ losses }} {% translate "losses" %}</small>
         </article>
+    </section>
 
-
-    </div>
-
-
-    <!-- ==============================
-         MAIN PROFILE GRID
-    =============================== -->
-
-    <div class="profile-grid">
-
-
-        <!-- ==============================
-             PERSONAL INFORMATION
-        =============================== -->
-
-        <article class="profile-card">
-
-
-            <div class="profile-card-heading">
-
-
-                <span class="profile-card-icon">
-                    👤
-                </span>
-
-
-                <div>
-
-                    <h2>
-                        Personal information
-                    </h2>
-
-
-                    <p>
-                        Basic information about this athlete.
-                    </p>
-
-                </div>
-
+    <div class="profile-dashboard-grid">
+        <article class="profile-panel profile-personal-panel">
+            <div class="profile-panel-heading">
+                <div><p class="eyebrow">{% translate "Athlete" %}</p><h2>{% translate "Personal information" %}</h2></div>
             </div>
-
-
             <div class="profile-info-list">
-
-
-                <div class="profile-info-item">
-
-                    <span>
-                        First name
-                    </span>
-
-
-                    <strong>
-                        {{ player.first_name }}
-                    </strong>
-
-                </div>
-
-
-                <div class="profile-info-item">
-
-                    <span>
-                        Last name
-                    </span>
-
-
-                    <strong>
-                        {{ player.last_name }}
-                    </strong>
-
-                </div>
-
-
-                <div class="profile-info-item">
-
-                    <span>
-                        Date of birth
-                    </span>
-
-
-                    <strong>
-
-                        {% if player.date_of_birth %}
-
-                            {{ player.date_of_birth|date:"d/m/Y" }}
-
-                        {% else %}
-
-                            Not provided
-
-                        {% endif %}
-
-                    </strong>
-
-                </div>
-
-
-                <div class="profile-info-item">
-
-                    <span>
-                        Playing hand
-                    </span>
-
-
-                    <strong>
-                        {{ player.get_hand_display }}
-                    </strong>
-
-                </div>
-
-
+                <div class="profile-info-item"><span>{% translate "First name" %}</span><strong>{{ player.first_name }}</strong></div>
+                <div class="profile-info-item"><span>{% translate "Last name" %}</span><strong>{{ player.last_name }}</strong></div>
+                <div class="profile-info-item"><span>{% translate "Date of birth" %}</span><strong>{% if player.date_of_birth %}{{ player.date_of_birth|date:"DATE_FORMAT" }}{% else %}{% translate "Not provided" %}{% endif %}</strong></div>
+                <div class="profile-info-item"><span>{% translate "Playing hand" %}</span><strong>{{ player.get_hand_display }}</strong></div>
             </div>
-
         </article>
 
-
-        <!-- ==============================
-             COMPETITIVE PROFILE
-        =============================== -->
-
-        <article class="profile-card">
-
-
-            <div class="profile-card-heading">
-
-
-                <span class="profile-card-icon">
-                    🏆
-                </span>
-
-
-                <div>
-
-                    <h2>
-                        Competitive profile
-                    </h2>
-
-
-                    <p>
-                        Current competitive information.
-                    </p>
-
-                </div>
-
+        <article class="profile-panel profile-results-panel">
+            <div class="profile-panel-heading">
+                <div><p class="eyebrow">{% translate "Overall performance" %}</p><h2>{% translate "Results overview" %}</h2></div>
+                <a href="{% url 'matches:list' %}?player={{ player.pk }}" class="text-link">{% translate "View matches" %} →</a>
             </div>
-
-
-            <div class="ranking-highlight">
-
-
-                <span class="ranking-label">
-                    Current ranking
-                </span>
-
-
-                <strong>
-
-                    {% if player.ranking %}
-
-                        #{{ player.ranking }}
-
-                    {% else %}
-
-                        Not ranked
-
-                    {% endif %}
-
-                </strong>
-
-
+            <div class="profile-result-split">
+                <div class="profile-result-number profile-result-number--win"><strong>{{ wins }}</strong><span>{% translate "Wins" %}</span><small>{{ win_rate|floatformat:1 }}%</small></div>
+                <div class="profile-result-number profile-result-number--loss"><strong>{{ losses }}</strong><span>{% translate "Losses" %}</span><small>{{ loss_rate|floatformat:1 }}%</small></div>
             </div>
-
-
-            <div class="competitive-status">
-
-
-                <span class="competitive-status-icon">
-                    📈
-                </span>
-
-
-                <div>
-
-                    <strong>
-                        Performance analytics
-                    </strong>
-
-
-                    <p>
-                        Match statistics, rating evolution,
-                        win rate and competitive trends will
-                        appear here as match data becomes available.
-                    </p>
-
-                </div>
-
+            <div class="profile-rate-bar" aria-label="{% translate 'Win and loss percentage' %}">
+                <span class="profile-rate-win" style="width: {{ win_rate|stringformat:'f' }}%"></span>
+                <span class="profile-rate-loss" style="width: {{ loss_rate|stringformat:'f' }}%"></span>
             </div>
-
+            {% if not total_matches %}<p class="profile-panel-empty">{% translate "Complete matches to unlock performance statistics." %}</p>{% endif %}
         </article>
 
-
-        <!-- ==============================
-             PLAYER WORKSPACE
-        =============================== -->
-
-        <article class="profile-card profile-card-wide">
-
-
-            <div class="profile-card-heading">
-
-
-                <span class="profile-card-icon">
-                    🏓
-                </span>
-
-
-                <div>
-
-                    <h2>
-                        Player workspace
-                    </h2>
-
-
-                    <p>
-                        Manage every aspect of this athlete
-                        from one central workspace.
-                    </p>
-
-                </div>
-
+        <article class="profile-panel profile-panel-wide">
+            <div class="profile-panel-heading">
+                <div><p class="eyebrow">{% translate "League performance" %}</p><h2>{% translate "Statistics by league" %}</h2><p>{% translate "Results calculated automatically from completed matches." %}</p></div>
+                <a href="{% url 'matches:create' %}" class="secondary-button">{% translate "Add match" %}</a>
             </div>
-
-
-            <div class="feature-preview-grid">
-
-
-                <!-- MATCHES -->
-
-                <div class="feature-preview">
-
-
-                    <span class="feature-preview-icon">
-                        🎯
-                    </span>
-
-
-                    <h3>
-                        Matches
-                    </h3>
-
-
-                    <p>
-                        Track opponents, scores, results
-                        and complete match history.
-                    </p>
-
-
-                    <span class="coming-soon">
-                        Coming soon
-                    </span>
-
+            {% if league_stats %}
+                <div class="league-stats-table-wrap">
+                    <table class="league-stats-table">
+                        <thead><tr><th>{% translate "League / competition" %}</th><th>{% translate "Played" %}</th><th>{% translate "Wins" %}</th><th>{% translate "Losses" %}</th><th>{% translate "Win rate" %}</th><th>{% translate "Loss rate" %}</th></tr></thead>
+                        <tbody>
+                            {% for league in league_stats %}
+                                <tr>
+                                    <td><strong>{{ league.name }}</strong></td><td>{{ league.matches_played }}</td><td class="league-win">{{ league.wins }}</td><td class="league-loss">{{ league.losses }}</td>
+                                    <td><span class="rate-pill rate-pill--win">{{ league.win_rate|floatformat:1 }}%</span></td><td><span class="rate-pill rate-pill--loss">{{ league.loss_rate|floatformat:1 }}%</span></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-
-
-                <!-- TRAINING -->
-
-                <div class="feature-preview">
-
-
-                    <span class="feature-preview-icon">
-                        📅
-                    </span>
-
-
-                    <h3>
-                        Training
-                    </h3>
-
-
-                    <p>
-                        Organize training sessions,
-                        workload and player development.
-                    </p>
-
-
-                    <span class="coming-soon">
-                        Coming soon
-                    </span>
-
-                </div>
-
-
-                <!-- STATISTICS -->
-
-                <div class="feature-preview">
-
-
-                    <span class="feature-preview-icon">
-                        📊
-                    </span>
-
-
-                    <h3>
-                        Statistics
-                    </h3>
-
-
-                    <p>
-                        Analyze wins, losses, trends
-                        and long-term performance.
-                    </p>
-
-
-                    <span class="coming-soon">
-                        Coming soon
-                    </span>
-
-                </div>
-
-
-                <!-- RANKING -->
-
-                <div class="feature-preview">
-
-
-                    <span class="feature-preview-icon">
-                        🏆
-                    </span>
-
-
-                    <h3>
-                        Ranking
-                    </h3>
-
-
-                    <p>
-                        Monitor competitive position
-                        and ranking progression.
-                    </p>
-
-
-                    <span class="coming-soon">
-                        Coming soon
-                    </span>
-
-                </div>
-
-
-            </div>
-
+            {% else %}
+                <div class="profile-league-empty"><strong>{% translate "No league statistics yet" %}</strong><p>{% translate "Add completed matches with a competition name to build this analysis." %}</p></div>
+            {% endif %}
         </article>
 
-
-        <!-- ==============================
-             RECENT ACTIVITY
-        =============================== -->
-
-        <article class="profile-card profile-card-wide">
-
-
-            <div class="profile-card-heading">
-
-
-                <span class="profile-card-icon">
-                    ⚡
-                </span>
-
-
-                <div>
-
-                    <h2>
-                        Recent activity
-                    </h2>
-
-
-                    <p>
-                        Latest competitive and training activity
-                        for this athlete.
-                    </p>
-
+        {% if recent_matches %}
+            <article class="profile-panel profile-panel-wide">
+                <div class="profile-panel-heading"><div><p class="eyebrow">{% translate "Recent activity" %}</p><h2>{% translate "Latest completed matches" %}</h2></div></div>
+                <div class="profile-recent-matches">
+                    {% for match in recent_matches %}
+                        <a href="{% url 'matches:detail' match.pk %}" class="profile-recent-match">
+                            <div><strong>{{ match.opponent_name }}</strong><span>{% if match.competition %}{{ match.competition }}{% else %}{% translate "Unspecified league" %}{% endif %} · {{ match.played_at|date:"DATE_FORMAT" }}</span></div>
+                            <span class="profile-match-result {% if match.result == 'Win' %}is-win{% else %}is-loss{% endif %}">{{ match.score }} · {% if match.result == 'Win' %}{% translate "Win" %}{% else %}{% translate "Loss" %}{% endif %}</span>
+                        </a>
+                    {% endfor %}
                 </div>
-
-            </div>
-
-
-            <div class="profile-empty-activity">
-
-
-                <div class="profile-empty-activity-icon">
-                    📋
-                </div>
-
-
-                <div>
-
-                    <h3>
-                        No activity recorded yet
-                    </h3>
-
-
-                    <p>
-                        Match results, training sessions and
-                        performance events will appear here once
-                        the player starts building their activity history.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </article>
-
-
+            </article>
+        {% endif %}
     </div>
-
-
 </section>
-
 {% endblock %}

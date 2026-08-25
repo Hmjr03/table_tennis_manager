@@ -1,6 +1,10 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.db.models import Count, F
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext as _
 
+from matches.models import Match
 from players.forms import PlayerForm
 from players.models import Player
 
@@ -11,11 +15,23 @@ def player_list(request):
         user=request.user
     )
 
+    total_players = players.count()
+    ranked_players = players.filter(
+        Q(world_ranking__gt=0) | Q(national_ranking__gt=0)
+    ).count()
+    profiles_to_complete = players.filter(
+        Q(world_ranking=0, national_ranking=0)
+        | Q(date_of_birth__isnull=True)
+    ).count()
+
     return render(
         request,
         "players/player_list.html",
         {
             "players": players,
+            "total_players": total_players,
+            "ranked_players": ranked_players,
+            "profiles_to_complete": profiles_to_complete,
         },
     )
 
@@ -28,11 +44,48 @@ def player_detail(request, pk):
         user=request.user,
     )
 
+    completed_matches = player.matches_as_player.filter(
+        owner=request.user,
+        status=Match.Status.COMPLETED,
+    )
+    total_matches = completed_matches.count()
+    wins = completed_matches.filter(
+        player_sets_won__gt=F("opponent_sets_won")
+    ).count()
+    losses = total_matches - wins
+    win_rate = round((wins / total_matches) * 100, 1) if total_matches else 0
+    loss_rate = round((losses / total_matches) * 100, 1) if total_matches else 0
+
+    league_rows = completed_matches.values("competition").annotate(
+        matches_played=Count("id"),
+        wins=Count("id", filter=Q(player_sets_won__gt=F("opponent_sets_won"))),
+    ).order_by("-matches_played", "competition")
+    league_stats = []
+    for row in league_rows:
+        league_losses = row["matches_played"] - row["wins"]
+        league_stats.append(
+            {
+                "name": row["competition"] or _("Unspecified league"),
+                "matches_played": row["matches_played"],
+                "wins": row["wins"],
+                "losses": league_losses,
+                "win_rate": round((row["wins"] / row["matches_played"]) * 100, 1),
+                "loss_rate": round((league_losses / row["matches_played"]) * 100, 1),
+            }
+        )
+
     return render(
         request,
         "players/player_detail.html",
         {
             "player": player,
+            "total_matches": total_matches,
+            "wins": wins,
+            "losses": losses,
+            "win_rate": win_rate,
+            "loss_rate": loss_rate,
+            "league_stats": league_stats,
+            "recent_matches": completed_matches[:5],
         },
     )
 
@@ -59,8 +112,8 @@ def player_create(request):
         "players/player_form.html",
         {
             "form": form,
-            "page_title": "Add player",
-            "submit_label": "Create player",
+            "page_title": _("Add player"),
+            "submit_label": _("Create player"),
         },
     )
 
@@ -95,8 +148,8 @@ def player_update(request, pk):
         {
             "form": form,
             "player": player,
-            "page_title": "Edit player",
-            "submit_label": "Save changes",
+            "page_title": _("Edit player"),
+            "submit_label": _("Save changes"),
         },
     )
 
@@ -121,4 +174,3 @@ def player_delete(request, pk):
             "player": player,
         },
     )
-

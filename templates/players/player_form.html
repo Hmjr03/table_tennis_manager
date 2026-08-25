@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 
 {% block title %}
@@ -10,21 +11,10 @@
 
 <section class="form-page">
 
-
-    <!-- ==============================
-         NAVIGATION
-    =============================== -->
-
-    <div class="form-page-navigation">
-
-        <a
-            href="{% url 'players:list' %}"
-            class="back-link"
-        >
-            ← Back to players
-        </a>
-
-    </div>
+    {% url 'players:list' as back_url %}
+    {% translate "Player management" as area_label %}
+    {% translate "Back to players" as back_label %}
+    {% include "includes/context_navigation.html" with back_url=back_url area_label=area_label back_label=back_label current_label=page_title %}
 
 
     <!-- ==============================
@@ -36,7 +26,7 @@
         <div>
 
             <p class="eyebrow">
-                Player management
+                {% translate "Player management" %}
             </p>
 
 
@@ -46,8 +36,7 @@
 
 
             <p class="page-subtitle">
-                Create and maintain an accurate competitive profile
-                for your table tennis athlete.
+                {% translate "Create and maintain an accurate competitive profile for your table tennis athlete." %}
             </p>
 
         </div>
@@ -88,7 +77,7 @@
                     <div>
 
                         <strong>
-                            Please review the information below.
+                            {% translate "Please review the information below." %}
                         </strong>
 
                         {% for error in form.non_field_errors %}
@@ -122,12 +111,11 @@
                     <div>
 
                         <h2>
-                            Personal information
+                            {% translate "Personal information" %}
                         </h2>
 
                         <p>
-                            Enter the athlete's basic identification
-                            and personal information.
+                            {% translate "Enter the athlete's basic identification and personal information." %}
                         </p>
 
                     </div>
@@ -145,7 +133,7 @@
                         <label
                             for="{{ form.first_name.id_for_label }}"
                         >
-                            First name
+                            {% translate "First name" %}
                         </label>
 
 
@@ -169,7 +157,7 @@
 
 
                         <span class="field-help">
-                            Use the athlete's official first name.
+                            {% translate "Use the athlete's official first name." %}
                         </span>
 
                     </div>
@@ -180,7 +168,7 @@
                         <label
                             for="{{ form.last_name.id_for_label }}"
                         >
-                            Last name
+                            {% translate "Last name" %}
                         </label>
 
 
@@ -204,7 +192,7 @@
 
 
                         <span class="field-help">
-                            Use the athlete's official surname.
+                            {% translate "Use the athlete's official surname." %}
                         </span>
 
                     </div>
@@ -223,7 +211,7 @@
                         <label
                             for="{{ form.date_of_birth.id_for_label }}"
                         >
-                            Date of birth
+                            {% translate "Date of birth" %}
                         </label>
 
 
@@ -247,8 +235,7 @@
 
 
                         <span class="field-help">
-                            This information helps maintain an accurate
-                            athlete profile.
+                            {% translate "This information helps maintain an accurate athlete profile." %}
                         </span>
 
                     </div>
@@ -259,7 +246,7 @@
                         <label
                             for="{{ form.hand.id_for_label }}"
                         >
-                            Playing hand
+                            {% translate "Playing hand" %}
                         </label>
 
 
@@ -283,7 +270,7 @@
 
 
                         <span class="field-help">
-                            Select the athlete's dominant playing hand.
+                            {% translate "Select the athlete's dominant playing hand." %}
                         </span>
 
                     </div>
@@ -311,13 +298,11 @@
                     <div>
 
                         <h2>
-                            Competitive information
+                            {% translate "Competitive information" %}
                         </h2>
 
                         <p>
-                            Ranking and performance metrics will be
-                            managed by the platform as competitive
-                            data becomes available.
+                            {% translate "Add the athlete's official world and national ranking positions." %}
                         </p>
 
                     </div>
@@ -325,30 +310,19 @@
                 </div>
 
 
-                <div class="form-information">
-
-                    <span class="form-information-icon">
-                        📊
-                    </span>
-
-
-                    <div>
-
-                        <strong>
-                            Ranking management
-                        </strong>
-
-
-                        <p>
-                            Player ranking is intentionally managed
-                            separately from this basic profile form.
-                            Future match and ranking modules will use
-                            competitive activity to calculate and display
-                            performance progression.
-                        </p>
-
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.world_ranking.id_for_label }}">{% translate "World ranking" %}</label>
+                        {{ form.world_ranking }}
+                        {% for error in form.world_ranking.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+                        <span class="field-help">{% translate "Enter 0 when the athlete does not have a world ranking." %}</span>
                     </div>
-
+                    <div class="form-group">
+                        <label for="{{ form.national_ranking.id_for_label }}">{% translate "National ranking" %}</label>
+                        {{ form.national_ranking }}
+                        {% for error in form.national_ranking.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+                        <span class="field-help">{% translate "Enter 0 when the athlete does not have a national ranking." %}</span>
+                    </div>
                 </div>
 
 
@@ -371,12 +345,11 @@
                     <div>
 
                         <h2>
-                            Profile quality
+                            {% translate "Profile quality" %}
                         </h2>
 
                         <p>
-                            Accurate player information is important for
-                            reliable performance analysis.
+                            {% translate "Accurate player information is important for reliable performance analysis." %}
                         </p>
 
                     </div>
@@ -396,12 +369,11 @@
                         <div>
 
                             <strong>
-                                Use official player information
+                                {% translate "Use official player information" %}
                             </strong>
 
                             <p>
-                                Keep names and personal information
-                                consistent throughout the system.
+                                {% translate "Keep names and personal information consistent throughout the system." %}
                             </p>
 
                         </div>
@@ -418,12 +390,11 @@
                         <div>
 
                             <strong>
-                                Keep competitive data accurate
+                                {% translate "Keep competitive data accurate" %}
                             </strong>
 
                             <p>
-                                Match and ranking information will form
-                                the foundation of future analytics.
+                                {% translate "Match and ranking information will form the foundation of future analytics." %}
                             </p>
 
                         </div>
@@ -440,12 +411,11 @@
                         <div>
 
                             <strong>
-                                Build the athlete profile progressively
+                                {% translate "Build the athlete profile progressively" %}
                             </strong>
 
                             <p>
-                                Additional performance information can be
-                                connected as the platform evolves.
+                                {% translate "Additional performance information can be connected as the platform evolves." %}
                             </p>
 
                         </div>
@@ -470,7 +440,7 @@
                     href="{% url 'players:list' %}"
                     class="secondary-button"
                 >
-                    Cancel
+                    {% translate "Cancel" %}
                 </a>
 
 

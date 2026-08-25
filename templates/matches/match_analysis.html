@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block title %}
+Performance | Table Tennis Manager
+{% endblock %}
+
+
+
+{% block content %}
+
+<section class="page-section">
+
+<nav class="matches-section-tabs" aria-label="{% translate 'Matches section' %}">
+<a href="{% url 'matches:list' %}" class="matches-section-tab">{% translate "Match history" %}</a>
+<a href="{% url 'matches:analysis' %}" class="matches-section-tab matches-section-tab-active">{% translate "Performance analysis" %}</a>
+</nav>
+
+
+<div class="page-header">
+
+<div>
+
+<p class="eyebrow">
+{% translate "Matches" %}
+</p>
+
+
+<h1>
+{% translate "Performance analysis" %}
+</h1>
+
+
+<p class="page-subtitle">
+{% translate "Analyze completed matches, competitive evolution and progress." %}
+</p>
+
+
+</div>
+
+</div>
+
+
+<div class="filter-card">
+<form method="get" class="performance-player-filter">
+<div class="form-group">
+<label for="id_analysis_player">{% translate "Player" %}</label>
+<select id="id_analysis_player" name="player">
+<option value="">{% translate "All players" %}</option>
+{% for player in players %}
+<option value="{{ player.pk }}" {% if selected_player == player.pk|stringformat:"s" %}selected{% endif %}>{{ player }}</option>
+{% endfor %}
+</select>
+</div>
+<div class="filter-actions">
+<button type="submit" class="primary-button">{% translate "Analyze" %}</button>
+<a href="{% url 'matches:analysis' %}" class="secondary-button">{% translate "Clear" %}</a>
+</div>
+</form>
+</div>
+
+
+
+<div class="dashboard-grid">
+
+
+<article class="dashboard-card">
+
+<h2>
+{% translate "Matches played" %}
+</h2>
+
+<strong>
+{{ total_matches }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+{% translate "Wins" %}
+</h2>
+
+<strong>
+{{ wins }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+{% translate "Losses" %}
+</h2>
+
+<strong>
+{{ losses }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+{% translate "Win rate" %}
+</h2>
+
+<strong>
+{{ win_rate }}%
+</strong>
+
+</article>
+
+
+</div>
+
+
+
+
+<div class="dashboard-grid">
+
+
+<article class="dashboard-card">
+
+<h2>
+{% translate "Sets won" %}
+</h2>
+
+<strong>
+{{ sets_won }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+{% translate "Sets lost" %}
+</h2>
+
+<strong>
+{{ sets_lost }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+{% translate "Sets difference" %}
+</h2>
+
+<strong>
+{{ sets_difference }}
+</strong>
+
+</article>
+
+
+
+<article class="dashboard-card">
+
+<h2>
+{% translate "Current streak" %}
+</h2>
+
+<strong>
+{{ current_streak }}
+</strong>
+
+<p>
+{{ current_streak_type }}
+</p>
+
+</article>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-grid">
+
+
+<article class="dashboard-card">
+
+
+<h2>
+{% translate "Recent form" %}
+</h2>
+
+
+{% if recent_matches %}
+
+
+<p>
+Wins:
+{{ recent_wins }}
+</p>
+
+
+<p>
+Losses:
+{{ recent_losses }}
+</p>
+
+
+<p>
+Win rate:
+{{ recent_win_rate }}%
+</p>
+
+
+
+<div class="form-list">
+
+
+{% for item in form %}
+
+<span class="form-item">
+{{ item }}
+</span>
+
+
+{% endfor %}
+
+
+</div>
+
+
+
+{% else %}
+
+
+<p>
+{% translate "Your performance story starts with your first match." %}
+</p>
+
+
+{% endif %}
+
+
+
+</article>
+
+
+</div>
+
+
+
+
+
+<div class="professional-form-card">
+
+
+<h2>
+{% translate "Recent matches" %}
+</h2>
+
+
+{% if recent_matches %}
+
+
+{% for match in recent_matches %}
+
+
+<div class="match-row">
+
+
+<div>
+
+<strong>
+{{ match.player }}
+</strong>
+
+
+<p>
+{{ match.score }}
+</p>
+
+
+</div>
+
+
+
+{% if match.result == "Win" %}
+
+<span class="result-win">
+{% translate "WIN" %}
+</span>
+
+
+{% else %}
+
+<span class="result-loss">
+{% translate "LOSS" %}
+</span>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+{% endfor %}
+
+
+
+{% else %}
+
+
+<p>
+{% translate "No completed matches yet." %}
+</p>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+</section>
+
+
+{% endblock %}

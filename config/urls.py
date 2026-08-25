@@ -2,9 +2,12 @@ from django.contrib import admin
 from django.urls import include, path
 
 from accounts import views
+from config.views import health_check
 
 
 urlpatterns = [
+    path("health/", health_check, name="health-check"),
+    path("i18n/", include("django.conf.urls.i18n")),
     path(
         "admin/",
         admin.site.urls,
@@ -40,5 +43,17 @@ urlpatterns = [
             "planning.urls",
             namespace="planning",
         ),
+    ),
+    path(
+        "finances/",
+        include("finances.urls", namespace="finances"),
+    ),
+    path(
+        "notes/",
+        include("notes.urls", namespace="notes"),
+    ),
+    path(
+        "competitions/",
+        include("competitions.urls", namespace="competitions"),
     ),
 ]
