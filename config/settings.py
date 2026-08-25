@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     "finances",
     "notes",
     "competitions",
+    "legal",
 ]
 
 
@@ -247,6 +248,32 @@ TIME_ZONE = os.getenv(
 
 USE_I18N = True
 USE_TZ = True
+
+
+# =====================================================
+# LEGAL DOCUMENTS
+# =====================================================
+
+LEGAL_DOCUMENTS_VERSION = os.getenv(
+    "LEGAL_DOCUMENTS_VERSION",
+    "2026-08-25",
+)
+LEGAL_EFFECTIVE_DATE = os.getenv(
+    "LEGAL_EFFECTIVE_DATE",
+    "2026-08-25",
+)
+LEGAL_CONTROLLER_NAME = os.getenv(
+    "LEGAL_CONTROLLER_NAME",
+    "Escola de Tênis de Mesa",
+)
+LEGAL_CONTACT_EMAIL = os.getenv(
+    "LEGAL_CONTACT_EMAIL",
+    "contato@escoladetenisdemesa.com.br",
+)
+LEGAL_COUNTRY = os.getenv(
+    "LEGAL_COUNTRY",
+    "Brazil",
+)
 
 
 # =====================================================

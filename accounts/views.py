@@ -5,6 +5,8 @@ from django.db import transaction
 from django.shortcuts import redirect, render
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
+from django.utils import timezone
+from django.conf import settings
 
 from accounts.forms import ActivationResendForm, UserRegistrationForm
 from accounts.models import User
@@ -26,6 +28,12 @@ def register(request):
             with transaction.atomic():
                 user = form.save(commit=False)
                 user.is_active = False
+                accepted_at = timezone.now()
+                user.terms_accepted_at = accepted_at
+                user.privacy_notice_acknowledged_at = accepted_at
+                user.legal_documents_version = (
+                    settings.LEGAL_DOCUMENTS_VERSION
+                )
                 user.save()
                 send_account_activation_email(request, user)
 

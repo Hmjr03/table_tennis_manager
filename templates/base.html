@@ -112,12 +112,16 @@
     <div class="container">
 
 
-        <p>
-
-            © 2026 Table Tennis Manager.
-            {% translate "Built for competitive athletes." %}
-
-        </p>
+        <div class="footer-content">
+            <p>
+                © 2026 Table Tennis Manager.
+                {% translate "Built for competitive athletes." %}
+            </p>
+            <nav class="footer-legal-nav" aria-label="{% translate 'Legal information' %}">
+                <a href="{% url 'legal:privacy' %}">{% translate "Privacy Policy" %}</a>
+                <a href="{% url 'legal:terms' %}">{% translate "Terms of Use" %}</a>
+            </nav>
+        </div>
 
 
     </div>

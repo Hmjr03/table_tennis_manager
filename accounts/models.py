@@ -19,5 +19,18 @@ class User(AbstractUser):
         default=Role.ATHLETE,
     )
 
+    terms_accepted_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    privacy_notice_acknowledged_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    legal_documents_version = models.CharField(
+        max_length=20,
+        blank=True,
+    )
+
     def __str__(self):
         return self.username

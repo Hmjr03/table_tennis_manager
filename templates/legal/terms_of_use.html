@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Terms of Use" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<article class="legal-page">
+    <header class="legal-hero">
+        <p class="eyebrow">{% translate "Rules for using the platform" %}</p>
+        <h1>{% translate "Terms of Use" %}</h1>
+        <p>{% translate "The commitments that keep Table Tennis Manager safe and reliable." %}</p>
+        <div class="legal-meta">
+            <span>{% translate "Version" %}: {{ document_version }}</span>
+            <span>{% translate "Effective date" %}: {{ effective_date }}</span>
+        </div>
+    </header>
+
+    {% get_current_language as CURRENT_LANGUAGE %}
+    {% if CURRENT_LANGUAGE == "pt-br" %}
+        {% include "legal/content/terms_pt_br.html" %}
+    {% elif CURRENT_LANGUAGE == "es" %}
+        {% include "legal/content/terms_es.html" %}
+    {% else %}
+        {% include "legal/content/terms_en.html" %}
+    {% endif %}
+</article>
+{% endblock %}

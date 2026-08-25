@@ -9,7 +9,14 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         (
             "Table Tennis Manager",
-            {"fields": ("role",)},
+            {
+                "fields": (
+                    "role",
+                    "terms_accepted_at",
+                    "privacy_notice_acknowledged_at",
+                    "legal_documents_version",
+                )
+            },
         ),
     )
 
@@ -48,4 +55,10 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "first_name",
         "last_name",
+    )
+
+    readonly_fields = (
+        "terms_accepted_at",
+        "privacy_notice_acknowledged_at",
+        "legal_documents_version",
     )

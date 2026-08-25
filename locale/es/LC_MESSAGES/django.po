@@ -1749,3 +1749,42 @@ msgstr "Este enlace caduca en una hora y solo puede utilizarse una vez. Si no cr
 
 msgid "Verify your Table Tennis Manager account"
 msgstr "Verifica tu cuenta de Table Tennis Manager"
+
+msgid "I have read and accept the Terms of Use."
+msgstr "He leído y acepto los Términos de Uso."
+
+msgid "I have read and acknowledge the Privacy Policy."
+msgstr "He leído y reconozco la Política de Privacidad."
+
+msgid "I have read and accept the"
+msgstr "He leído y acepto los"
+
+msgid "I have read and acknowledge the"
+msgstr "He leído y reconozco la"
+
+msgid "Privacy Policy"
+msgstr "Política de Privacidad"
+
+msgid "Terms of Use"
+msgstr "Términos de Uso"
+
+msgid "Legal information"
+msgstr "Información legal"
+
+msgid "Privacy and data protection"
+msgstr "Privacidad y protección de datos"
+
+msgid "Clear information about how your data is used and protected."
+msgstr "Información clara sobre cómo se utilizan y protegen tus datos."
+
+msgid "Rules for using the platform"
+msgstr "Reglas para utilizar la plataforma"
+
+msgid "The commitments that keep Table Tennis Manager safe and reliable."
+msgstr "Los compromisos que mantienen Table Tennis Manager seguro y fiable."
+
+msgid "Version"
+msgstr "Versión"
+
+msgid "Effective date"
+msgstr "Fecha de entrada en vigor"

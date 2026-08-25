@@ -40,6 +40,8 @@ class RegistrationTests(TestCase):
                 "role": User.Role.ATHLETE,
                 "password1": "SecurePass123!",
                 "password2": "SecurePass123!",
+                "accept_terms": "on",
+                "acknowledge_privacy": "on",
             },
         )
 
@@ -52,6 +54,14 @@ class RegistrationTests(TestCase):
         self.assertEqual(user.email, "maria@example.com")
         self.assertEqual(user.role, User.Role.ATHLETE)
         self.assertFalse(user.is_active)
+        self.assertIsNotNone(user.terms_accepted_at)
+        self.assertIsNotNone(
+            user.privacy_notice_acknowledged_at
+        )
+        self.assertEqual(
+            user.legal_documents_version,
+            settings.LEGAL_DOCUMENTS_VERSION,
+        )
         self.assertNotIn("_auth_user_id", self.client.session)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("/accounts/activate/", mail.outbox[0].body)
@@ -73,6 +83,8 @@ class RegistrationTests(TestCase):
                 "role": User.Role.COACH,
                 "password1": "SecurePass123!",
                 "password2": "SecurePass123!",
+                "accept_terms": "on",
+                "acknowledge_privacy": "on",
             },
         )
 
@@ -95,6 +107,35 @@ class RegistrationTests(TestCase):
         response = self.client.get(reverse("accounts:register"))
 
         self.assertRedirects(response, reverse("dashboard:home"))
+
+    def test_registration_requires_both_legal_acknowledgements(self):
+        response = self.client.post(
+            reverse("accounts:register"),
+            {
+                "username": "no-legal-acceptance",
+                "email": "no-legal@example.com",
+                "role": User.Role.ATHLETE,
+                "password1": "SecurePass123!",
+                "password2": "SecurePass123!",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(
+            response.context["form"],
+            "accept_terms",
+            "This field is required.",
+        )
+        self.assertFormError(
+            response.context["form"],
+            "acknowledge_privacy",
+            "This field is required.",
+        )
+        self.assertFalse(
+            User.objects.filter(
+                username="no-legal-acceptance"
+            ).exists()
+        )
 
 
 class AuthenticationTests(TestCase):
@@ -252,6 +293,8 @@ class EmailVerificationTests(TestCase):
             "role": User.Role.ATHLETE,
             "password1": "SecurePass123!",
             "password2": "SecurePass123!",
+            "accept_terms": "on",
+            "acknowledge_privacy": "on",
         }
 
     def register_user(self):

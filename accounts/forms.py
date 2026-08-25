@@ -10,6 +10,14 @@ class UserRegistrationForm(UserCreationForm):
         required=True,
         label=_("Email"),
     )
+    accept_terms = forms.BooleanField(
+        required=True,
+        label=_("I have read and accept the Terms of Use."),
+    )
+    acknowledge_privacy = forms.BooleanField(
+        required=True,
+        label=_("I have read and acknowledge the Privacy Policy."),
+    )
 
     class Meta:
         model = User

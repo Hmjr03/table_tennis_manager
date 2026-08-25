@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Privacy Policy" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<article class="legal-page">
+    <header class="legal-hero">
+        <p class="eyebrow">{% translate "Privacy and data protection" %}</p>
+        <h1>{% translate "Privacy Policy" %}</h1>
+        <p>{% translate "Clear information about how your data is used and protected." %}</p>
+        <div class="legal-meta">
+            <span>{% translate "Version" %}: {{ document_version }}</span>
+            <span>{% translate "Effective date" %}: {{ effective_date }}</span>
+        </div>
+    </header>
+
+    {% get_current_language as CURRENT_LANGUAGE %}
+    {% if CURRENT_LANGUAGE == "pt-br" %}
+        {% include "legal/content/privacy_pt_br.html" %}
+    {% elif CURRENT_LANGUAGE == "es" %}
+        {% include "legal/content/privacy_es.html" %}
+    {% else %}
+        {% include "legal/content/privacy_en.html" %}
+    {% endif %}
+</article>
+{% endblock %}
