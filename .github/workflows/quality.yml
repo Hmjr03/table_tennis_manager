@@ -28,6 +28,14 @@ jobs:
       - name: Check Django configuration
         run: python manage.py check
 
+      - name: Check production security configuration
+        env:
+          DJANGO_DEBUG: "False"
+          DJANGO_SECRET_KEY: ci-production-audit-key-7f4c9e2b6a1d8f3c5e0b7a4d9f2c6e1b
+          DJANGO_ALLOWED_HOSTS: audit.example.com
+          DJANGO_CSRF_TRUSTED_ORIGINS: https://audit.example.com
+        run: python manage.py check --deploy --fail-level ERROR
+
       - name: Check migrations
         run: python manage.py makemigrations --check --dry-run
 

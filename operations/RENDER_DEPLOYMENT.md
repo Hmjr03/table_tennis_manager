@@ -1,5 +1,8 @@
 # Private production deployment on Render
 
+Complete `operations/PRE_LAUNCH_CHECKLIST.md` before inviting external users or
+accepting payment.
+
 This runbook publishes Table Tennis Manager without placing passwords or API
 keys in Git. The Blueprint creates a paid web service and a paid PostgreSQL
 database in Frankfurt. Review Render's displayed monthly price before applying

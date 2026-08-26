@@ -12,11 +12,27 @@ from django.test import SimpleTestCase
 from django.test import override_settings
 from django.urls import reverse
 from django.contrib.staticfiles import finders
+from django.contrib.auth import get_user_model
 
 from config.backup import create_postgresql_backup
 
 
+User = get_user_model()
+
+
 class ProductionDeploymentContractTests(SimpleTestCase):
+    def test_ci_runs_production_security_check(self):
+        workflow = (
+            Path(__file__).resolve().parent.parent
+            / ".github"
+            / "workflows"
+            / "quality.yml"
+        ).read_text()
+
+        self.assertIn("check --deploy --fail-level ERROR", workflow)
+        self.assertIn('DJANGO_DEBUG: "False"', workflow)
+        self.assertNotIn("django-insecure-", workflow)
+
     def test_render_blueprint_uses_safe_release_sequence(self):
         blueprint = (Path(__file__).resolve().parent.parent / "render.yaml").read_text()
 
@@ -37,6 +53,32 @@ class ProductionDeploymentContractTests(SimpleTestCase):
         self.assertIn("collectstatic --noinput", build_script)
         self.assertIn("check --deploy", build_script)
         self.assertNotIn("manage.py migrate", build_script)
+
+
+class MultilingualPageTitleTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="title-audit",
+            password="test-password",
+        )
+        self.client.force_login(self.user)
+
+    def test_primary_page_titles_are_translated_in_spanish(self):
+        expected_titles = {
+            "/dashboard/": "Panel | Table Tennis Manager",
+            "/matches/": "Partidos | Table Tennis Manager",
+            "/planning/calendar/": "Calendario | Table Tennis Manager",
+            "/finances/": "Finanzas | Table Tennis Manager",
+            "/notes/": "Notas | Table Tennis Manager",
+        }
+
+        for path, expected_title in expected_titles.items():
+            with self.subTest(path=path):
+                response = self.client.get(
+                    path,
+                    HTTP_ACCEPT_LANGUAGE="es",
+                )
+                self.assertContains(response, expected_title)
 
 
 class ProgressiveWebAppTests(TestCase):
@@ -81,6 +123,11 @@ class ProgressiveWebAppTests(TestCase):
         self.assertIn('request.mode === "navigate"', content)
         self.assertIn('url.pathname.startsWith("/static/")', content)
         self.assertIn("fetch(request).catch", content)
+
+    def test_service_worker_uses_current_static_cache_version(self):
+        response = self.client.get(reverse("service-worker"))
+
+        self.assertContains(response, 'CACHE_VERSION = "ttm-static-v3"')
 
     def test_offline_page_explains_data_protection(self):
         response = self.client.get(
