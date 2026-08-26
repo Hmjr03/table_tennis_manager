@@ -10152,3 +10152,88 @@ p {
         padding-inline: 4px;
     }
 }
+
+/* =====================================================
+   MOBILE APPLICATION SHELL
+===================================================== */
+
+@media (max-width: 600px) {
+    .site-header {
+        overflow-x: hidden;
+    }
+
+    .header-content {
+        height: auto;
+        min-width: 0;
+    }
+
+    .main-nav {
+        max-width: 100%;
+        min-width: 0;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        scrollbar-width: thin;
+    }
+
+    .main-nav > a,
+    .main-nav > button,
+    .main-nav > form {
+        flex: 0 0 auto;
+    }
+
+    .dashboard-welcome h1 {
+        overflow-wrap: anywhere;
+    }
+
+    .compact-calendar-card {
+        overflow-x: hidden;
+    }
+
+    .compact-calendar-weekdays,
+    .compact-calendar-grid {
+        min-width: 0;
+    }
+
+    .compact-calendar-weekdays span {
+        padding: 10px 2px;
+        font-size: 8px;
+    }
+
+    .compact-calendar-day {
+        min-height: 78px;
+        padding: 4px;
+    }
+
+    .compact-calendar-number {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
+
+    .compact-calendar-events {
+        gap: 3px;
+        margin-top: 3px;
+    }
+
+    .compact-calendar-event {
+        min-height: 5px;
+        padding: 0;
+        background: #2563eb;
+        border: 0;
+        border-radius: 999px;
+    }
+
+    .compact-calendar-event span,
+    .compact-calendar-event strong {
+        display: none;
+    }
+
+    .compact-calendar-event-competition { background: #dc2626; }
+    .compact-calendar-event-travel { background: #ea580c; }
+    .compact-calendar-event-recovery { background: #16a34a; }
+    .compact-calendar-event-evaluation { background: #7c3aed; }
+    .compact-calendar-event-meeting { background: #0891b2; }
+    .compact-calendar-event-personal { background: #db2777; }
+    .compact-calendar-event-other { background: #64748b; }
+}
