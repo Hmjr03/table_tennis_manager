@@ -64,3 +64,9 @@ python manage.py check --deploy
 python manage.py migrate --check
 python manage.py test
 ```
+
+The reproducible private-production configuration is defined in `render.yaml`.
+Follow `operations/RENDER_DEPLOYMENT.md` before creating or changing any Render
+resource. The Blueprint intentionally uses paid baseline resources suitable for
+an initial commercial pilot; always review the displayed price before applying
+it.

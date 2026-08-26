@@ -8,11 +8,35 @@ from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.db.utils import OperationalError
 from django.test import TestCase
+from django.test import SimpleTestCase
 from django.test import override_settings
 from django.urls import reverse
 from django.contrib.staticfiles import finders
 
 from config.backup import create_postgresql_backup
+
+
+class ProductionDeploymentContractTests(SimpleTestCase):
+    def test_render_blueprint_uses_safe_release_sequence(self):
+        blueprint = (Path(__file__).resolve().parent.parent / "render.yaml").read_text()
+
+        self.assertIn("healthCheckPath: /health/ready/", blueprint)
+        self.assertIn("preDeployCommand: python manage.py migrate --noinput", blueprint)
+        self.assertIn("autoDeployTrigger: checksPass", blueprint)
+        self.assertIn("generateValue: true", blueprint)
+        self.assertIn("fromDatabase:", blueprint)
+        self.assertNotIn("DJANGO_SECRET_KEY=", blueprint)
+
+    def test_build_does_not_run_database_migrations(self):
+        build_script = (
+            Path(__file__).resolve().parent.parent
+            / "deployment"
+            / "render_build.sh"
+        ).read_text()
+
+        self.assertIn("collectstatic --noinput", build_script)
+        self.assertIn("check --deploy", build_script)
+        self.assertNotIn("manage.py migrate", build_script)
 
 
 class ProgressiveWebAppTests(TestCase):

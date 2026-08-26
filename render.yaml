@@ -1,0 +1,59 @@
+services:
+  - type: web
+    name: table-tennis-manager
+    runtime: python
+    region: frankfurt
+    plan: starter
+    buildCommand: bash deployment/render_build.sh
+    preDeployCommand: python manage.py migrate --noinput
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60 --access-logfile - --error-logfile -
+    healthCheckPath: /health/ready/
+    autoDeployTrigger: checksPass
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: table-tennis-manager-db
+          property: connectionString
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_LANGUAGE_CODE
+        value: pt-br
+      - key: DJANGO_TIME_ZONE
+        value: Europe/Rome
+      - key: DJANGO_LOG_LEVEL
+        value: INFO
+      - key: DJANGO_SECURE_HSTS_SECONDS
+        value: "3600"
+      - key: LEGAL_CONTROLLER_NAME
+        value: Escola de Tênis de Mesa
+      - key: LEGAL_CONTACT_EMAIL
+        value: contato@escoladetenisdemesa.com.br
+      - key: LEGAL_COUNTRY
+        value: Brazil
+      - key: DJANGO_EMAIL_BACKEND
+        value: django.core.mail.backends.smtp.EmailBackend
+      - key: DJANGO_DEFAULT_FROM_EMAIL
+        sync: false
+      - key: DJANGO_EMAIL_HOST
+        sync: false
+      - key: DJANGO_EMAIL_PORT
+        value: "587"
+      - key: DJANGO_EMAIL_HOST_USER
+        sync: false
+      - key: DJANGO_EMAIL_HOST_PASSWORD
+        sync: false
+      - key: DJANGO_EMAIL_USE_TLS
+        value: "True"
+
+databases:
+  - name: table-tennis-manager-db
+    region: frankfurt
+    plan: basic-256mb
+    postgresMajorVersion: "18"
+    databaseName: table_tennis_manager
+    user: table_tennis_manager
+    storageAutoscalingEnabled: true
+    ipAllowList: []
