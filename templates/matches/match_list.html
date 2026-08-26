@@ -1,17 +1,23 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Matches | Table Tennis Manager{% endblock %}
 
 {% block content %}
 <section class="page-section">
+    <nav class="matches-section-tabs" aria-label="{% translate 'Matches section' %}">
+        <a href="{% url 'matches:list' %}" class="matches-section-tab matches-section-tab-active">{% translate "Match history" %}</a>
+        <a href="{% url 'matches:analysis' %}" class="matches-section-tab">{% translate "Performance analysis" %}</a>
+    </nav>
+
     <div class="page-header">
         <div>
-            <p class="eyebrow">Matches</p>
+            <p class="eyebrow">{% translate "Matches" %}</p>
 
-            <h1>Match history</h1>
+            <h1>{% translate "Match history" %}</h1>
 
             <p class="page-subtitle">
-                Record, review and manage every competitive match.
+                {% translate "Record, review and manage every competitive match." %}
             </p>
         </div>
 
@@ -19,29 +25,29 @@
             href="{% url 'matches:create' %}"
             class="primary-button"
         >
-            Add match
+            {% translate "Add match" %}
         </a>
     </div>
 
     <div class="filter-card">
         <form method="get" class="filter-form">
             <div class="form-group">
-                <label for="id_q">Search</label>
+                <label for="id_q">{% translate "Search" %}</label>
 
                 <input
                     type="search"
                     id="id_q"
                     name="q"
                     value="{{ current_query }}"
-                    placeholder="Opponent, player or competition"
+                    placeholder="{% translate 'Opponent, player or competition' %}"
                 >
             </div>
 
             <div class="form-group">
-                <label for="id_player">Player</label>
+                <label for="id_player">{% translate "Player" %}</label>
 
                 <select id="id_player" name="player">
-                    <option value="">All players</option>
+                    <option value="">{% translate "All players" %}</option>
 
                     {% for player in players %}
                         <option
@@ -57,10 +63,10 @@
             </div>
 
             <div class="form-group">
-                <label for="id_status">Status</label>
+                <label for="id_status">{% translate "Status" %}</label>
 
                 <select id="id_status" name="status">
-                    <option value="">All statuses</option>
+                    <option value="">{% translate "All statuses" %}</option>
 
                     {% for value, label in status_choices %}
                         <option
@@ -80,18 +86,39 @@
                     type="submit"
                     class="primary-button"
                 >
-                    Filter
+                    {% translate "Filter" %}
                 </button>
 
                 <a
                     href="{% url 'matches:list' %}"
                     class="secondary-button"
                 >
-                    Clear
+                    {% translate "Clear" %}
                 </a>
             </div>
         </form>
     </div>
+
+    <section class="matches-performance-summary" aria-labelledby="matches-performance-title">
+        <div class="matches-performance-heading">
+            <div>
+                <p class="eyebrow">{% translate "Performance" %}</p>
+                <h2 id="matches-performance-title">{% translate "Season snapshot" %}</h2>
+            </div>
+            <a href="{% url 'matches:analysis' %}{% if current_player %}?player={{ current_player }}{% endif %}" class="secondary-button">{% translate "View full analysis" %}</a>
+        </div>
+
+        <div class="dashboard-grid matches-performance-dashboard-grid">
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Matches played" %}</span><strong>{{ performance_total }}</strong><p>{% translate "Completed matches" %}</p></article>
+            <article class="dashboard-card matches-performance-win"><span class="dashboard-card-label">{% translate "Wins" %}</span><strong>{{ performance_wins }}</strong><p>{% translate "Victories" %}</p></article>
+            <article class="dashboard-card matches-performance-loss"><span class="dashboard-card-label">{% translate "Losses" %}</span><strong>{{ performance_losses }}</strong><p>{% translate "Defeats" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Win rate" %}</span><strong>{{ performance_win_rate }}%</strong><p>{% translate "Overall performance" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Sets won" %}</span><strong>{{ performance_sets_won }}</strong><p>{% translate "Total sets" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Sets lost" %}</span><strong>{{ performance_sets_lost }}</strong><p>{% translate "Opponent advantage" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Sets difference" %}</span><strong>{{ performance_sets_difference }}</strong><p>{% translate "Won minus lost" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Current streak" %}</span><strong>{{ performance_current_streak }}</strong><p>{% translate "Consecutive wins" %}</p></article>
+        </div>
+    </section>
 
     {% if page_obj.object_list %}
         <div class="matches-list">
@@ -100,12 +127,12 @@
                     <div class="match-card-main">
                         <div>
                             <p class="match-date">
-                                {{ match.played_at|date:"M d, Y • H:i" }}
+                                {{ match.played_at|date:"DATETIME_FORMAT" }}
                             </p>
 
                             <h2>
                                 {{ match.player }}
-                                <span class="match-vs">vs</span>
+                                <span class="match-vs">{% translate "vs" %}</span>
                                 {{ match.opponent_name }}
                             </h2>
 
@@ -140,13 +167,13 @@
                             <a
                                 href="{% url 'matches:detail' match.pk %}"
                             >
-                                View
+                                {% translate "View" %}
                             </a>
 
                             <a
                                 href="{% url 'matches:update' match.pk %}"
                             >
-                                Edit
+                                {% translate "Edit" %}
                             </a>
                         </div>
                     </div>
@@ -155,25 +182,24 @@
         </div>
 
         {% if page_obj.has_other_pages %}
-            <nav class="pagination" aria-label="Match pagination">
+            <nav class="pagination" aria-label="{% translate 'Match pagination' %}">
                 {% if page_obj.has_previous %}
                     <a
                         href="?page={{ page_obj.previous_page_number }}{% if current_query %}&q={{ current_query|urlencode }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}{% if current_player %}&player={{ current_player }}{% endif %}"
                     >
-                        Previous
+                        {% translate "Previous" %}
                     </a>
                 {% endif %}
 
                 <span>
-                    Page {{ page_obj.number }}
-                    of {{ page_obj.paginator.num_pages }}
+                    {% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}
                 </span>
 
                 {% if page_obj.has_next %}
                     <a
                         href="?page={{ page_obj.next_page_number }}{% if current_query %}&q={{ current_query|urlencode }}{% endif %}{% if current_status %}&status={{ current_status }}{% endif %}{% if current_player %}&player={{ current_player }}{% endif %}"
                     >
-                        Next
+                        {% translate "Next" %}
                     </a>
                 {% endif %}
             </nav>
@@ -182,18 +208,17 @@
         <div class="empty-state">
             <span class="empty-state-icon">🏓</span>
 
-            <h2>No matches found</h2>
+            <h2>{% translate "No matches found" %}</h2>
 
             <p>
-                Start building your match history by recording
-                your first table tennis match.
+                {% translate "Start building your match history by recording your first table tennis match." %}
             </p>
 
             <a
                 href="{% url 'matches:create' %}"
                 class="primary-button"
             >
-                Add your first match
+                {% translate "Add your first match" %}
             </a>
         </div>
     {% endif %}

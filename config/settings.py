@@ -63,6 +63,17 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
+RENDER_EXTERNAL_HOSTNAME = os.getenv(
+    "RENDER_EXTERNAL_HOSTNAME",
+    "",
+).strip()
+
+if (
+    RENDER_EXTERNAL_HOSTNAME
+    and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS
+):
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
@@ -72,6 +83,11 @@ CSRF_TRUSTED_ORIGINS = [
     ).split(",")
     if origin.strip()
 ]
+
+if RENDER_EXTERNAL_HOSTNAME:
+    render_origin = f"https://{RENDER_EXTERNAL_HOSTNAME}"
+    if render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_origin)
 
 
 # =====================================================
@@ -91,6 +107,10 @@ INSTALLED_APPS = [
     "performance",
     "dashboard",
     "planning",
+    "finances",
+    "notes",
+    "competitions",
+    "legal",
 ]
 
 
@@ -102,6 +122,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -213,7 +234,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LOGIN_URL = "/accounts/login/"
-LOGIN_REDIRECT_URL = "accounts:dashboard"
+LOGIN_REDIRECT_URL = "dashboard:home"
 LOGOUT_REDIRECT_URL = "accounts:login"
 
 
@@ -226,6 +247,14 @@ LANGUAGE_CODE = os.getenv(
     "en-us",
 )
 
+LANGUAGES = [
+    ("en", "English"),
+    ("pt-br", "Português"),
+    ("es", "Español"),
+]
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
+
 
 TIME_ZONE = os.getenv(
     "DJANGO_TIME_ZONE",
@@ -235,6 +264,49 @@ TIME_ZONE = os.getenv(
 
 USE_I18N = True
 USE_TZ = True
+
+
+# =====================================================
+# LEGAL DOCUMENTS
+# =====================================================
+
+LEGAL_DOCUMENTS_VERSION = os.getenv(
+    "LEGAL_DOCUMENTS_VERSION",
+    "2026-08-25",
+)
+LEGAL_EFFECTIVE_DATE = os.getenv(
+    "LEGAL_EFFECTIVE_DATE",
+    "2026-08-25",
+)
+LEGAL_CONTROLLER_NAME = os.getenv(
+    "LEGAL_CONTROLLER_NAME",
+    "Escola de Tênis de Mesa",
+)
+LEGAL_CONTACT_EMAIL = os.getenv(
+    "LEGAL_CONTACT_EMAIL",
+    "contato@escoladetenisdemesa.com.br",
+)
+LEGAL_COUNTRY = os.getenv(
+    "LEGAL_COUNTRY",
+    "Brazil",
+)
+
+
+# =====================================================
+# OPERATIONAL RESILIENCE
+# =====================================================
+
+BACKUP_ROOT = Path(
+    os.getenv("DJANGO_BACKUP_ROOT", BASE_DIR / "backups")
+)
+PG_DUMP_BINARY = os.getenv(
+    "DJANGO_PG_DUMP_BINARY",
+    "pg_dump",
+)
+PG_RESTORE_BINARY = os.getenv(
+    "DJANGO_PG_RESTORE_BINARY",
+    "pg_restore",
+)
 
 
 # =====================================================
@@ -261,8 +333,9 @@ STORAGES = {
     },
     "staticfiles": {
         "BACKEND": (
-            "whitenoise.storage."
-            "CompressedManifestStaticFilesStorage"
+            "django.contrib.staticfiles.storage.StaticFilesStorage"
+            if DEBUG
+            else "whitenoise.storage.CompressedManifestStaticFilesStorage"
         ),
     },
 }
@@ -290,6 +363,66 @@ DEFAULT_FROM_EMAIL = os.getenv(
     "DJANGO_DEFAULT_FROM_EMAIL",
     "Table Tennis Manager <noreply@localhost>",
 )
+
+EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
+EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv(
+    "DJANGO_EMAIL_HOST_PASSWORD",
+    "",
+)
+EMAIL_USE_TLS = env_bool("DJANGO_EMAIL_USE_TLS", True)
+EMAIL_TIMEOUT = int(os.getenv("DJANGO_EMAIL_TIMEOUT", "10"))
+
+PASSWORD_RESET_TIMEOUT = int(
+    os.getenv("DJANGO_PASSWORD_RESET_TIMEOUT", "3600")
+)
+
+
+# =====================================================
+# LOGGING
+# =====================================================
+
+LOG_LEVEL = os.getenv(
+    "DJANGO_LOG_LEVEL",
+    "INFO",
+).upper()
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": (
+                "{asctime} {levelname} "
+                "{name}: {message}"
+            ),
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": LOG_LEVEL,
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.security": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}
 
 
 # =====================================================

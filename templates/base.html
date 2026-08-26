@@ -1,7 +1,8 @@
-{% load static %}
+{% load i18n static %}
+{% get_current_language as CURRENT_LANGUAGE %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ CURRENT_LANGUAGE }}">
 
 
 <head>
@@ -11,13 +12,19 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
+
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="TT Manager">
 
 
     <meta
         name="description"
-        content="Table Tennis Manager - Track players, matches and performance."
+        content="{% translate 'Table Tennis Manager - Track players, matches and performance.' %}"
     >
 
 
@@ -35,6 +42,11 @@
         rel="stylesheet"
         href="{% static 'css/styles.css' %}"
     >
+
+    <link rel="manifest" href="{% url 'pwa-manifest' %}">
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/favicon-32.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-touch-icon.png' %}">
 
 
 
@@ -111,18 +123,48 @@
     <div class="container">
 
 
-        <p>
-
-            © 2026 Table Tennis Manager.
-            Built for competitive athletes.
-
-        </p>
+        <div class="footer-content">
+            <p>
+                © 2026 Table Tennis Manager.
+                {% translate "Built for competitive athletes." %}
+            </p>
+            <nav class="footer-legal-nav" aria-label="{% translate 'Legal information' %}">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:privacy_center' %}">{% translate "My privacy" %}</a>
+                {% else %}
+                    <a href="{% url 'accounts:request_account_deletion' %}">{% translate "Delete account" %}</a>
+                {% endif %}
+                <a href="{% url 'legal:privacy' %}">{% translate "Privacy Policy" %}</a>
+                <a href="{% url 'legal:terms' %}">{% translate "Terms of Use" %}</a>
+            </nav>
+        </div>
 
 
     </div>
 
 
 </footer>
+
+<div
+    id="pwa-install-dialog"
+    class="pwa-install-dialog"
+    role="dialog"
+    aria-labelledby="pwa-install-title"
+    aria-modal="true"
+    hidden
+>
+    <div class="pwa-install-dialog__icon" aria-hidden="true">
+        <img src="{% static 'icons/icon-192.png' %}" alt="">
+    </div>
+    <div class="pwa-install-dialog__content">
+        <strong id="pwa-install-title">{% translate "Install Table Tennis Manager" %}</strong>
+        <p id="pwa-install-message">{% translate "Install the app for faster access from your home screen." %}</p>
+    </div>
+    <button type="button" id="pwa-install-confirm" class="primary-button">
+        {% translate "Install app" %}
+    </button>
+    <button type="button" id="pwa-install-close" class="pwa-install-dialog__close" aria-label="{% translate 'Close' %}">×</button>
+</div>
 
 
 
@@ -131,6 +173,8 @@
 {% block extra_js %}
 
 {% endblock %}
+
+<script src="{% static 'js/pwa.js' %}" defer></script>
 
 
 

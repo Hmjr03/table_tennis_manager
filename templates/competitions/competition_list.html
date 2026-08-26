@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Competitions" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="competition-page">
+    <header class="competition-list-hero">
+        <div>
+            <p class="eyebrow">{% translate "Competitive management" %}</p>
+            <h1>{% translate "Competitions" %}</h1>
+            <p class="page-subtitle">{% translate "Centralize schedules, athletes, matches and results in one organized workspace." %}</p>
+        </div>
+        <a href="{% url 'competitions:create' %}" class="primary-button">+ {% translate "Add competition" %}</a>
+    </header>
+
+    <div class="competition-summary-grid">
+        <article><span>{% translate "Registered competitions" %}</span><strong>{{ total_count }}</strong></article>
+        <article><span>{% translate "Upcoming" %}</span><strong>{{ upcoming_count }}</strong></article>
+        <article><span>{% translate "Completed" %}</span><strong>{{ completed_count }}</strong></article>
+    </div>
+
+    <form method="get" class="competition-filter-card">
+        <div class="form-group">
+            <label for="competition-search">{% translate "Search" %}</label>
+            <input id="competition-search" name="q" value="{{ current_query }}" placeholder="{% translate 'Name, season or location' %}">
+        </div>
+        <div class="form-group">
+            <label for="competition-status">{% translate "Status" %}</label>
+            <select id="competition-status" name="status">
+                <option value="">{% translate "All statuses" %}</option>
+                {% for value, label in status_choices %}<option value="{{ value }}" {% if current_status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="competition-filter-actions">
+            <button class="primary-button" type="submit">{% translate "Filter" %}</button>
+            <a class="secondary-button" href="{% url 'competitions:list' %}">{% translate "Clear" %}</a>
+        </div>
+    </form>
+
+    {% if competitions %}
+        <div class="competition-card-grid">
+            {% for competition in competitions %}
+                <article class="competition-card">
+                    <div class="competition-card-topline">
+                        <span class="competition-type-pill">{{ competition.get_competition_type_display }}</span>
+                        <span class="competition-status-pill competition-status-{{ competition.status|lower }}">{{ competition.get_status_display }}</span>
+                    </div>
+                    <div>
+                        <h2><a href="{% url 'competitions:detail' competition.pk %}">{{ competition.name }}</a></h2>
+                        <p>{{ competition.start_date|date:"DATE_FORMAT" }}{% if competition.location %} · {{ competition.location }}{% endif %}</p>
+                    </div>
+                    <div class="competition-card-meta">
+                        <span>{% translate "Season" %}<strong>{{ competition.season|default:"—" }}</strong></span>
+                        <span>{% translate "Athletes" %}<strong>{{ competition.players.count }}</strong></span>
+                        <span>{% translate "Matches" %}<strong>{{ competition.match_count }}</strong></span>
+                    </div>
+                    <a href="{% url 'competitions:detail' competition.pk %}" class="competition-card-link">{% translate "Open competition center" %} →</a>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="players-empty-state">
+            <div class="empty-state-visual"><span class="empty-state-icon">🏆</span></div>
+            <p class="eyebrow">{% translate "Competition center" %}</p>
+            <h2>{% translate "Organize your first competition" %}</h2>
+            <p>{% translate "Create a competition to connect its calendar, participating athletes and match results." %}</p>
+            <a href="{% url 'competitions:create' %}" class="primary-button">{% translate "Add competition" %}</a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

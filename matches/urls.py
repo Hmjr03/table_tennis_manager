@@ -1,6 +1,7 @@
 from django.urls import path
 
 from matches import views
+from performance import views as performance_views
 
 
 app_name = "matches"
@@ -15,6 +16,11 @@ urlpatterns = [
         "add/",
         views.match_create,
         name="create",
+    ),
+    path(
+        "analysis/",
+        performance_views.analysis,
+        name="analysis",
     ),
     path(
         "<int:pk>/",

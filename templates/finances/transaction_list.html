@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Finances | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="page-section finance-page">
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">{% translate "Financial management" %}</p>
+            <h1>{% translate "Finance workspace" %}</h1>
+            <p class="page-subtitle">{% translate "Personal and professional finances in one organized view." %}</p>
+        </div>
+        <a href="{% url 'finances:create' %}" class="primary-button">{% translate "Add transaction" %}</a>
+    </div>
+
+    <div class="finance-summary-grid">
+        <article class="finance-summary-card finance-income"><span>{% translate "Income" %}</span><strong>€ {{ income|floatformat:2 }}</strong><p>{{ selected_month|date:"F Y" }}</p></article>
+        <article class="finance-summary-card finance-expense"><span>{% translate "Expenses" %}</span><strong>€ {{ expenses|floatformat:2 }}</strong><p>{{ selected_month|date:"F Y" }}</p></article>
+        <article class="finance-summary-card finance-balance"><span>{% translate "Balance" %}</span><strong>€ {{ balance|floatformat:2 }}</strong><p>{% translate "Income minus expenses" %}</p></article>
+    </div>
+
+    <div class="filter-card finance-filter-card">
+        <form method="get" class="finance-filter-form">
+            <div class="form-group"><label for="id_month">{% translate "Month" %}</label><input id="id_month" type="month" name="month" value="{{ month_value }}"></div>
+            <div class="form-group"><label for="id_q">{% translate "Search" %}</label><input id="id_q" type="search" name="q" value="{{ current_query }}" placeholder="{% translate 'Description or notes' %}"></div>
+            <div class="form-group"><label for="id_area">{% translate "Area" %}</label><select id="id_area" name="area"><option value="">{% translate "All areas" %}</option>{% for value, label in area_choices %}<option value="{{ value }}" {% if current_area == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+            <div class="form-group"><label for="id_type">{% translate "Type" %}</label><select id="id_type" name="type"><option value="">{% translate "All types" %}</option>{% for value, label in type_choices %}<option value="{{ value }}" {% if current_type == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+            <div class="form-group"><label for="id_status">{% translate "Status" %}</label><select id="id_status" name="status"><option value="">{% translate "All statuses" %}</option>{% for value, label in status_choices %}<option value="{{ value }}" {% if current_status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+            <div class="filter-actions"><button type="submit" class="primary-button">{% translate "Filter" %}</button><a href="{% url 'finances:list' %}" class="secondary-button">{% translate "Clear" %}</a></div>
+        </form>
+    </div>
+
+    <div class="finance-table-card">
+        {% if page_obj.object_list %}
+            <div class="finance-table-scroll">
+                <table class="finance-table">
+                    <thead><tr><th>{% translate "Date" %}</th><th>{% translate "Description" %}</th><th>{% translate "Area" %}</th><th>{% translate "Category" %}</th><th>{% translate "Status" %}</th><th class="finance-amount-column">{% translate "Amount" %}</th><th><span class="sr-only">{% translate "Actions" %}</span></th></tr></thead>
+                    <tbody>
+                        {% for transaction in page_obj %}
+                            <tr>
+                                <td>{{ transaction.date|date:"DATE_FORMAT" }}</td>
+                                <td><strong>{{ transaction.description }}</strong><small>{{ transaction.get_payment_method_display }}{% if transaction.is_recurring %} · {% translate "Recurring" %}{% endif %}</small></td>
+                                <td><span class="finance-badge finance-area-{{ transaction.area|lower }}">{{ transaction.get_area_display }}</span></td>
+                                <td>{{ transaction.get_category_display }}</td>
+                                <td><span class="finance-status finance-status-{{ transaction.status|lower }}">{{ transaction.get_status_display }}</span></td>
+                                <td class="finance-amount finance-amount-{{ transaction.transaction_type|lower }}">{% if transaction.transaction_type == "EXPENSE" %}−{% else %}+{% endif %} € {{ transaction.amount|floatformat:2 }}</td>
+                                <td><div class="finance-row-actions"><a href="{% url 'finances:update' transaction.pk %}">{% translate "Edit" %}</a><a href="{% url 'finances:delete' transaction.pk %}" class="finance-delete-link">{% translate "Delete" %}</a></div></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if page_obj.has_other_pages %}<nav class="pagination" aria-label="{% translate 'Finance pagination' %}">{% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&month={{ month_value }}&q={{ current_query|urlencode }}&area={{ current_area }}&type={{ current_type }}&status={{ current_status }}">{% translate "Previous" %}</a>{% endif %}<span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>{% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&month={{ month_value }}&q={{ current_query|urlencode }}&area={{ current_area }}&type={{ current_type }}&status={{ current_status }}">{% translate "Next" %}</a>{% endif %}</nav>{% endif %}
+        {% else %}
+            <div class="empty-state"><span class="empty-state-icon">€</span><h2>{% translate "No transactions found" %}</h2><p>{% translate "Add your first transaction or adjust the selected filters." %}</p><a href="{% url 'finances:create' %}" class="primary-button">{% translate "Add transaction" %}</a></div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

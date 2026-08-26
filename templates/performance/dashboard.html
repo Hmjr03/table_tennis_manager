@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 
 {% block title %}
@@ -17,17 +18,17 @@ Performance | Table Tennis Manager
 <div>
 
 <p class="eyebrow">
-Performance
+{% translate "Performance" %}
 </p>
 
 
 <h1>
-Performance dashboard
+{% translate "Performance dashboard" %}
 </h1>
 
 
 <p class="page-subtitle">
-Analyze your competitive evolution and track your progress.
+{% translate "Analyze your competitive evolution and track your progress." %}
 </p>
 
 
@@ -43,7 +44,7 @@ Analyze your competitive evolution and track your progress.
 <article class="dashboard-card">
 
 <h2>
-Matches played
+{% translate "Matches played" %}
 </h2>
 
 <strong>
@@ -57,7 +58,7 @@ Matches played
 <article class="dashboard-card">
 
 <h2>
-Wins
+{% translate "Wins" %}
 </h2>
 
 <strong>
@@ -71,7 +72,7 @@ Wins
 <article class="dashboard-card">
 
 <h2>
-Losses
+{% translate "Losses" %}
 </h2>
 
 <strong>
@@ -85,7 +86,7 @@ Losses
 <article class="dashboard-card">
 
 <h2>
-Win rate
+{% translate "Win rate" %}
 </h2>
 
 <strong>
@@ -106,7 +107,7 @@ Win rate
 <article class="dashboard-card">
 
 <h2>
-Sets won
+{% translate "Sets won" %}
 </h2>
 
 <strong>
@@ -120,7 +121,7 @@ Sets won
 <article class="dashboard-card">
 
 <h2>
-Sets lost
+{% translate "Sets lost" %}
 </h2>
 
 <strong>
@@ -134,7 +135,7 @@ Sets lost
 <article class="dashboard-card">
 
 <h2>
-Sets difference
+{% translate "Sets difference" %}
 </h2>
 
 <strong>
@@ -148,7 +149,7 @@ Sets difference
 <article class="dashboard-card">
 
 <h2>
-Current streak
+{% translate "Current streak" %}
 </h2>
 
 <strong>
@@ -175,7 +176,7 @@ Current streak
 
 
 <h2>
-Recent form
+{% translate "Recent form" %}
 </h2>
 
 
@@ -222,7 +223,7 @@ Win rate:
 
 
 <p>
-Your performance story starts with your first match.
+{% translate "Your performance story starts with your first match." %}
 </p>
 
 
@@ -243,7 +244,7 @@ Your performance story starts with your first match.
 
 
 <h2>
-Recent matches
+{% translate "Recent matches" %}
 </h2>
 
 
@@ -275,14 +276,14 @@ Recent matches
 {% if match.result == "Win" %}
 
 <span class="result-win">
-WIN
+{% translate "WIN" %}
 </span>
 
 
 {% else %}
 
 <span class="result-loss">
-LOSS
+{% translate "LOSS" %}
 </span>
 
 
@@ -301,7 +302,7 @@ LOSS
 
 
 <p>
-No completed matches yet.
+{% translate "No completed matches yet." %}
 </p>
 
 

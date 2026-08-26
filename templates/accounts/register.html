@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 
 {% block title %}
@@ -19,17 +20,17 @@ Register | Table Tennis Manager
         <div class="page-header">
 
             <p class="eyebrow">
-                Account
+                {% translate "Account" %}
             </p>
 
 
             <h1>
-                Create account
+                {% translate "Create account" %}
             </h1>
 
 
             <p class="page-subtitle">
-                Join Table Tennis Manager and start managing your journey.
+                {% translate "Join Table Tennis Manager and start managing your journey." %}
             </p>
 
         </div>
@@ -66,6 +67,30 @@ Register | Table Tennis Manager
 
             {% for field in form %}
 
+
+                {% if field.name == "accept_terms" %}
+                    <div class="legal-consent-field">
+                        {{ field }}
+                        <label for="{{ field.id_for_label }}">
+                            {% translate "I have read and accept the" %}
+                            <a href="{% url 'legal:terms' %}" target="_blank" rel="noopener">
+                                {% translate "Terms of Use" %}
+                            </a>.
+                        </label>
+                        {% if field.errors %}<div class="field-errors">{{ field.errors }}</div>{% endif %}
+                    </div>
+                {% elif field.name == "acknowledge_privacy" %}
+                    <div class="legal-consent-field">
+                        {{ field }}
+                        <label for="{{ field.id_for_label }}">
+                            {% translate "I have read and acknowledge the" %}
+                            <a href="{% url 'legal:privacy' %}" target="_blank" rel="noopener">
+                                {% translate "Privacy Policy" %}
+                            </a>.
+                        </label>
+                        {% if field.errors %}<div class="field-errors">{{ field.errors }}</div>{% endif %}
+                    </div>
+                {% else %}
 
                 <div class="form-group">
 
@@ -108,6 +133,8 @@ Register | Table Tennis Manager
 
                 </div>
 
+                {% endif %}
+
 
 
             {% endfor %}
@@ -121,7 +148,7 @@ Register | Table Tennis Manager
                 class="primary-button"
             >
 
-                Create account
+                {% translate "Create account" %}
 
             </button>
 

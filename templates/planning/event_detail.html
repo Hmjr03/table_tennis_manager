@@ -1,225 +1,112 @@
 {% extends "base.html" %}
+{% load i18n static %}
 
-{% block title %}
-    {{ event.title }} | Table Tennis Manager
-{% endblock %}
+{% block title %}{{ event.title }} | Table Tennis Manager{% endblock %}
 
 {% block content %}
-<section class="event-detail-page">
-
-    <div class="profile-navigation">
-
-        <a
-            href="{% url 'planning:list' %}"
-            class="back-link"
-        >
-            ← Back to calendar
+<section class="event-detail-page event-detail-2">
+    <nav class="event-detail-commandbar" aria-label="{% translate 'Event navigation' %}">
+        <a href="{% url 'planning:calendar' %}?year={{ event.start_datetime|date:'Y' }}&month={{ event.start_datetime|date:'n' }}" class="event-back-control">
+            <span class="event-back-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="m15 18-6-6 6-6"/></svg>
+            </span>
+            <span><small>{% translate "Calendar" %}</small><strong>{% translate "Back to event month" %}</strong></span>
         </a>
+        <div class="event-breadcrumb" aria-label="{% translate 'Current location' %}">
+            <span>{% translate "Planning" %}</span><span aria-hidden="true">/</span><strong>{% translate "Event details" %}</strong>
+        </div>
+    </nav>
 
-    </div>
-
-    <div class="event-detail-header">
-
+    <header class="event-detail-hero">
         <div>
-
-            <p class="eyebrow">
-                {{ event.get_event_type_display }}
-            </p>
-
-            <h1>
-                {{ event.title }}
-            </h1>
-
-            <p class="page-subtitle">
-                {{ event.start_datetime|date:"l, d F Y" }}
-            </p>
-
+            <div class="event-detail-badges">
+                <span class="event-type-badge">{{ event.get_event_type_display }}</span>
+                <span class="event-priority-badge event-priority-{{ event.priority|lower }}">{{ event.get_priority_display }}</span>
+            </div>
+            <h1>{{ event.title }}</h1>
+            <p class="page-subtitle">{{ event.start_datetime|date:"DATE_FORMAT" }}{% if event.location %} · {{ event.location }}{% endif %}</p>
         </div>
-
         <div class="profile-actions">
-
-            <a
-                href="{% url 'planning:edit' event.pk %}"
-                class="secondary-button"
-            >
-                Edit event
-            </a>
-
-            <a
-                href="{% url 'planning:delete' event.pk %}"
-                class="danger-button"
-            >
-                Delete
-            </a>
-
+            <a href="{% url 'planning:edit' event.pk %}" class="secondary-button">{% translate "Edit full event" %}</a>
+            <a href="{% url 'planning:delete' event.pk %}" class="profile-delete-link">{% translate "Delete" %}</a>
         </div>
+    </header>
 
+    <p class="event-inline-hint"><span aria-hidden="true">✦</span>{% translate "Select a section below to update it directly." %}</p>
+    {% if event.is_competition_sync and event.competition_record %}
+        <div class="competition-managed-notice">
+            <span aria-hidden="true">↻</span>
+            <p><strong>{% translate "Competition calendar event" %}</strong><small>{% translate "Dates, title and location are synchronized from the competition center." %}</small></p>
+            <a href="{% url 'competitions:detail' event.competition_record.pk %}">{% translate "Open competition" %} →</a>
+        </div>
+    {% endif %}
+
+    <div class="event-detail-grid">
+        <article class="event-inline-card" id="event-schedule">
+            <button type="button" class="event-inline-trigger" data-editor-target="schedule-editor" aria-controls="schedule-editor" aria-expanded="{% if active_section == 'schedule' %}true{% else %}false{% endif %}">
+                <span class="event-section-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></svg></span>
+                <span class="event-section-title"><strong>{% translate "Schedule" %}</strong><small>{% translate "Date, time and location" %}</small></span>
+                <span class="event-edit-label"><span>{% translate "Edit" %}</span><svg viewBox="0 0 24 24" fill="none"><path d="m4 16-1 5 5-1L19 9a2.12 2.12 0 0 0-3-3L4 16Z"/></svg></span>
+            </button>
+            <div class="event-section-summary">
+                <div><span>{% translate "Starts" %}</span><strong>{{ event.start_datetime|date:"DATETIME_FORMAT" }}</strong></div>
+                <div><span>{% translate "Ends" %}</span><strong>{{ event.end_datetime|date:"DATETIME_FORMAT" }}</strong></div>
+                <div><span>{% translate "Location" %}</span><strong>{% if event.location %}{{ event.location }}{% else %}{% translate "Not specified" %}{% endif %}</strong></div>
+            </div>
+            <div id="schedule-editor" class="event-inline-editor{% if active_section == 'schedule' %} is-open{% endif %}" {% if active_section != 'schedule' %}hidden{% endif %}>
+                <form method="post" action="{% url 'planning:quick_update' event.pk 'schedule' %}">
+                    {% csrf_token %}
+                    {% if schedule_form.non_field_errors %}<div class="form-errors">{{ schedule_form.non_field_errors }}</div>{% endif %}
+                    <div class="event-inline-form-grid">
+                        {% for field in schedule_form %}<div class="form-group"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>{% endfor %}
+                    </div>
+                    <div class="event-inline-form-actions"><button type="button" class="secondary-button event-editor-cancel" data-editor-target="schedule-editor">{% translate "Cancel" %}</button><button type="submit" class="primary-button">{% translate "Save schedule" %}</button></div>
+                </form>
+            </div>
+        </article>
+
+        <article class="event-inline-card" id="event-classification">
+            <button type="button" class="event-inline-trigger" data-editor-target="classification-editor" aria-controls="classification-editor" aria-expanded="{% if active_section == 'classification' %}true{% else %}false{% endif %}">
+                <span class="event-section-icon event-section-icon--classification" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h10M4 12h16M4 17h7M18 4v6M15 7h6"/></svg></span>
+                <span class="event-section-title"><strong>{% translate "Classification" %}</strong><small>{% translate "Type and priority" %}</small></span>
+                <span class="event-edit-label"><span>{% translate "Edit" %}</span><svg viewBox="0 0 24 24" fill="none"><path d="m4 16-1 5 5-1L19 9a2.12 2.12 0 0 0-3-3L4 16Z"/></svg></span>
+            </button>
+            <div class="event-section-summary">
+                <div><span>{% translate "Type" %}</span><strong>{{ event.get_event_type_display }}</strong></div>
+                <div><span>{% translate "Priority" %}</span><strong>{{ event.get_priority_display }}</strong></div>
+                <div><span>{% translate "Competition" %}</span><strong>{% if event.competition_record %}<a href="{% url 'competitions:detail' event.competition_record.pk %}">{{ event.competition_record.name }}</a>{% else %}{% translate "Not linked" %}{% endif %}</strong></div>
+                <div><span>{% translate "Created" %}</span><strong>{{ event.created_at|date:"DATETIME_FORMAT" }}</strong></div>
+            </div>
+            <div id="classification-editor" class="event-inline-editor{% if active_section == 'classification' %} is-open{% endif %}" {% if active_section != 'classification' %}hidden{% endif %}>
+                <form method="post" action="{% url 'planning:quick_update' event.pk 'classification' %}">
+                    {% csrf_token %}
+                    <div class="event-inline-form-grid event-inline-form-grid--two">
+                        {% for field in classification_form %}<div class="form-group"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>{% endfor %}
+                    </div>
+                    <div class="event-inline-form-actions"><button type="button" class="secondary-button event-editor-cancel" data-editor-target="classification-editor">{% translate "Cancel" %}</button><button type="submit" class="primary-button">{% translate "Save classification" %}</button></div>
+                </form>
+            </div>
+        </article>
+
+        <article class="event-inline-card event-inline-card--wide" id="event-description">
+            <button type="button" class="event-inline-trigger" data-editor-target="description-editor" aria-controls="description-editor" aria-expanded="{% if active_section == 'description' %}true{% else %}false{% endif %}">
+                <span class="event-section-icon event-section-icon--description" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg></span>
+                <span class="event-section-title"><strong>{% translate "Description" %}</strong><small>{% translate "Notes and additional information" %}</small></span>
+                <span class="event-edit-label"><span>{% translate "Edit" %}</span><svg viewBox="0 0 24 24" fill="none"><path d="m4 16-1 5 5-1L19 9a2.12 2.12 0 0 0-3-3L4 16Z"/></svg></span>
+            </button>
+            <div class="event-description-preview">
+                {% if event.description %}{{ event.description|linebreaks }}{% else %}<p class="event-muted-copy">{% translate "No additional information was provided for this event." %}</p>{% endif %}
+            </div>
+            <div id="description-editor" class="event-inline-editor{% if active_section == 'description' %} is-open{% endif %}" {% if active_section != 'description' %}hidden{% endif %}>
+                <form method="post" action="{% url 'planning:quick_update' event.pk 'description' %}">
+                    {% csrf_token %}
+                    {% for field in description_form %}<div class="form-group"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>{% endfor %}
+                    <div class="event-inline-form-actions"><button type="button" class="secondary-button event-editor-cancel" data-editor-target="description-editor">{% translate "Cancel" %}</button><button type="submit" class="primary-button">{% translate "Save description" %}</button></div>
+                </form>
+            </div>
+        </article>
     </div>
-
-    <div class="profile-grid">
-
-        <article class="profile-card">
-
-            <div class="profile-card-heading">
-
-                <span class="profile-card-icon">
-                    📅
-                </span>
-
-                <div>
-
-                    <h2>Schedule</h2>
-
-                    <p>
-                        Date and time information.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="profile-info-list">
-
-                <div class="profile-info-item">
-
-                    <span>Starts</span>
-
-                    <strong>
-                        {{ event.start_datetime|date:"d/m/Y H:i" }}
-                    </strong>
-
-                </div>
-
-                <div class="profile-info-item">
-
-                    <span>Ends</span>
-
-                    <strong>
-                        {{ event.end_datetime|date:"d/m/Y H:i" }}
-                    </strong>
-
-                </div>
-
-                <div class="profile-info-item">
-
-                    <span>Location</span>
-
-                    <strong>
-                        {% if event.location %}
-                            {{ event.location }}
-                        {% else %}
-                            Not specified
-                        {% endif %}
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <article class="profile-card">
-
-            <div class="profile-card-heading">
-
-                <span class="profile-card-icon">
-                    🎯
-                </span>
-
-                <div>
-
-                    <h2>Classification</h2>
-
-                    <p>
-                        Event organization information.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="profile-info-list">
-
-                <div class="profile-info-item">
-
-                    <span>Type</span>
-
-                    <strong>
-                        {{ event.get_event_type_display }}
-                    </strong>
-
-                </div>
-
-                <div class="profile-info-item">
-
-                    <span>Priority</span>
-
-                    <strong>
-                        {{ event.get_priority_display }}
-                    </strong>
-
-                </div>
-
-                <div class="profile-info-item">
-
-                    <span>Created</span>
-
-                    <strong>
-                        {{ event.created_at|date:"d/m/Y H:i" }}
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <article class="profile-card profile-card-wide">
-
-            <div class="profile-card-heading">
-
-                <span class="profile-card-icon">
-                    📝
-                </span>
-
-                <div>
-
-                    <h2>Description</h2>
-
-                    <p>
-                        Additional information about this activity.
-                    </p>
-
-                </div>
-
-            </div>
-
-            {% if event.description %}
-
-                <div class="event-description-full">
-
-                    {{ event.description|linebreaks }}
-
-                </div>
-
-            {% else %}
-
-                <div class="empty-state">
-
-                    <h2>No description</h2>
-
-                    <p>
-                        No additional information was provided
-                        for this event.
-                    </p>
-
-                </div>
-
-            {% endif %}
-
-        </article>
-
-    </div>
-
 </section>
 {% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/event-detail.js' %}" defer></script>{% endblock %}

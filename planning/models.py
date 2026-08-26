@@ -1,22 +1,25 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 
 
 class CalendarEvent(models.Model):
     class EventType(models.TextChoices):
-        TRAINING = "TRAINING", "Training"
-        COMPETITION = "COMPETITION", "Competition"
-        TRAVEL = "TRAVEL", "Travel"
-        RECOVERY = "RECOVERY", "Recovery"
-        EVALUATION = "EVALUATION", "Evaluation"
-        MEETING = "MEETING", "Meeting"
-        PERSONAL = "PERSONAL", "Personal"
-        OTHER = "OTHER", "Other"
+        TRAINING = "TRAINING", _("Training")
+        COMPETITION = "COMPETITION", _("Competition")
+        TRAVEL = "TRAVEL", _("Travel")
+        RECOVERY = "RECOVERY", _("Recovery")
+        EVALUATION = "EVALUATION", _("Evaluation")
+        MEETING = "MEETING", _("Meeting")
+        PERSONAL = "PERSONAL", _("Personal")
+        OTHER = "OTHER", _("Other")
 
     class Priority(models.TextChoices):
-        LOW = "LOW", "Low"
-        MEDIUM = "MEDIUM", "Medium"
-        HIGH = "HIGH", "High"
+        LOW = "LOW", _("Low")
+        MEDIUM = "MEDIUM", _("Medium")
+        HIGH = "HIGH", _("High")
 
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -53,6 +56,19 @@ class CalendarEvent(models.Model):
         default=Priority.MEDIUM,
     )
 
+    competition_record = models.ForeignKey(
+        "competitions.Competition",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="events",
+    )
+
+    is_competition_sync = models.BooleanField(
+        default=False,
+        editable=False,
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
@@ -63,6 +79,27 @@ class CalendarEvent(models.Model):
 
     class Meta:
         ordering = ["start_datetime"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["competition_record"],
+                condition=Q(is_competition_sync=True),
+                name="unique_synced_event_per_competition",
+            )
+        ]
 
     def __str__(self):
         return self.title
+
+    def clean(self):
+        if (
+            self.competition_record_id
+            and self.owner_id
+            and self.competition_record.owner_id != self.owner_id
+        ):
+            raise ValidationError(
+                {
+                    "competition_record": _(
+                        "The selected competition does not belong to this account."
+                    )
+                }
+            )

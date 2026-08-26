@@ -1,39 +1,38 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}
     Delete Match | Table Tennis Manager
 {% endblock %}
 
 {% block content %}
-<section class="page-section">
-    <div class="professional-form-card delete-card">
-        <p class="eyebrow">Danger zone</p>
+<section class="page-section match-delete-page">
+    <div class="form-page-header">
+        <a href="{% url 'matches:update' match.pk %}" class="back-link">
+            ← {% translate "Back to edit match" %}
+        </a>
+        <p class="eyebrow">{% translate "Match management" %}</p>
+        <h1>{% translate "Delete this match?" %}</h1>
+        <p class="page-subtitle">{% translate "Review the match before permanently removing it from the athlete's history." %}</p>
+    </div>
 
-        <h1>Delete this match?</h1>
+    <div class="professional-form-card delete-card match-delete-card">
+        <p class="eyebrow">{% translate "Danger zone" %}</p>
 
-        <p>
-            You are about to permanently delete:
-        </p>
-
-        <div class="delete-summary">
-            <strong>
-                {{ match.player }}
-                vs
-                {{ match.opponent_name }}
-            </strong>
-
-            <span>
-                {{ match.played_at|date:"M d, Y • H:i" }}
-            </span>
-
-            <span>
-                Score: {{ match.score }}
-            </span>
+        <div class="match-delete-warning" role="alert">
+            <span aria-hidden="true">!</span>
+            <div><strong>{% translate "This action cannot be undone." %}</strong><p>{% translate "The result will be removed from match history and all performance statistics will be recalculated." %}</p></div>
         </div>
 
-        <p class="delete-warning">
-            This action cannot be undone.
-        </p>
+        <div class="delete-summary">
+            <div class="match-delete-players"><span>{{ match.player }}</span><small>{% translate "vs" %}</small><span>{{ match.opponent_name }}</span></div>
+            <div class="match-delete-meta">
+                <span>{{ match.played_at|date:"DATETIME_FORMAT" }}</span>
+                <span>{% if match.competition %}{{ match.competition }}{% else %}{% translate "No competition specified" %}{% endif %}</span>
+                <span>{{ match.get_status_display }}</span>
+            </div>
+            <div class="match-delete-score"><span>{% translate "Final score" %}</span><strong>{{ match.score }}</strong></div>
+        </div>
 
         <form method="post" class="form-actions">
             {% csrf_token %}
@@ -42,14 +41,14 @@
                 type="submit"
                 class="danger-button"
             >
-                Yes, delete match
+                {% translate "Yes, delete match" %}
             </button>
 
             <a
-                href="{% url 'matches:detail' match.pk %}"
+                href="{% url 'matches:update' match.pk %}"
                 class="secondary-button"
             >
-                Cancel
+                {% translate "Cancel" %}
             </a>
         </form>
     </div>

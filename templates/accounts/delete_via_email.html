@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Confirm account deletion" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="auth-card account-delete-card">
+    <div class="auth-status-icon auth-status-icon--warning" aria-hidden="true">!</div>
+    <h1>{% translate "Confirm account deletion" %}</h1>
+    <p class="auth-subtitle">{% blocktranslate %}You are about to permanently delete the account associated with {{ account_email }} and all of its data.{% endblocktranslate %}</p>
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        <div class="legal-consent-field">
+            {{ form.confirm_deletion }}
+            <label for="{{ form.confirm_deletion.id_for_label }}">{% translate "I understand that this action is permanent." %}</label>
+            {% if form.confirm_deletion.errors %}<div class="field-errors">{{ form.confirm_deletion.errors }}</div>{% endif %}
+        </div>
+        <button type="submit" class="danger-button danger-button--full">{% translate "Permanently delete account" %}</button>
+    </form>
+</section>
+{% endblock %}

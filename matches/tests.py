@@ -355,6 +355,17 @@ class MatchCreateSecurityTests(MatchTestMixin, TestCase):
             ).exists()
         )
 
+    def test_create_page_does_not_display_delete_option(self):
+        response = self.client.get(reverse("matches:create"))
+
+        self.assertNotContains(response, "record-danger-zone")
+
+    def test_create_page_uses_professional_context_navigation(self):
+        response = self.client.get(reverse("matches:create"))
+
+        self.assertContains(response, 'class="context-navigation"')
+        self.assertContains(response, reverse("matches:list"))
+
 
 class MatchUpdateSecurityTests(MatchTestMixin, TestCase):
     def setUp(self):
@@ -405,6 +416,18 @@ class MatchUpdateSecurityTests(MatchTestMixin, TestCase):
             self.own_match.opponent_name,
             "Updated Opponent",
         )
+
+    def test_edit_page_displays_delete_option_for_existing_match(self):
+        response = self.client.get(
+            reverse("matches:update", args=[self.own_match.pk])
+        )
+
+        self.assertContains(
+            response,
+            reverse("matches:delete", args=[self.own_match.pk]),
+        )
+        self.assertContains(response, "Delete match")
+        self.assertContains(response, "record-danger-zone")
 
     def test_user_cannot_open_update_for_another_users_match(self):
         response = self.client.get(
@@ -485,6 +508,16 @@ class MatchDeleteSecurityTests(MatchTestMixin, TestCase):
             ).exists()
         )
 
+    def test_delete_confirmation_does_not_delete_on_get(self):
+        response = self.client.get(
+            reverse("matches:delete", args=[self.own_match.pk])
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.own_match.opponent_name)
+        self.assertContains(response, "Final score")
+        self.assertTrue(Match.objects.filter(pk=self.own_match.pk).exists())
+
     def test_user_cannot_open_delete_page_for_another_users_match(self):
         response = self.client.get(
             reverse(
@@ -510,3 +543,73 @@ class MatchDeleteSecurityTests(MatchTestMixin, TestCase):
                 pk=self.other_match.pk,
             ).exists()
         )
+
+
+class MatchPerformanceSummaryTests(MatchTestMixin, TestCase):
+    def setUp(self):
+        self.user = self.create_user()
+        self.player = self.create_player(self.user)
+        self.client.force_login(self.user)
+
+    def test_match_history_displays_performance_before_match_cards(self):
+        self.create_match(
+            self.user,
+            self.player,
+            opponent_name="First opponent",
+            status=Match.Status.COMPLETED,
+            player_sets_won=3,
+            opponent_sets_won=1,
+        )
+        self.create_match(
+            self.user,
+            self.player,
+            opponent_name="Second opponent",
+            status=Match.Status.COMPLETED,
+            player_sets_won=1,
+            opponent_sets_won=3,
+        )
+
+        response = self.client.get(reverse("matches:list"))
+
+        self.assertEqual(response.context["performance_total"], 2)
+        self.assertEqual(response.context["performance_wins"], 1)
+        self.assertEqual(response.context["performance_losses"], 1)
+        self.assertEqual(response.context["performance_win_rate"], 50.0)
+        self.assertEqual(response.context["performance_sets_won"], 4)
+        self.assertEqual(response.context["performance_sets_lost"], 4)
+        self.assertEqual(response.context["performance_sets_difference"], 0)
+        content = response.content.decode()
+        self.assertLess(
+            content.index("Filter"),
+            content.index("Season snapshot"),
+        )
+        self.assertLess(
+            content.index("Season snapshot"),
+            content.index("First opponent"),
+        )
+
+    def test_performance_summary_ignores_scheduled_matches(self):
+        self.create_match(
+            self.user,
+            self.player,
+            status=Match.Status.SCHEDULED,
+        )
+
+        response = self.client.get(reverse("matches:list"))
+
+        self.assertEqual(response.context["performance_total"], 0)
+        self.assertEqual(response.context["performance_win_rate"], 0)
+
+    def test_match_history_can_be_displayed_in_portuguese(self):
+        self.client.post(
+            reverse("set_language"),
+            {"language": "pt-br", "next": reverse("matches:list")},
+        )
+
+        response = self.client.get(reverse("matches:list"))
+
+        self.assertContains(response, "Histórico de partidas")
+        self.assertContains(response, "Resumo da temporada")
+        self.assertContains(response, "Adicionar partida")
+        self.assertContains(response, "Registre, revise e gerencie")
+        self.assertContains(response, "Todos os atletas")

@@ -1,0 +1,10 @@
+{% load i18n %}{% blocktranslate with username=user.get_username %}Hello {{ username }},{% endblocktranslate %}
+
+{% translate "Welcome to Table Tennis Manager. Confirm your email to activate your account securely." %}
+
+{% translate "Use the verification link below:" %}
+{{ activation_url }}
+
+{% translate "This link expires in one hour and can be used only once. If you did not create this account, you can ignore this email." %}
+
+{% translate "Table Tennis Manager team" %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ competition.name }} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="competition-page">
+    {% url 'competitions:list' as back_url %}
+    {% translate "Competitions" as area_label %}
+    {% translate "Back to competitions" as back_label %}
+    {% translate "Competition overview" as current_label %}
+    {% include "includes/context_navigation.html" with back_url=back_url area_label=area_label back_label=back_label current_label=current_label %}
+
+    <header class="competition-detail-hero">
+        <div>
+            <div class="competition-card-topline"><span class="competition-type-pill">{{ competition.get_competition_type_display }}</span><span class="competition-status-pill competition-status-{{ competition.status|lower }}">{{ competition.get_status_display }}</span></div>
+            <h1>{{ competition.name }}</h1>
+            <p class="page-subtitle">{{ competition.start_date|date:"DATE_FORMAT" }}{% if competition.end_date %} – {{ competition.end_date|date:"DATE_FORMAT" }}{% endif %}{% if competition.location %} · {{ competition.location }}{% endif %}</p>
+            {% if competition.events.all %}<p class="competition-sync-status"><span aria-hidden="true">✓</span>{% translate "Synchronized with calendar" %}</p>{% endif %}
+        </div>
+        <div class="profile-actions"><a href="{% url 'competitions:update' competition.pk %}" class="secondary-button">{% translate "Edit competition" %}</a><a href="{% url 'competitions:delete' competition.pk %}" class="profile-delete-link">{% translate "Delete" %}</a></div>
+    </header>
+
+    <div class="competition-performance-grid">
+        <article><span>{% translate "Completed matches" %}</span><strong>{{ total_matches }}</strong></article>
+        <article><span>{% translate "Wins" %}</span><strong>{{ wins }}</strong></article>
+        <article><span>{% translate "Losses" %}</span><strong>{{ losses }}</strong></article>
+        <article><span>{% translate "Win rate" %}</span><strong>{{ win_rate }}%</strong></article>
+    </div>
+
+    <div class="competition-finance-summary">
+        <article><span>{% translate "Competition income" %}</span><strong class="finance-positive">€ {{ competition_income|floatformat:2 }}</strong></article>
+        <article><span>{% translate "Competition expenses" %}</span><strong class="finance-negative">€ {{ competition_expenses|floatformat:2 }}</strong></article>
+        <article><span>{% translate "Competition balance" %}</span><strong>€ {{ competition_balance|floatformat:2 }}</strong></article>
+    </div>
+
+    <div class="competition-detail-grid">
+        <article class="competition-panel">
+            <div class="competition-panel-heading"><div><p class="eyebrow">{% translate "Team" %}</p><h2>{% translate "Participating athletes" %}</h2></div></div>
+            {% if competition.players.all %}<div class="competition-person-list">{% for player in competition.players.all %}<a href="{% url 'players:detail' player.pk %}"><span>{{ player.first_name|first }}{{ player.last_name|first }}</span><strong>{{ player }}</strong></a>{% endfor %}</div>{% else %}<p class="event-muted-copy">{% translate "No athletes linked yet." %}</p>{% endif %}
+        </article>
+
+        <article class="competition-panel">
+            <div class="competition-panel-heading"><div><p class="eyebrow">{% translate "Agenda" %}</p><h2>{% translate "Linked events" %}</h2></div><a href="{% url 'planning:create' %}?competition={{ competition.pk }}" class="secondary-button">+ {% translate "Add event" %}</a></div>
+            {% if events %}<div class="competition-record-list">{% for event in events %}<a href="{% url 'planning:detail' event.pk %}"><span>{{ event.start_datetime|date:"SHORT_DATE_FORMAT" }}</span><strong>{{ event.title }}</strong></a>{% endfor %}</div>{% else %}<p class="event-muted-copy">{% translate "No events linked yet." %}</p>{% endif %}
+        </article>
+
+        <article class="competition-panel competition-panel-wide">
+            <div class="competition-panel-heading"><div><p class="eyebrow">{% translate "Performance" %}</p><h2>{% translate "Competition matches" %}</h2></div><a href="{% url 'matches:create' %}?competition={{ competition.pk }}" class="secondary-button">+ {% translate "Add match" %}</a></div>
+            {% if matches %}<div class="competition-record-list">{% for match in matches %}<a href="{% url 'matches:detail' match.pk %}"><span>{{ match.played_at|date:"SHORT_DATE_FORMAT" }}</span><strong>{{ match.player }} {% translate "vs" %} {{ match.opponent_name }}</strong><b>{{ match.score }}</b></a>{% endfor %}</div>{% else %}<p class="event-muted-copy">{% translate "No matches linked yet." %}</p>{% endif %}
+        </article>
+
+        <article class="competition-panel">
+            <div class="competition-panel-heading"><div><p class="eyebrow">{% translate "Finances" %}</p><h2>{% translate "Linked transactions" %}</h2></div><a href="{% url 'finances:create' %}?competition={{ competition.pk }}" class="secondary-button">+ {% translate "Add transaction" %}</a></div>
+            {% if transactions %}<div class="competition-record-list">{% for transaction in transactions %}<a href="{% url 'finances:update' transaction.pk %}"><span>{{ transaction.date|date:"SHORT_DATE_FORMAT" }}</span><strong>{{ transaction.description }}</strong><b class="{% if transaction.transaction_type == 'INCOME' %}finance-positive{% else %}finance-negative{% endif %}">{% if transaction.transaction_type == 'INCOME' %}+{% else %}-{% endif %} € {{ transaction.amount|floatformat:2 }}</b></a>{% endfor %}</div>{% else %}<p class="event-muted-copy">{% translate "No transactions linked yet." %}</p>{% endif %}
+        </article>
+
+        <article class="competition-panel">
+            <div class="competition-panel-heading"><div><p class="eyebrow">{% translate "Knowledge" %}</p><h2>{% translate "Linked notes" %}</h2></div><a href="{% url 'notes:create' %}?competition={{ competition.pk }}" class="secondary-button">+ {% translate "Add note" %}</a></div>
+            {% if linked_notes %}<div class="competition-record-list">{% for note in linked_notes %}<a href="{% url 'notes:update' note.pk %}"><span>{{ note.get_category_display }}</span><strong>{{ note.title }}</strong>{% if note.is_pinned %}<b title="{% translate 'Important note' %}">★</b>{% endif %}</a>{% endfor %}</div>{% else %}<p class="event-muted-copy">{% translate "No notes linked yet." %}</p>{% endif %}
+        </article>
+
+        {% if competition.notes %}<article class="competition-panel competition-panel-wide"><p class="eyebrow">{% translate "Important information" %}</p><h2>{% translate "Competition notes" %}</h2><div class="competition-notes">{{ competition.notes|linebreaks }}</div></article>{% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,319 +1,168 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load i18n planning_tags %}
 
-
-{% block title %}
-Dashboard | Table Tennis Manager
-{% endblock %}
-
-
+{% block title %}Dashboard | Table Tennis Manager{% endblock %}
 
 {% block content %}
-
-
-<section class="page-section dashboard-page">
-
-
-    <header class="page-header">
-
-        <p class="eyebrow">
-            Overview
-        </p>
-
-
-        <h1>
-            Athlete Dashboard
-        </h1>
-
-
-        <p class="page-subtitle">
-            Track your progress, matches and competitive evolution.
-        </p>
-
+<section class="page-section dashboard-page dashboard-v2">
+    <header class="dashboard-welcome">
+        <div>
+            <p class="eyebrow">{% translate "Your daily overview" %}</p>
+            <h1>{{ welcome_greeting }}, {{ display_name }}.</h1>
+            <p class="page-subtitle">{{ today|date:"DATE_FORMAT" }} · {% translate "Your season, schedule and performance at a glance." %}</p>
+        </div>
+        <a href="{% url 'planning:create' %}" class="primary-button">{% translate "Add event" %}</a>
     </header>
 
-
-
-
-    <section class="dashboard-section">
-
-
-        <div class="dashboard-grid">
-
-
-            <article class="dashboard-card">
-
-                <span class="dashboard-card-label">
-                    Players
-                </span>
-
-                <strong>
-                    {{ players_count }}
-                </strong>
-
-                <p>
-                    Registered athletes
-                </p>
-
-            </article>
-
-
-
-
-            <article class="dashboard-card">
-
-                <span class="dashboard-card-label">
-                    Matches played
-                </span>
-
-                <strong>
-                    {{ matches_played }}
-                </strong>
-
-                <p>
-                    Completed matches
-                </p>
-
-            </article>
-
-
-
-
-            <article class="dashboard-card">
-
-                <span class="dashboard-card-label">
-                    Wins
-                </span>
-
-                <strong>
-                    {{ wins }}
-                </strong>
-
-                <p>
-                    Victories
-                </p>
-
-            </article>
-
-
-
-
-            <article class="dashboard-card">
-
-                <span class="dashboard-card-label">
-                    Losses
-                </span>
-
-                <strong>
-                    {{ losses }}
-                </strong>
-
-                <p>
-                    Defeats
-                </p>
-
-            </article>
-
-
-
-
-            <article class="dashboard-card">
-
-                <span class="dashboard-card-label">
-                    Win rate
-                </span>
-
-                <strong>
-                    {{ win_rate }}%
-                </strong>
-
-                <p>
-                    Overall performance
-                </p>
-
-            </article>
-
-
-
-
-            <article class="dashboard-card">
-
-                <span class="dashboard-card-label">
-                    Sets won
-                </span>
-
-                <strong>
-                    {{ sets_won }}
-                </strong>
-
-                <p>
-                    Total sets
-                </p>
-
-            </article>
-
-
-
-
-            <article class="dashboard-card">
-
-                <span class="dashboard-card-label">
-                    Sets lost
-                </span>
-
-                <strong>
-                    {{ sets_lost }}
-                </strong>
-
-                <p>
-                    Opponent advantage
-                </p>
-
-            </article>
-
-
-
-
-            <article class="dashboard-card">
-
-                <span class="dashboard-card-label">
-                    Current streak
-                </span>
-
-                <strong>
-                    {{ current_streak }}
-                </strong>
-
-                <p>
-                    Consecutive wins
-                </p>
-
-            </article>
-
-
-        </div>
-
-
-    </section>
-
-
-
-
-
-
-    <section class="dashboard-section">
-
-
-        <div class="professional-form-card">
-
-
-            <h2>
-                Recent matches
-            </h2>
-
-
-
-
-            {% if recent_matches %}
-
-
-                <div class="match-list">
-
-
-                    {% for match in recent_matches %}
-
-
-                        <div class="match-row">
-
-
-                            <div>
-
-                                <strong>
-                                    {{ match.player }}
-                                </strong>
-
-
-                                <p>
-                                    vs {{ match.opponent_name }}
-                                </p>
-
-
-                            </div>
-
-
-
-                            <div>
-
-                                {% if match.result == "Win" %}
-
-                                    <span class="result-win">
-                                        WIN
-                                    </span>
-
-                                {% else %}
-
-                                    <span class="result-loss">
-                                        LOSS
-                                    </span>
-
-                                {% endif %}
-
-                            </div>
-
-
-                        </div>
-
-
-                    {% endfor %}
-
-
+    <section class="dashboard-focus-grid" aria-label="{% translate 'Upcoming schedule' %}">
+        <article class="dashboard-focus-card dashboard-focus-card-competition">
+            <p class="dashboard-card-label">{% translate "Next competition" %}</p>
+            {% if next_competition_record %}
+                <div class="dashboard-countdown">
+                    <strong>{{ days_until_competition }}</strong>
+                    <span>{% if days_until_competition == 1 %}{% translate "day to go" %}{% else %}{% translate "days to go" %}{% endif %}</span>
                 </div>
-
-
-
+                <span class="dashboard-event-type">{{ next_competition_record.get_status_display }}</span>
+                <h2>{{ next_competition_record.name }}</h2>
+                <p>{{ next_competition_record.start_date|date:"DATE_FORMAT" }}{% if next_competition_record.location %} · {{ next_competition_record.location }}{% endif %}</p>
+                <a href="{% url 'competitions:detail' next_competition_record.pk %}" class="dashboard-text-link">{% translate "View competition" %} →</a>
+            {% elif next_competition %}
+                <div class="dashboard-countdown">
+                    <strong>{{ days_until_competition }}</strong>
+                    <span>{% if days_until_competition == 1 %}{% translate "day to go" %}{% else %}{% translate "days to go" %}{% endif %}</span>
+                </div>
+                <h2>{{ next_competition.title }}</h2>
+                <p>{{ next_competition.start_datetime|date:"DATETIME_FORMAT" }}{% if next_competition.location %} · {{ next_competition.location }}{% endif %}</p>
+                <a href="{% url 'planning:detail' next_competition.pk %}" class="dashboard-text-link">{% translate "View competition" %} →</a>
             {% else %}
-
-
-                <div class="empty-state">
-
-
-                    <span class="empty-state-icon">
-                        🏓
-                    </span>
-
-
-                    <h2>
-                        No matches yet
-                    </h2>
-
-
-                    <p>
-                        Your performance story starts with your first match.
-                    </p>
-
-
-                    <a
-                        href="{% url 'matches:create' %}"
-                        class="primary-button"
-                    >
-                        Add your first match
-                    </a>
-
-
+                <div class="dashboard-empty-compact">
+                    <h2>{% translate "No competition scheduled" %}</h2>
+                    <p>{% translate "Add your next tournament to start the countdown." %}</p>
+                    <a href="{% url 'competitions:create' %}" class="dashboard-text-link">{% translate "Register competition" %} →</a>
                 </div>
-
-
             {% endif %}
+        </article>
 
-
-        </div>
-
+        <article class="dashboard-focus-card">
+            <p class="dashboard-card-label">{% translate "Next commitment" %}</p>
+            {% if next_commitment %}
+                <span class="dashboard-event-type">{{ next_commitment.get_event_type_display }}</span>
+                <h2>{{ next_commitment.title }}</h2>
+                <p class="dashboard-commitment-time">{{ next_commitment.start_datetime|date:"DATETIME_FORMAT" }}</p>
+                {% if next_commitment.location %}<p>{{ next_commitment.location }}</p>{% endif %}
+                <a href="{% url 'planning:detail' next_commitment.pk %}" class="dashboard-text-link">{% translate "View commitment" %} →</a>
+            {% else %}
+                <div class="dashboard-empty-compact">
+                    <h2>{% translate "Your schedule is clear" %}</h2>
+                    <p>{% translate "No upcoming commitments." %}</p>
+                    <a href="{% url 'planning:create' %}" class="dashboard-text-link">{% translate "Add commitment" %} →</a>
+                </div>
+            {% endif %}
+        </article>
 
     </section>
 
+    <section class="dashboard-compact-calendar" aria-labelledby="dashboard-calendar-title">
+        <div class="dashboard-section-heading">
+            <div><p class="eyebrow">{% translate "Schedule" %}</p><h2 id="dashboard-calendar-title">{{ calendar_month|date:"F Y" }}</h2></div>
+            <div class="dashboard-calendar-actions">
+                <nav class="dashboard-calendar-navigation" aria-label="{% translate 'Calendar month navigation' %}">
+                    <a href="?year={{ previous_calendar_month.year }}&month={{ previous_calendar_month.month }}#dashboard-calendar-title" class="secondary-button" aria-label="{% translate 'Previous month' %}">←</a>
+                    <a href="{% url 'dashboard:home' %}#dashboard-calendar-title" class="secondary-button">{% translate "Today" %}</a>
+                    <a href="?year={{ next_calendar_month.year }}&month={{ next_calendar_month.month }}#dashboard-calendar-title" class="secondary-button" aria-label="{% translate 'Next month' %}">→</a>
+                </nav>
+                <a href="{% url 'planning:calendar' %}?year={{ calendar_month.year }}&month={{ calendar_month.month }}" class="secondary-button">{% translate "Open full calendar" %}</a>
+            </div>
+        </div>
+        <div class="compact-calendar-card">
+            <div class="compact-calendar-weekdays" aria-hidden="true">
+                <span>{% translate "Mon" %}</span><span>{% translate "Tue" %}</span><span>{% translate "Wed" %}</span><span>{% translate "Thu" %}</span><span>{% translate "Fri" %}</span><span>{% translate "Sat" %}</span><span>{% translate "Sun" %}</span>
+            </div>
+            <div class="compact-calendar-grid">
+                {% for week in calendar_weeks %}
+                    {% for day in week %}
+                        <div class="compact-calendar-day {% if day.month != calendar_month.month %}compact-calendar-day-muted{% endif %} {% if day == today %}compact-calendar-day-today{% endif %}">
+                            <a href="{% url 'planning:create' %}?date={{ day|date:'Y-m-d' }}" class="compact-calendar-create" aria-label="{% blocktranslate with event_date=day|date:'DATE_FORMAT' %}Add event on {{ event_date }}{% endblocktranslate %}"></a>
+                            <span class="compact-calendar-number">{{ day.day }}</span>
+                            <div class="compact-calendar-events">
+                                {% for event in calendar_events_by_date|get_item:day %}
+                                    <a href="{% url 'planning:detail' event.pk %}" class="compact-calendar-event compact-calendar-event-{{ event.event_type|lower }}" title="{{ event.title }} at {{ event.start_datetime|date:'H:i' }}">
+                                        <span>{{ event.start_datetime|date:"H:i" }}</span><strong>{{ event.title }}</strong>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
+    <section class="dashboard-finance-section" aria-labelledby="dashboard-finance-title">
+        <div class="dashboard-section-heading">
+            <div>
+                <p class="eyebrow">{% translate "Financial overview" %}</p>
+                <h2 id="dashboard-finance-title">{{ today|date:"F" }} · {% translate "At a glance" %}</h2>
+            </div>
+            <a href="{% url 'finances:list' %}" class="secondary-button">{% translate "Open finance workspace" %}</a>
+        </div>
+
+        <div class="dashboard-finance-panel">
+            <article class="dashboard-finance-main">
+                <span>{% translate "Current balance" %}</span>
+                <strong class="{% if monthly_balance < 0 %}dashboard-finance-negative{% endif %}">€ {{ monthly_balance|floatformat:2 }}</strong>
+                <p>€ {{ monthly_income|floatformat:2 }} {% translate "income" %} · € {{ monthly_expenses|floatformat:2 }} {% translate "expenses" %}</p>
+            </article>
+
+            <div class="dashboard-finance-breakdown">
+                <article><span>{% translate "Personal expenses" %}</span><strong>€ {{ personal_expenses|floatformat:2 }}</strong></article>
+                <article><span>{% translate "Professional expenses" %}</span><strong>€ {{ professional_expenses|floatformat:2 }}</strong></article>
+                <article class="dashboard-finance-pending"><span>{% translate "Pending payments" %}</span><strong>€ {{ pending_expenses|floatformat:2 }}</strong></article>
+            </div>
+
+            <a href="{% url 'finances:create' %}" class="dashboard-finance-quick-add">+ {% translate "Add transaction" %}</a>
+        </div>
+    </section>
+
+    <section class="dashboard-notes-section" aria-labelledby="dashboard-notes-title">
+        <div class="dashboard-section-heading">
+            <div><p class="eyebrow">{% translate "Notes" %}</p><h2 id="dashboard-notes-title">{% translate "Important notes" %}</h2></div>
+            <a href="{% url 'notes:list' %}" class="secondary-button">{% translate "Open notes workspace" %}</a>
+        </div>
+
+        {% if pinned_notes %}
+            <div class="dashboard-notes-grid">
+                {% for note in pinned_notes %}
+                    <article class="dashboard-note-card">
+                        <span>{{ note.get_category_display }}</span>
+                        <h3>{{ note.title }}</h3>
+                        <p>{{ note.content|truncatechars:150 }}</p>
+                        <a href="{% url 'notes:update' note.pk %}">{% translate "Open note" %} →</a>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="dashboard-notes-empty">
+                <div><h3>{% translate "No pinned notes" %}</h3><p>{% translate "Pin important decisions or reminders to keep them visible here." %}</p></div>
+                <a href="{% url 'notes:create' %}" class="dashboard-text-link">{% translate "Create a note" %} →</a>
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="dashboard-section" aria-labelledby="performance-title">
+        <div class="dashboard-section-heading"><div><p class="eyebrow">{% translate "Performance" %}</p><h2 id="performance-title">{% translate "Season snapshot" %}</h2></div></div>
+        <div class="dashboard-grid">
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Players" %}</span><strong>{{ players_count }}</strong><p>{% translate "Registered athletes" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Matches played" %}</span><strong>{{ matches_played }}</strong><p>{% translate "Completed matches" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Wins" %}</span><strong>{{ wins }}</strong><p>{% translate "Victories" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Losses" %}</span><strong>{{ losses }}</strong><p>{% translate "Defeats" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Win rate" %}</span><strong>{{ win_rate }}%</strong><p>{% translate "Overall performance" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Sets won" %}</span><strong>{{ sets_won }}</strong><p>{% translate "Total sets" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Sets lost" %}</span><strong>{{ sets_lost }}</strong><p>{% translate "Opponent advantage" %}</p></article>
+            <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Current streak" %}</span><strong>{{ current_streak }}</strong><p>{% translate "Consecutive wins" %}</p></article>
+        </div>
+    </section>
 
 </section>
-
-
 {% endblock %}
-

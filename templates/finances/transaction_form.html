@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ page_title }} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="page-section form-page">
+    {% url 'finances:list' as back_url %}
+    {% translate "Finances" as area_label %}
+    {% translate "Back to finances" as back_label %}
+    {% include "includes/context_navigation.html" with back_url=back_url area_label=area_label back_label=back_label current_label=page_title %}
+
+    <div class="page-header"><div><p class="eyebrow">{% translate "Financial management" %}</p><h1>{{ page_title }}</h1><p class="page-subtitle">{% translate "Keep every personal and professional transaction accurate." %}</p></div></div>
+    <div class="professional-form-card">
+        <form method="post" class="professional-form">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+            <div class="form-grid">
+                {% for field in form %}
+                    <div class="form-group {% if field.name == 'description' or field.name == 'notes' %}form-group-full{% endif %}">
+                        {% if field.name == 'is_recurring' %}<label class="finance-checkbox">{{ field }} <span>{{ field.label }}</span></label>{% else %}<label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% endif %}
+                        {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+                        {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-actions"><button type="submit" class="primary-button">{{ submit_label }}</button><a href="{% url 'finances:list' %}" class="secondary-button">{% translate "Cancel" %}</a></div>
+        </form>
+    </div>
+</section>
+{% endblock %}

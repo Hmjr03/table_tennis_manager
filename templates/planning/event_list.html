@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Calendar | Table Tennis Manager{% endblock %}
 
@@ -8,13 +9,12 @@
     <div class="page-header">
 
         <div>
-            <p class="eyebrow">Planning</p>
+            <p class="eyebrow">{% translate "Planning" %}</p>
 
-            <h1>Calendar</h1>
+            <h1>{% translate "Calendar" %}</h1>
 
             <p class="page-subtitle">
-                Organize your training, competitions, travel, recovery
-                and professional activities throughout the year.
+                {% translate "Organize your training, competitions, travel, recovery and professional activities throughout the year." %}
             </p>
         </div>
 
@@ -22,7 +22,7 @@
             href="{% url 'planning:create' %}"
             class="primary-button"
         >
-            Add event
+            {% translate "Add event" %}
         </a>
 
     </div>
@@ -32,10 +32,10 @@
         <div class="calendar-toolbar">
 
             <div>
-                <h2>Upcoming activities</h2>
+                <h2>{% translate "Upcoming activities" %}</h2>
 
                 <p>
-                    Your personal and professional schedule.
+                    {% translate "Your personal and professional schedule." %}
                 </p>
             </div>
 
@@ -89,12 +89,12 @@
 
                             <span>
                                 🕐
-                                {{ event.start_datetime|date:"d/m/Y H:i" }}
+                                {{ event.start_datetime|date:"DATETIME_FORMAT" }}
                             </span>
 
                             <span>
                                 →
-                                {{ event.end_datetime|date:"d/m/Y H:i" }}
+                                {{ event.end_datetime|date:"DATETIME_FORMAT" }}
                             </span>
 
                             {% if event.location %}
@@ -119,7 +119,7 @@
                             href="{% url 'planning:detail' event.pk %}"
                             class="secondary-button"
                         >
-                            View
+                            {% translate "View" %}
                         </a>
 
                     </div>
@@ -138,18 +138,17 @@
                 📅
             </div>
 
-            <h2>Your calendar is empty</h2>
+            <h2>{% translate "Your calendar is empty" %}</h2>
 
             <p>
-                Start organizing your season by adding your first
-                training session, competition, travel or personal event.
+                {% translate "Start organizing your season by adding your first training session, competition, travel or personal event." %}
             </p>
 
             <a
                 href="{% url 'planning:create' %}"
                 class="primary-button"
             >
-                Create your first event
+                {% translate "Create your first event" %}
             </a>
 
         </div>

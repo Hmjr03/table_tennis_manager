@@ -6,7 +6,7 @@ from players.models import Player
 
 
 @login_required
-def dashboard(request):
+def analysis(request):
 
     matches = (
         Match.objects.filter(
@@ -246,6 +246,13 @@ def dashboard(request):
 
     return render(
         request,
-        "performance/dashboard.html",
+        "matches/match_analysis.html",
         context,
     )
+
+
+@login_required
+def dashboard(request):
+    # Backward-compatible alias for saved links. The feature now belongs
+    # to the Matches section and renders its integrated analysis page.
+    return analysis(request)

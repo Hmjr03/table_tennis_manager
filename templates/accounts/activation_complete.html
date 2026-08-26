@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Account verified" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="auth-card auth-card--status">
+    <div class="auth-status-icon auth-status-icon--success" aria-hidden="true">✓</div>
+    <h1>{% translate "Account verified" %}</h1>
+    <p class="auth-subtitle">
+        {% translate "Your email has been confirmed and your account is ready to use." %}
+    </p>
+    <a href="{% url 'dashboard:home' %}" class="primary-button auth-button-link">
+        {% translate "Open my dashboard" %}
+    </a>
+</section>
+{% endblock %}

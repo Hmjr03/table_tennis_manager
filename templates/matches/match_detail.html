@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}
     {{ match.player }} vs {{ match.opponent_name }}
@@ -12,31 +13,31 @@
             href="{% url 'matches:list' %}"
             class="back-link"
         >
-            ← Back to matches
+            {% translate "← Back to matches" %}
         </a>
 
-        <p class="eyebrow">Match details</p>
+        <p class="eyebrow">{% translate "Match details" %}</p>
 
         <h1>
             {{ match.player }}
-            <span class="match-vs">vs</span>
+            <span class="match-vs">{% translate "vs" %}</span>
             {{ match.opponent_name }}
         </h1>
 
         <p class="page-subtitle">
-            {{ match.played_at|date:"F d, Y • H:i" }}
+            {{ match.played_at|date:"DATETIME_FORMAT" }}
         </p>
     </div>
 
     <div class="match-detail-card">
         <div class="match-scoreboard">
             <div class="score-player">
-                <span class="score-label">Player</span>
+                <span class="score-label">{% translate "Player" %}</span>
 
                 <strong>{{ match.player }}</strong>
 
                 {% if match.result == "Win" %}
-                    <span class="winner-label">Winner</span>
+                    <span class="winner-label">{% translate "Winner" %}</span>
                 {% endif %}
             </div>
 
@@ -55,27 +56,27 @@
             </div>
 
             <div class="score-player">
-                <span class="score-label">Opponent</span>
+                <span class="score-label">{% translate "Opponent" %}</span>
 
                 <strong>{{ match.opponent_name }}</strong>
 
                 {% if match.result == "Loss" %}
-                    <span class="winner-label">Winner</span>
+                    <span class="winner-label">{% translate "Winner" %}</span>
                 {% endif %}
             </div>
         </div>
 
         <div class="match-information">
             <div class="information-item">
-                <span>Competition</span>
+                <span>{% translate "Competition" %}</span>
 
                 <strong>
-                    {{ match.competition|default:"Not specified" }}
+                    {% if match.competition_record %}<a href="{% url 'competitions:detail' match.competition_record.pk %}">{{ match.competition_record.name }}</a>{% else %}{{ match.competition|default:"Not specified" }}{% endif %}
                 </strong>
             </div>
 
             <div class="information-item">
-                <span>Status</span>
+                <span>{% translate "Status" %}</span>
 
                 <strong>
                     {{ match.get_status_display }}
@@ -83,7 +84,7 @@
             </div>
 
             <div class="information-item">
-                <span>Format</span>
+                <span>{% translate "Format" %}</span>
 
                 <strong>
                     {{ match.get_best_of_display }}
@@ -91,17 +92,17 @@
             </div>
 
             <div class="information-item">
-                <span>Recorded</span>
+                <span>{% translate "Recorded" %}</span>
 
                 <strong>
-                    {{ match.created_at|date:"M d, Y" }}
+                    {{ match.created_at|date:"DATE_FORMAT" }}
                 </strong>
             </div>
         </div>
 
         {% if match.notes %}
             <div class="match-notes">
-                <h2>Match notes</h2>
+                <h2>{% translate "Match notes" %}</h2>
 
                 <p>
                     {{ match.notes|linebreaksbr }}
@@ -114,14 +115,14 @@
                 href="{% url 'matches:update' match.pk %}"
                 class="primary-button"
             >
-                Edit match
+                {% translate "Edit match" %}
             </a>
 
             <a
                 href="{% url 'matches:delete' match.pk %}"
                 class="danger-button"
             >
-                Delete match
+                {% translate "Delete match" %}
             </a>
         </div>
     </div>

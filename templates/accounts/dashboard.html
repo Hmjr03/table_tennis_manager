@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Dashboard | Table Tennis Manager{% endblock %}
 
@@ -6,14 +7,14 @@
 <section class="dashboard">
     <div class="dashboard-header">
         <div>
-            <p class="eyebrow">Dashboard</p>
+            <p class="eyebrow">{% translate "Dashboard" %}</p>
 
             <h1>
-                Welcome, {{ user.username }}!
+                {% blocktranslate with username=user.username %}Welcome, {{ username }}!{% endblocktranslate %}
             </h1>
 
             <p class="dashboard-subtitle">
-                Your Table Tennis Manager workspace.
+                {% translate "Your Table Tennis Manager workspace." %}
             </p>
         </div>
 
@@ -29,15 +30,14 @@
         >
             <span class="card-icon">🏓</span>
 
-            <h2>Matches</h2>
+            <h2>{% translate "Matches" %}</h2>
 
             <p>
-                Record matches, opponents, scores and results.
-                Build the foundation for future performance analytics.
+                {% translate "Record matches, opponents, scores and results. Build the foundation for future performance analytics." %}
             </p>
 
             <span class="card-action">
-                Open matches →
+                {% translate "Open matches →" %}
             </span>
         </a>
 
@@ -47,60 +47,56 @@
         >
             <span class="card-icon">👤</span>
 
-            <h2>Players</h2>
+            <h2>{% translate "Players" %}</h2>
 
             <p>
-                Manage your athletes, player profiles,
-                rankings and playing characteristics.
+                {% translate "Manage your athletes, player profiles, rankings and playing characteristics." %}
             </p>
 
             <span class="card-action">
-                Open players →
+                {% translate "Open players →" %}
             </span>
         </a>
 
         <article class="dashboard-card">
             <span class="card-icon">🏆</span>
 
-            <h2>Rankings</h2>
+            <h2>{% translate "Rankings" %}</h2>
 
             <p>
-                Track ranking progression and competitive
-                position over time.
+                {% translate "Track ranking progression and competitive position over time." %}
             </p>
 
             <span class="coming-soon">
-                Coming soon
+                {% translate "Coming soon" %}
             </span>
         </article>
 
         <article class="dashboard-card">
             <span class="card-icon">📊</span>
 
-            <h2>Performance</h2>
+            <h2>{% translate "Performance" %}</h2>
 
             <p>
-                Analyze wins, losses, trends and sporting
-                performance using your match history.
+                {% translate "Analyze wins, losses, trends and sporting performance using your match history." %}
             </p>
 
             <span class="coming-soon">
-                Coming soon
+                {% translate "Coming soon" %}
             </span>
         </article>
 
         <article class="dashboard-card">
             <span class="card-icon">📅</span>
 
-            <h2>Training</h2>
+            <h2>{% translate "Training" %}</h2>
 
             <p>
-                Plan training sessions, exercises,
-                workload and your sporting calendar.
+                {% translate "Plan training sessions, exercises, workload and your sporting calendar." %}
             </p>
 
             <span class="coming-soon">
-                Coming soon
+                {% translate "Coming soon" %}
             </span>
         </article>
     </div>

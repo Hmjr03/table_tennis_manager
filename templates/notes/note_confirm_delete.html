@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Delete note" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="page-section form-page">
+    <div class="page-header">
+        <div>
+            <p class="eyebrow">{% translate "Knowledge and decisions" %}</p>
+            <h1>{% translate "Delete note" %}</h1>
+            <p class="page-subtitle">
+                {% translate "Review the note before permanently removing it." %}
+            </p>
+        </div>
+    </div>
+
+    <div class="professional-form-card delete-confirmation-card note-delete-card">
+        <div class="note-delete-warning" role="alert">
+            <span class="note-delete-warning-icon" aria-hidden="true">!</span>
+            <div>
+                <strong>{% translate "This action cannot be undone." %}</strong>
+                <p>
+                    {% translate "The note will be permanently removed from your workspace and dashboard." %}
+                </p>
+            </div>
+        </div>
+
+        <div class="delete-event-preview">
+            <strong>{{ note.title }}</strong>
+            <span>
+                {{ note.get_category_display }} ·
+                {{ note.updated_at|date:"DATETIME_FORMAT" }}
+            </span>
+            <p>{{ note.content|truncatechars:220 }}</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-actions">
+                <button type="submit" class="danger-button">
+                    {% translate "Delete note permanently" %}
+                </button>
+                <a href="{% url 'notes:update' note.pk %}" class="secondary-button">
+                    {% translate "Cancel" %}
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

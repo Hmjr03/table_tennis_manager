@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Notes | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="page-section notes-page">
+    <div class="page-header">
+        <div><p class="eyebrow">{% translate "Knowledge and decisions" %}</p><h1>{% translate "Notes workspace" %}</h1><p class="page-subtitle">{% translate "Keep tactical ideas, reminders and important decisions easy to find." %}</p></div>
+        <a href="{% url 'notes:create' %}" class="primary-button">{% translate "Add note" %}</a>
+    </div>
+
+    <div class="filter-card">
+        <form method="get" class="notes-filter-form">
+            <div class="form-group"><label for="id_q">{% translate "Search" %}</label><input id="id_q" type="search" name="q" value="{{ current_query }}" placeholder="{% translate 'Title or note content' %}"></div>
+            <div class="form-group"><label for="id_category">{% translate "Category" %}</label><select id="id_category" name="category"><option value="">{% translate "All categories" %}</option>{% for value, label in category_choices %}<option value="{{ value }}" {% if current_category == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+            <div class="notes-view-switch"><label class="finance-checkbox"><input type="checkbox" name="archived" value="1" {% if show_archived %}checked{% endif %}><span>{% translate "Show archived notes" %}</span></label></div>
+            <div class="filter-actions"><button type="submit" class="primary-button">{% translate "Filter" %}</button><a href="{% url 'notes:list' %}" class="secondary-button">{% translate "Clear" %}</a></div>
+        </form>
+    </div>
+
+    {% if page_obj.object_list %}
+        <div class="notes-grid">
+            {% for note in page_obj %}
+                <article class="note-card {% if note.is_pinned %}note-card-pinned{% endif %}">
+                    <div class="note-card-header"><span class="note-category note-category-{{ note.category|lower }}">{{ note.get_category_display }}</span>{% if note.is_pinned %}<span class="note-pinned-label">{% translate "Pinned" %}</span>{% endif %}</div>
+                    <h2>{{ note.title }}</h2>
+                    <p class="note-preview">{{ note.content|truncatechars:220|linebreaksbr }}</p>
+                    <p class="note-updated">{% blocktranslate with elapsed=note.updated_at|timesince %}Updated {{ elapsed }} ago{% endblocktranslate %}</p>
+                    <div class="note-actions">
+                        <a href="{% url 'notes:update' note.pk %}">{% translate "Edit" %}</a>
+                        <form method="post" action="{% url 'notes:toggle_pin' note.pk %}">{% csrf_token %}<button type="submit">{% if note.is_pinned %}Unpin{% else %}Pin{% endif %}</button></form>
+                        <form method="post" action="{% url 'notes:toggle_archive' note.pk %}">{% csrf_token %}<button type="submit">{% if note.is_archived %}Restore{% else %}Archive{% endif %}</button></form>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        {% if page_obj.has_other_pages %}<nav class="pagination" aria-label="{% translate 'Notes pagination' %}">{% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&q={{ current_query|urlencode }}&category={{ current_category }}{% if show_archived %}&archived=1{% endif %}">{% translate "Previous" %}</a>{% endif %}<span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>{% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&q={{ current_query|urlencode }}&category={{ current_category }}{% if show_archived %}&archived=1{% endif %}">{% translate "Next" %}</a>{% endif %}</nav>{% endif %}
+    {% else %}
+        <div class="empty-state"><span class="empty-state-icon">📝</span><h2>{% if show_archived %}No archived notes{% else %}No notes found{% endif %}</h2><p>{% translate "Capture your first idea, decision or reminder." %}</p><a href="{% url 'notes:create' %}" class="primary-button">{% translate "Add note" %}</a></div>
+    {% endif %}
+</section>
+{% endblock %}

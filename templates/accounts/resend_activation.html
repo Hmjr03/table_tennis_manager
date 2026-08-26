@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Resend verification email" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="auth-card">
+    <span class="auth-eyebrow">{% translate "Account security" %}</span>
+    <h1>{% translate "Resend verification email" %}</h1>
+    <p class="auth-subtitle">
+        {% translate "Enter the email used during registration and we will send a new secure link." %}
+    </p>
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">{% translate "Email address" %}</label>
+            {{ form.email }}
+            {% if form.email.errors %}<div class="field-errors">{{ form.email.errors }}</div>{% endif %}
+        </div>
+        <button type="submit" class="primary-button">{% translate "Send verification email" %}</button>
+    </form>
+    <p class="auth-footer"><a href="{% url 'accounts:login' %}">{% translate "Return to sign in" %}</a></p>
+</section>
+{% endblock %}

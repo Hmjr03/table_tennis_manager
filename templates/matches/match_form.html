@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}
     {{ page_title }} | Table Tennis Manager
@@ -6,21 +7,18 @@
 
 {% block content %}
 <section class="page-section">
-    <div class="form-page-header">
-        <a
-            href="{% url 'matches:list' %}"
-            class="back-link"
-        >
-            ← Back to matches
-        </a>
+    {% url 'matches:list' as back_url %}
+    {% translate "Matches" as area_label %}
+    {% translate "Back to matches" as back_label %}
+    {% include "includes/context_navigation.html" with back_url=back_url area_label=area_label back_label=back_label current_label=page_title %}
 
-        <p class="eyebrow">Matches</p>
+    <div class="form-page-header">
+        <p class="eyebrow">{% translate "Matches" %}</p>
 
         <h1>{{ page_title }}</h1>
 
         <p class="page-subtitle">
-            Record match information accurately so your
-            future performance analytics remain reliable.
+            {% translate "Record match information accurately so your future performance analytics remain reliable." %}
         </p>
     </div>
 
@@ -58,21 +56,17 @@
                 </div>
             {% endfor %}
 
-            <div class="form-actions">
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    {{ submit_label }}
-                </button>
+            {% if match %}
+                {% url 'matches:delete' match.pk as destructive_url %}
+                {% url 'matches:detail' match.pk as cancel_url %}
+            {% else %}
+                {% url 'matches:list' as cancel_url %}
+            {% endif %}
 
-                <a
-                    href="{% url 'matches:list' %}"
-                    class="secondary-button"
-                >
-                    Cancel
-                </a>
-            </div>
+            {% translate "Delete match" as destructive_label %}
+            {% translate "Remove match record" as destructive_title %}
+            {% translate "This permanently removes the result and recalculates performance statistics." as destructive_help %}
+            {% include "includes/form_action_bar.html" with destructive_url=destructive_url destructive_label=destructive_label destructive_title=destructive_title destructive_help=destructive_help submit_label=submit_label cancel_url=cancel_url %}
         </form>
     </div>
 </section>

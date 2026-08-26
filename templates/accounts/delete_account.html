@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Delete account" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="auth-card account-delete-card">
+    <div class="auth-status-icon auth-status-icon--warning" aria-hidden="true">!</div>
+    <span class="auth-eyebrow">{% translate "Permanent action" %}</span>
+    <h1>{% translate "Delete your account?" %}</h1>
+    <p class="auth-subtitle">{% translate "Your athletes, matches, competitions, events, transactions and notes will be permanently deleted." %}</p>
+
+    <div class="deletion-warning-list">
+        <strong>{% translate "Before continuing" %}</strong>
+        <ul>
+            <li>{% translate "Download a copy of your data if you want to keep it." %}</li>
+            <li>{% translate "Account deletion cannot be reversed." %}</li>
+            <li>{% translate "Certain minimal records may be retained only when required by law or security obligations." %}</li>
+        </ul>
+    </div>
+
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.current_password.id_for_label }}">{% translate "Current password" %}</label>
+            {{ form.current_password }}
+            {% if form.current_password.errors %}<div class="field-errors">{{ form.current_password.errors }}</div>{% endif %}
+        </div>
+        <div class="legal-consent-field">
+            {{ form.confirm_deletion }}
+            <label for="{{ form.confirm_deletion.id_for_label }}">{% translate "I understand that this action is permanent." %}</label>
+            {% if form.confirm_deletion.errors %}<div class="field-errors">{{ form.confirm_deletion.errors }}</div>{% endif %}
+        </div>
+        <div class="account-delete-actions">
+            <a href="{% url 'accounts:privacy_center' %}" class="secondary-button">{% translate "Keep my account" %}</a>
+            <button type="submit" class="danger-button">{% translate "Permanently delete account" %}</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

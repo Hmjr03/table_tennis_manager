@@ -33,6 +33,11 @@ urlpatterns = [
         name="edit",
     ),
     path(
+        "<int:pk>/quick-update/<str:section>/",
+        views.event_quick_update,
+        name="quick_update",
+    ),
+    path(
         "<int:pk>/delete/",
         views.event_delete,
         name="delete",

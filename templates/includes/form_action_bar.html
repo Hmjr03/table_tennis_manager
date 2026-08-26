@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<footer class="record-form-footer{% if destructive_url %} record-form-footer--with-danger{% endif %}">
+    {% if destructive_url %}
+        <div class="record-danger-zone">
+            <span class="record-danger-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 10v6M14 10v6"/>
+                </svg>
+            </span>
+            <div class="record-danger-copy">
+                <strong>{{ destructive_title }}</strong>
+                <span>{{ destructive_help }}</span>
+            </div>
+            <a href="{{ destructive_url }}" class="record-danger-button">
+                {{ destructive_label }}
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="record-primary-actions">
+        <a href="{{ cancel_url }}" class="secondary-button">
+            {% translate "Cancel" %}
+        </a>
+        <button type="submit" class="primary-button">
+            {{ submit_label }}
+        </button>
+    </div>
+</footer>
