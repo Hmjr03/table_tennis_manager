@@ -43,6 +43,9 @@ Use the temporary `onrender.com` address and verify:
 1. `/health/live/` returns `{"status": "ok"}`.
 2. `/health/ready/` returns `{"status": "ok"}`.
 3. Create a new test account and receive the verification email.
+
+Configure the sender and DNS using `operations/EMAIL_AND_DOMAIN.md` before
+inviting external users.
 4. Log in, add a test athlete, match, calendar event, transaction and note.
 5. Change the language between Portuguese, Spanish and English.
 6. Install the PWA on one Android device and add it to the home screen on one
