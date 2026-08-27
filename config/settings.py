@@ -111,6 +111,7 @@ INSTALLED_APPS = [
     "notes",
     "competitions",
     "legal",
+    "subscriptions.apps.SubscriptionsConfig",
 ]
 
 

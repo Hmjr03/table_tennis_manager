@@ -44,6 +44,9 @@ verification evidence to the release record.
 
 ## 5. Mobile and commercial readiness
 
+Follow `operations/COMMERCIAL_PLANS.md` before enabling any entitlement limit
+or payment provider.
+
 - [ ] Essential pages work on a small Android screen and on an iPhone/iPad.
 - [ ] PWA installation, icons, offline screen and updates work as expected.
 - [ ] Pricing, billing cycle, cancellation and refund rules are approved before

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Plans" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="plans-page container">
+    <header class="plans-hero">
+        <p class="eyebrow">{% translate "Plans" %}</p>
+        <h1>{% translate "A plan for every stage of your journey" %}</h1>
+        <p>{% translate "Start with the essentials and grow without losing your sporting history." %}</p>
+        <div class="plans-preview-notice">
+            <strong>{% translate "Commercial preview" %}</strong>
+            <span>{% translate "Paid subscriptions are not active yet. No charge can be made from this page." %}</span>
+        </div>
+    </header>
+
+    <div class="plans-grid">
+        {% for plan in plans %}
+            <article class="plan-card{% if plan.highlighted %} plan-card-highlighted{% endif %}">
+                <div>
+                    <div class="plan-card-heading">
+                        <div>
+                            <p class="plan-audience">{{ plan.audience }}</p>
+                            <h2>{{ plan.name }}</h2>
+                        </div>
+                        {% if current_plan == plan.code %}
+                            <span class="current-plan-badge">{% translate "Current plan" %}</span>
+                        {% endif %}
+                    </div>
+                    <p class="plan-description">{{ plan.description }}</p>
+                    <p class="plan-capacity">
+                        {% blocktranslate count limit=plan.player_limit %}Up to {{ limit }} player profile{% plural %}Up to {{ limit }} player profiles{% endblocktranslate %}
+                    </p>
+                    <ul class="plan-features">
+                        {% for feature in plan.features %}
+                            <li><span aria-hidden="true">✓</span>{{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% if current_plan == plan.code %}
+                    <span class="plan-action plan-action-current">{% translate "Active on your account" %}</span>
+                {% elif user.is_authenticated %}
+                    <span class="plan-action">{% translate "Coming soon" %}</span>
+                {% else %}
+                    <a class="plan-action" href="{% url 'accounts:register' %}">{% translate "Create account" %}</a>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+
+    <footer class="plans-assurance">
+        <h2>{% translate "Built for a safe launch" %}</h2>
+        <p>{% translate "Prices, billing cycle, cancellation and refund conditions will be shown clearly before paid subscriptions are enabled." %}</p>
+    </footer>
+</section>
+{% endblock %}
