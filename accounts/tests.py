@@ -200,6 +200,94 @@ class AuthenticationTests(TestCase):
         self.assertNotIn("_auth_user_id", self.client.session)
 
 
+class AccountCenterTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="account-owner",
+            email="owner@example.com",
+            first_name="Account",
+            last_name="Owner",
+            password="OriginalPass123!",
+            role=User.Role.COACH,
+        )
+        self.other_user = User.objects.create_user(
+            username="other-owner",
+            email="other-owner@example.com",
+            password="OriginalPass123!",
+        )
+
+    def test_account_center_requires_authentication(self):
+        response = self.client.get(reverse("accounts:account_center"))
+
+        self.assertRedirects(
+            response,
+            f"{reverse('accounts:login')}?next={reverse('accounts:account_center')}",
+        )
+
+    def test_account_center_shows_identity_plan_and_own_capacity(self):
+        Player.objects.create(
+            user=self.user,
+            first_name="Visible",
+            last_name="Athlete",
+        )
+        Player.objects.create(
+            user=self.other_user,
+            first_name="Private",
+            last_name="Athlete",
+        )
+        self.client.force_login(self.user)
+
+        response = self.client.get(reverse("accounts:account_center"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Account Owner")
+        self.assertContains(response, "owner@example.com")
+        self.assertContains(response, "Starter")
+        self.assertEqual(response.context["players_used"], 1)
+        self.assertNotContains(response, "Private Athlete")
+        self.assertNotContains(response, "card number")
+        self.assertNotContains(response, "checkout")
+
+    def test_authenticated_user_can_change_password_and_stays_logged_in(self):
+        self.client.force_login(self.user)
+
+        response = self.client.post(
+            reverse("accounts:password_change"),
+            {
+                "old_password": "OriginalPass123!",
+                "new_password1": "UpdatedPass456!",
+                "new_password2": "UpdatedPass456!",
+            },
+            follow=True,
+        )
+
+        self.assertRedirects(response, reverse("accounts:password_change_done"))
+        self.assertContains(response, "Password updated")
+        self.assertIn("_auth_user_id", self.client.session)
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password("UpdatedPass456!"))
+
+    def test_account_center_is_available_in_portuguese_and_spanish(self):
+        self.client.force_login(self.user)
+        expectations = (
+            ("pt-br", "Minha conta", "Treinador"),
+            ("es", "Mi cuenta", "Entrenador"),
+        )
+
+        for language, title, role in expectations:
+            with self.subTest(language=language):
+                response = self.client.post(
+                    reverse("set_language"),
+                    {
+                        "language": language,
+                        "next": reverse("accounts:account_center"),
+                    },
+                    follow=True,
+                )
+                self.assertContains(response, title)
+                self.assertContains(response, role)
+
+
 @override_settings(
     EMAIL_BACKEND=(
         "django.core.mail.backends.locmem.EmailBackend"
