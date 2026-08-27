@@ -31,6 +31,10 @@ class User(AbstractUser):
         max_length=20,
         blank=True,
     )
+    onboarding_dismissed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.username

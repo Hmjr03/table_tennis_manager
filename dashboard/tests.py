@@ -7,9 +7,11 @@ from django.urls import reverse
 from django.utils import timezone
 
 from finances.models import Transaction
+from matches.models import Match
 from notes.models import Note
 from planning.models import CalendarEvent
 from competitions.models import Competition
+from players.models import Player
 
 
 User = get_user_model()
@@ -61,6 +63,72 @@ class DashboardViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Humberto")
         self.assertContains(response, "Your daily overview")
+
+    def test_new_user_sees_actionable_onboarding(self):
+        response = self.client.get(reverse("dashboard:home"))
+
+        self.assertContains(response, "Set up your competitive workspace")
+        self.assertContains(response, "0 of 3 completed")
+        self.assertContains(response, reverse("players:create"))
+        self.assertContains(response, reverse("planning:create"))
+        self.assertContains(response, reverse("matches:create"))
+
+    def test_onboarding_progress_uses_only_current_user_data(self):
+        Player.objects.create(
+            user=self.other_user,
+            first_name="Private",
+            last_name="Player",
+        )
+        Player.objects.create(
+            user=self.user,
+            first_name="Visible",
+            last_name="Player",
+        )
+
+        response = self.client.get(reverse("dashboard:home"))
+
+        self.assertEqual(response.context["onboarding"]["completed_count"], 1)
+        self.assertContains(response, "1 of 3 completed")
+
+    def test_user_can_dismiss_and_resume_onboarding(self):
+        dismiss_url = reverse("dashboard:dismiss_onboarding")
+
+        get_response = self.client.get(dismiss_url)
+        self.assertEqual(get_response.status_code, 405)
+
+        response = self.client.post(dismiss_url, follow=True)
+        self.assertRedirects(response, reverse("dashboard:home"))
+        self.assertNotContains(response, "Set up your competitive workspace")
+        self.assertContains(response, "Resume guide")
+
+        response = self.client.get(
+            reverse("dashboard:home") + "?show_onboarding=1"
+        )
+        self.assertContains(response, "Set up your competitive workspace")
+
+    def test_completed_onboarding_is_not_shown(self):
+        player = Player.objects.create(
+            user=self.user,
+            first_name="Ready",
+            last_name="Athlete",
+        )
+        self.create_event(
+            title="First training",
+            event_type=CalendarEvent.EventType.TRAINING,
+            starts_in=timedelta(days=1),
+        )
+        Match.objects.create(
+            owner=self.user,
+            player=player,
+            opponent_name="Opponent",
+            played_at=timezone.now(),
+        )
+
+        response = self.client.get(reverse("dashboard:home"))
+
+        self.assertTrue(response.context["onboarding"]["is_complete"])
+        self.assertNotContains(response, "Set up your competitive workspace")
+        self.assertNotContains(response, "Resume guide")
 
     def test_dashboard_selects_next_competition_and_counts_days(self):
         later_competition = self.create_event(
@@ -279,6 +347,7 @@ class DashboardViewTests(TestCase):
         self.assertContains(response, "Próxima competição")
         self.assertContains(response, "Visão financeira")
         self.assertContains(response, "Notas importantes")
+        self.assertContains(response, "Configure seu espaço competitivo")
 
     def test_user_can_switch_dashboard_to_spanish(self):
         response = self.client.post(
@@ -291,6 +360,7 @@ class DashboardViewTests(TestCase):
         self.assertContains(response, "Próxima competición")
         self.assertContains(response, "Resumen financiero")
         self.assertContains(response, "Notas importantes")
+        self.assertContains(response, "Configura tu espacio competitivo")
 
     def test_compact_calendar_can_show_a_previous_month(self):
         past_event = self.create_event(

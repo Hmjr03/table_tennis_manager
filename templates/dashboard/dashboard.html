@@ -15,6 +15,57 @@
         <a href="{% url 'planning:create' %}" class="primary-button">{% translate "Add event" %}</a>
     </header>
 
+    {% if show_onboarding %}
+        <section class="onboarding-panel" aria-labelledby="onboarding-title">
+            <div class="onboarding-heading">
+                <div>
+                    <p class="eyebrow">{% translate "Getting started" %}</p>
+                    <h2 id="onboarding-title">{% translate "Set up your competitive workspace" %}</h2>
+                    <p>{% translate "Complete these essentials to make your dashboard useful from day one." %}</p>
+                </div>
+                <form method="post" action="{% url 'dashboard:dismiss_onboarding' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="onboarding-dismiss">{% translate "Continue later" %}</button>
+                </form>
+            </div>
+
+            <div class="onboarding-progress-row">
+                <div class="onboarding-progress-copy">
+                    <strong>{% blocktranslate with completed=onboarding.completed_count total=onboarding.total_count %}{{ completed }} of {{ total }} completed{% endblocktranslate %}</strong>
+                    <span>{{ onboarding.progress_percent }}%</span>
+                </div>
+                <div class="onboarding-progress" role="progressbar" aria-valuenow="{{ onboarding.progress_percent }}" aria-valuemin="0" aria-valuemax="100">
+                    <span style="width: {{ onboarding.progress_percent }}%"></span>
+                </div>
+            </div>
+
+            <div class="onboarding-steps">
+                {% for step in onboarding.steps %}
+                    <article class="onboarding-step{% if step.completed %} onboarding-step-complete{% endif %}">
+                        <span class="onboarding-step-status" aria-hidden="true">{% if step.completed %}✓{% else %}{{ forloop.counter }}{% endif %}</span>
+                        <div>
+                            <h3>{{ step.title }}</h3>
+                            <p>{{ step.description }}</p>
+                        </div>
+                        {% if step.completed %}
+                            <span class="onboarding-complete-label">{% translate "Completed" %}</span>
+                        {% else %}
+                            <a href="{{ step.url }}" class="onboarding-step-action">{% translate "Start" %} →</a>
+                        {% endif %}
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% elif onboarding_was_dismissed %}
+        <aside class="onboarding-resume">
+            <div>
+                <strong>{% translate "Finish setting up your workspace" %}</strong>
+                <span>{% blocktranslate with completed=onboarding.completed_count total=onboarding.total_count %}{{ completed }} of {{ total }} steps completed{% endblocktranslate %}</span>
+            </div>
+            <a href="?show_onboarding=1" class="dashboard-text-link">{% translate "Resume guide" %} →</a>
+        </aside>
+    {% endif %}
+
     <section class="dashboard-focus-grid" aria-label="{% translate 'Upcoming schedule' %}">
         <article class="dashboard-focus-card dashboard-focus-card-competition">
             <p class="dashboard-card-label">{% translate "Next competition" %}</p>

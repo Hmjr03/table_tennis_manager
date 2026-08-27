@@ -15,6 +15,7 @@ class CustomUserAdmin(UserAdmin):
                     "terms_accepted_at",
                     "privacy_notice_acknowledged_at",
                     "legal_documents_version",
+                    "onboarding_dismissed_at",
                 )
             },
         ),
@@ -61,4 +62,5 @@ class CustomUserAdmin(UserAdmin):
         "terms_accepted_at",
         "privacy_notice_acknowledged_at",
         "legal_documents_version",
+        "onboarding_dismissed_at",
     )
