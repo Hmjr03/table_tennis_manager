@@ -29,12 +29,20 @@ def send_account_activation_email(request, user):
                 "user": user,
             },
         )
+        html_message = render_to_string(
+            "accounts/account_activation_email.html",
+            {
+                "activation_url": activation_url,
+                "user": user,
+            },
+        )
 
     send_mail(
         subject=subject,
         message=message,
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
+        html_message=html_message,
     )
 
 
@@ -56,10 +64,15 @@ def send_account_deletion_email(request, user):
             "accounts/account_deletion_email.txt",
             {"deletion_url": deletion_url, "user": user},
         )
+        html_message = render_to_string(
+            "accounts/account_deletion_email.html",
+            {"deletion_url": deletion_url, "user": user},
+        )
 
     send_mail(
         subject=subject,
         message=message,
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
+        html_message=html_message,
     )

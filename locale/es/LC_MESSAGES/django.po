@@ -1950,3 +1950,24 @@ msgstr "Tu información privada no se ha almacenado sin conexión. Vuelve a cone
 
 msgid "Try again"
 msgstr "Intentar de nuevo"
+
+msgid "Confirm your email to activate your Table Tennis Manager account."
+msgstr "Confirma tu correo para activar tu cuenta de Table Tennis Manager."
+
+msgid "Verify email"
+msgstr "Verificar correo"
+
+msgid "If the button does not work, copy and paste this address into your browser:"
+msgstr "Si el botón no funciona, copia y pega esta dirección en tu navegador:"
+
+msgid "Use a secure link to create a new password."
+msgstr "Utiliza un enlace seguro para crear una nueva contraseña."
+
+msgid "Reset your password"
+msgstr "Restablecer tu contraseña"
+
+msgid "Review a request to permanently delete your account."
+msgstr "Revisa una solicitud para eliminar permanentemente tu cuenta."
+
+msgid "Review deletion request"
+msgstr "Revisar solicitud de eliminación"

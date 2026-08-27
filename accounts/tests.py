@@ -75,6 +75,10 @@ class RegistrationTests(TestCase):
         self.assertNotIn("_auth_user_id", self.client.session)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("/accounts/activate/", mail.outbox[0].body)
+        self.assertEqual(len(mail.outbox[0].alternatives), 1)
+        html_email = mail.outbox[0].alternatives[0]
+        self.assertEqual(html_email.mimetype, "text/html")
+        self.assertIn("/accounts/activate/", html_email.content)
 
     def test_registration_rejects_duplicate_email(self):
         User.objects.create_user(
@@ -246,6 +250,10 @@ class PasswordRecoveryTests(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].to, ["maria@example.com"])
         self.assertIn("/accounts/reset/", mail.outbox[0].body)
+        self.assertEqual(len(mail.outbox[0].alternatives), 1)
+        html_email = mail.outbox[0].alternatives[0]
+        self.assertEqual(html_email.mimetype, "text/html")
+        self.assertIn("/accounts/reset/", html_email.content)
 
     def test_unknown_email_uses_same_confirmation_without_sending(self):
         response = self.client.post(
@@ -601,6 +609,10 @@ class ExternalAccountDeletionTests(TestCase):
         )
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("/accounts/delete-confirm/", mail.outbox[0].body)
+        self.assertEqual(len(mail.outbox[0].alternatives), 1)
+        html_email = mail.outbox[0].alternatives[0]
+        self.assertEqual(html_email.mimetype, "text/html")
+        self.assertIn("/accounts/delete-confirm/", html_email.content)
 
     def test_unknown_email_uses_same_response_without_email(self):
         response = self.client.post(

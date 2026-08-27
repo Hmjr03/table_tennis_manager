@@ -33,6 +33,9 @@ deployment alone is not a release approval.
 
 ## 4. Email and domain
 
+Follow `operations/EMAIL_AND_DOMAIN.md` and attach the provider and DNS
+verification evidence to the release record.
+
 - [ ] The production sender domain and SMTP provider are configured.
 - [ ] Verification and password-reset emails arrive in major email providers.
 - [ ] SPF, DKIM and DMARC records pass the provider's verification.
