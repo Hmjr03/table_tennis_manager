@@ -1648,6 +1648,12 @@ msgstr "Confirmar nova senha"
 msgid "Save new password"
 msgstr "Salvar nova senha"
 
+msgid "Coach"
+msgstr "Treinador"
+
+msgid "Club"
+msgstr "Clube"
+
 msgid "This recovery link is no longer valid"
 msgstr "Este link de recuperação não é mais válido"
 
@@ -2114,3 +2120,87 @@ msgstr "%(completed)s de %(total)s etapas concluídas"
 
 msgid "Resume guide"
 msgstr "Retomar guia"
+
+msgid "My account"
+msgstr "Minha conta"
+
+msgid "Account center"
+msgstr "Central da conta"
+
+msgid "Manage your identity, plan, security and privacy from one place."
+msgstr "Gerencie sua identidade, plano, segurança e privacidade em um só lugar."
+
+msgid "Account active"
+msgstr "Conta ativa"
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "Account information"
+msgstr "Informações da conta"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Account type"
+msgstr "Tipo de conta"
+
+msgid "Member since"
+msgstr "Membro desde"
+
+msgid "Email changes will require identity verification when this option is enabled."
+msgstr "Alterações de e-mail exigirão verificação de identidade quando esta opção for habilitada."
+
+msgid "Subscription"
+msgstr "Assinatura"
+
+msgid "Player capacity"
+msgstr "Capacidade de jogadores"
+
+msgid "Capacity is informational during the preview and does not restrict your account."
+msgstr "A capacidade é informativa durante a prévia e não restringe sua conta."
+
+msgid "Compare plans"
+msgstr "Comparar planos"
+
+msgid "Control center"
+msgstr "Central de controle"
+
+msgid "Security and privacy"
+msgstr "Segurança e privacidade"
+
+msgid "Update your password while keeping your current session secure."
+msgstr "Atualize sua senha mantendo sua sessão atual segura."
+
+msgid "Change password"
+msgstr "Alterar senha"
+
+msgid "Privacy and data"
+msgstr "Privacidade e dados"
+
+msgid "Download your information or review account deletion controls."
+msgstr "Baixe suas informações ou revise os controles de exclusão da conta."
+
+msgid "Open privacy center"
+msgstr "Abrir central de privacidade"
+
+msgid "Plan support"
+msgstr "Suporte do plano"
+
+msgid "Paid subscriptions are not active and no payment method is stored."
+msgstr "As assinaturas pagas não estão ativas e nenhum método de pagamento está armazenado."
+
+msgid "Review plan details"
+msgstr "Revisar detalhes do plano"
+
+msgid "Choose a strong, unique password that you do not use on other services."
+msgstr "Escolha uma senha forte e exclusiva que você não utiliza em outros serviços."
+
+msgid "Your new password is active and your current session remains secure."
+msgstr "Sua nova senha está ativa e sua sessão atual permanece segura."
+
+msgid "Return to my account"
+msgstr "Voltar para minha conta"
+
+msgid "Save new password"
+msgstr "Salvar nova senha"

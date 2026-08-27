@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
@@ -9,9 +10,9 @@ class User(AbstractUser):
     )
 
     class Role(models.TextChoices):
-        ATHLETE = "ATHLETE", "Athlete"
-        COACH = "COACH", "Coach"
-        CLUB = "CLUB", "Club"
+        ATHLETE = "ATHLETE", _("Athlete")
+        COACH = "COACH", _("Coach")
+        CLUB = "CLUB", _("Club")
 
     role = models.CharField(
         max_length=20,

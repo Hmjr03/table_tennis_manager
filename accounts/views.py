@@ -24,6 +24,8 @@ from accounts.services import (
     send_account_activation_email,
     send_account_deletion_email,
 )
+from subscriptions.catalog import plan_definition
+from subscriptions.models import Subscription
 
 
 def home(request):
@@ -124,6 +126,35 @@ def activation_resent(request):
 @login_required
 def privacy_center(request):
     return render(request, "accounts/privacy_center.html")
+
+
+@login_required
+def account_center(request):
+    subscription = Subscription.objects.filter(
+        user=request.user
+    ).first()
+    plan_code = (
+        subscription.plan
+        if subscription
+        else Subscription.Plan.STARTER
+    )
+    plan = plan_definition(plan_code)
+    players_used = request.user.players.count()
+    capacity_percent = min(
+        round(players_used / plan.player_limit * 100),
+        100,
+    )
+
+    return render(
+        request,
+        "accounts/account_center.html",
+        {
+            "subscription": subscription,
+            "plan": plan,
+            "players_used": players_used,
+            "capacity_percent": capacity_percent,
+        },
+    )
 
 
 @login_required

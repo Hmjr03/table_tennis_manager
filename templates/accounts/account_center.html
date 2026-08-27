@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "My account" %} | Table Tennis Manager{% endblock %}
+
+{% block content %}
+<section class="account-center page-section">
+    <header class="account-center-hero">
+        <div>
+            <p class="eyebrow">{% translate "Account center" %}</p>
+            <h1>{% translate "My account" %}</h1>
+            <p class="page-subtitle">{% translate "Manage your identity, plan, security and privacy from one place." %}</p>
+        </div>
+        <span class="account-status-badge">{% translate "Account active" %}</span>
+    </header>
+
+    <div class="account-overview-grid">
+        <article class="account-panel account-identity-panel">
+            <div class="account-panel-heading">
+                <div>
+                    <p class="eyebrow">{% translate "Profile" %}</p>
+                    <h2>{% translate "Account information" %}</h2>
+                </div>
+                <span class="account-avatar" aria-hidden="true">{{ user.first_name|first|default:user.username|first }}{{ user.last_name|first }}</span>
+            </div>
+            <dl class="account-detail-list">
+                <div><dt>{% translate "Name" %}</dt><dd>{{ user.get_full_name|default:user.username }}</dd></div>
+                <div><dt>{% translate "Email address" %}</dt><dd>{{ user.email }}</dd></div>
+                <div><dt>{% translate "Account type" %}</dt><dd>{{ user.get_role_display }}</dd></div>
+                <div><dt>{% translate "Member since" %}</dt><dd>{{ user.date_joined|date:"DATE_FORMAT" }}</dd></div>
+            </dl>
+            <p class="account-information-note">{% translate "Email changes will require identity verification when this option is enabled." %}</p>
+        </article>
+
+        <article class="account-panel account-plan-panel">
+            <div class="account-panel-heading">
+                <div>
+                    <p class="eyebrow">{% translate "Subscription" %}</p>
+                    <h2>{{ plan.name }}</h2>
+                </div>
+                <span class="current-plan-badge">{% translate "Current plan" %}</span>
+            </div>
+            <p>{{ plan.description }}</p>
+            <div class="account-capacity-copy">
+                <strong>{% translate "Player capacity" %}</strong>
+                <span>{{ players_used }} / {{ plan.player_limit }}</span>
+            </div>
+            <div class="account-capacity" role="progressbar" aria-valuenow="{{ players_used }}" aria-valuemin="0" aria-valuemax="{{ plan.player_limit }}">
+                <span style="width: {{ capacity_percent }}%"></span>
+            </div>
+            <p class="account-information-note">{% translate "Capacity is informational during the preview and does not restrict your account." %}</p>
+            <a href="{% url 'subscriptions:plans' %}" class="secondary-button">{% translate "Compare plans" %}</a>
+        </article>
+    </div>
+
+    <section class="account-actions" aria-labelledby="account-actions-title">
+        <div class="dashboard-section-heading">
+            <div><p class="eyebrow">{% translate "Control center" %}</p><h2 id="account-actions-title">{% translate "Security and privacy" %}</h2></div>
+        </div>
+        <div class="account-action-grid">
+            <article class="account-action-card">
+                <span class="account-action-icon" aria-hidden="true">●</span>
+                <div><h3>{% translate "Password" %}</h3><p>{% translate "Update your password while keeping your current session secure." %}</p></div>
+                <a href="{% url 'accounts:password_change' %}">{% translate "Change password" %} →</a>
+            </article>
+            <article class="account-action-card">
+                <span class="account-action-icon" aria-hidden="true">↓</span>
+                <div><h3>{% translate "Privacy and data" %}</h3><p>{% translate "Download your information or review account deletion controls." %}</p></div>
+                <a href="{% url 'accounts:privacy_center' %}">{% translate "Open privacy center" %} →</a>
+            </article>
+            <article class="account-action-card">
+                <span class="account-action-icon" aria-hidden="true">?</span>
+                <div><h3>{% translate "Plan support" %}</h3><p>{% translate "Paid subscriptions are not active and no payment method is stored." %}</p></div>
+                <a href="{% url 'subscriptions:plans' %}">{% translate "Review plan details" %} →</a>
+            </article>
+        </div>
+    </section>
+</section>
+{% endblock %}
