@@ -77,4 +77,8 @@ urlpatterns = [
         include("competitions.urls", namespace="competitions"),
     ),
     path("legal/", include("legal.urls", namespace="legal")),
+    path(
+        "plans/",
+        include("subscriptions.urls", namespace="subscriptions"),
+    ),
 ]

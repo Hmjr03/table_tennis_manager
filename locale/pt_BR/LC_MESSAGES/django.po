@@ -1971,3 +1971,99 @@ msgstr "Revise uma solicitação para excluir permanentemente sua conta."
 
 msgid "Review deletion request"
 msgstr "Revisar solicitação de exclusão"
+
+msgid "Starter"
+msgstr "Inicial"
+
+msgid "Organization"
+msgstr "Organização"
+
+msgid "Active"
+msgstr "Ativa"
+
+msgid "Trial"
+msgstr "Período de teste"
+
+msgid "Payment pending"
+msgstr "Pagamento pendente"
+
+msgid "Canceled"
+msgstr "Cancelada"
+
+msgid "For individual athletes getting organized"
+msgstr "Para atletas individuais que estão se organizando"
+
+msgid "Essential tools to manage one competitive profile."
+msgstr "Ferramentas essenciais para gerenciar um perfil competitivo."
+
+msgid "Dashboard and calendar"
+msgstr "Painel e calendário"
+
+msgid "Matches and performance"
+msgstr "Partidas e desempenho"
+
+msgid "Competitions, finances and notes"
+msgstr "Competições, finanças e notas"
+
+msgid "For athletes and coaches who need more capacity"
+msgstr "Para atletas e treinadores que precisam de mais capacidade"
+
+msgid "A complete workspace for continuous development."
+msgstr "Um espaço de trabalho completo para o desenvolvimento contínuo."
+
+msgid "Everything in Starter"
+msgstr "Tudo do plano Inicial"
+
+msgid "Up to 5 player profiles"
+msgstr "Até 5 perfis de jogadores"
+
+msgid "Advanced analysis and exports planned"
+msgstr "Análises avançadas e exportações planejadas"
+
+msgid "For clubs, academies and multidisciplinary teams"
+msgstr "Para clubes, academias e equipes multidisciplinares"
+
+msgid "Structured management for growing organizations."
+msgstr "Gestão estruturada para organizações em crescimento."
+
+msgid "Everything in Professional"
+msgstr "Tudo do plano Profissional"
+
+msgid "Up to 50 player profiles"
+msgstr "Até 50 perfis de jogadores"
+
+msgid "Team access and administrative controls planned"
+msgstr "Acesso de equipe e controles administrativos planejados"
+
+msgid "Plans"
+msgstr "Planos"
+
+msgid "A plan for every stage of your journey"
+msgstr "Um plano para cada etapa da sua jornada"
+
+msgid "Start with the essentials and grow without losing your sporting history."
+msgstr "Comece com o essencial e cresça sem perder seu histórico esportivo."
+
+msgid "Commercial preview"
+msgstr "Prévia comercial"
+
+msgid "Paid subscriptions are not active yet. No charge can be made from this page."
+msgstr "As assinaturas pagas ainda não estão ativas. Nenhuma cobrança pode ser realizada nesta página."
+
+msgid "Current plan"
+msgstr "Plano atual"
+
+msgid "Active on your account"
+msgstr "Ativo na sua conta"
+
+msgid "Built for a safe launch"
+msgstr "Preparado para um lançamento seguro"
+
+msgid "Prices, billing cycle, cancellation and refund conditions will be shown clearly before paid subscriptions are enabled."
+msgstr "Preços, ciclo de cobrança e condições de cancelamento e reembolso serão apresentados claramente antes da ativação das assinaturas pagas."
+
+#, python-format
+msgid "Up to %(limit)s player profile"
+msgid_plural "Up to %(limit)s player profiles"
+msgstr[0] "Até %(limit)s perfil de jogador"
+msgstr[1] "Até %(limit)s perfis de jogadores"

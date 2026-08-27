@@ -59,6 +59,10 @@
                     {% translate "Notes" %}
                 </a>
 
+                <a href="{% url 'subscriptions:plans' %}">
+                    {% translate "Plans" %}
+                </a>
+
                 <form action="{% url 'set_language' %}" method="post" class="language-switcher">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.get_full_path }}">
@@ -90,6 +94,10 @@
 
                 <a href="{% url 'accounts:login' %}">
                     {% translate "Login" %}
+                </a>
+
+                <a href="{% url 'subscriptions:plans' %}">
+                    {% translate "Plans" %}
                 </a>
 
                 <a
