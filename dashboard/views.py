@@ -5,8 +5,10 @@ from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 
 from finances.models import Transaction
 from competitions.models import Competition
@@ -14,6 +16,7 @@ from matches.models import Match
 from notes.models import Note
 from planning.models import CalendarEvent
 from players.models import Player
+from dashboard.onboarding import onboarding_summary
 
 
 def _welcome_greeting(current_hour):
@@ -172,6 +175,16 @@ def dashboard(request):
         is_archived=False,
     )[:4]
 
+    onboarding = onboarding_summary(user)
+    onboarding_requested = request.GET.get("show_onboarding") == "1"
+    show_onboarding = (
+        not onboarding["is_complete"]
+        and (
+            user.onboarding_dismissed_at is None
+            or onboarding_requested
+        )
+    )
+
 
     players = Player.objects.filter(
         user=user
@@ -286,6 +299,13 @@ def dashboard(request):
         "personal_expenses": personal_expenses,
         "professional_expenses": professional_expenses,
         "pinned_notes": pinned_notes,
+        "onboarding": onboarding,
+        "show_onboarding": show_onboarding,
+        "onboarding_was_dismissed": (
+            not onboarding["is_complete"]
+            and user.onboarding_dismissed_at is not None
+            and not onboarding_requested
+        ),
 
 
         "players_count": players.count(),
@@ -324,3 +344,11 @@ def dashboard(request):
         "dashboard/dashboard.html",
         context,
     )
+
+
+@login_required
+@require_POST
+def dismiss_onboarding(request):
+    request.user.onboarding_dismissed_at = timezone.now()
+    request.user.save(update_fields=["onboarding_dismissed_at"])
+    return redirect("dashboard:home")

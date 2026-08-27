@@ -2067,3 +2067,50 @@ msgid "Up to %(limit)s player profile"
 msgid_plural "Up to %(limit)s player profiles"
 msgstr[0] "Até %(limit)s perfil de jogador"
 msgstr[1] "Até %(limit)s perfis de jogadores"
+
+msgid "Create your first player"
+msgstr "Crie seu primeiro jogador"
+
+msgid "Build the athlete profile that will connect matches and analysis."
+msgstr "Crie o perfil do atleta que conectará partidas e análises."
+
+msgid "Schedule your first commitment"
+msgstr "Agende seu primeiro compromisso"
+
+msgid "Add a training session, meeting, trip or personal commitment."
+msgstr "Adicione um treino, reunião, viagem ou compromisso pessoal."
+
+msgid "Record your first match"
+msgstr "Registre sua primeira partida"
+
+msgid "Start building a reliable history of results and performance."
+msgstr "Comece a construir um histórico confiável de resultados e desempenho."
+
+msgid "Getting started"
+msgstr "Primeiros passos"
+
+msgid "Set up your competitive workspace"
+msgstr "Configure seu espaço competitivo"
+
+msgid "Complete these essentials to make your dashboard useful from day one."
+msgstr "Conclua estes itens essenciais para tornar seu painel útil desde o primeiro dia."
+
+msgid "Continue later"
+msgstr "Continuar depois"
+
+#, python-format
+msgid "%(completed)s of %(total)s completed"
+msgstr "%(completed)s de %(total)s concluídos"
+
+msgid "Start"
+msgstr "Começar"
+
+msgid "Finish setting up your workspace"
+msgstr "Conclua a configuração do seu espaço"
+
+#, python-format
+msgid "%(completed)s of %(total)s steps completed"
+msgstr "%(completed)s de %(total)s etapas concluídas"
+
+msgid "Resume guide"
+msgstr "Retomar guia"

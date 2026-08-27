@@ -12,4 +12,9 @@ urlpatterns = [
         views.dashboard,
         name="home",
     ),
+    path(
+        "onboarding/dismiss/",
+        views.dismiss_onboarding,
+        name="dismiss_onboarding",
+    ),
 ]
