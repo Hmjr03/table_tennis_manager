@@ -61,6 +61,7 @@ Run the deployment validation before every release:
 
 ```bash
 python manage.py check --deploy
+python manage.py check_release_readiness
 python manage.py migrate --check
 python manage.py test
 ```

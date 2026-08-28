@@ -13,6 +13,7 @@ from django.test import override_settings
 from django.urls import reverse
 from django.contrib.staticfiles import finders
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from config.backup import create_postgresql_backup
 
@@ -53,6 +54,44 @@ class ProductionDeploymentContractTests(SimpleTestCase):
         self.assertIn("collectstatic --noinput", build_script)
         self.assertIn("check --deploy", build_script)
         self.assertNotIn("manage.py migrate", build_script)
+
+
+class ReleaseReadinessCommandTests(SimpleTestCase):
+    @override_settings(
+        DEBUG=False,
+        SECRET_KEY="production-secret-key-for-readiness-tests",
+        ALLOWED_HOSTS=["app.example.com"],
+        CSRF_TRUSTED_ORIGINS=["https://app.example.com"],
+        SESSION_COOKIE_SECURE=True,
+        CSRF_COOKIE_SECURE=True,
+        SECURE_SSL_REDIRECT=True,
+        SECURE_HSTS_SECONDS=3600,
+        EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend",
+        EMAIL_HOST="smtp.example.com",
+        EMAIL_HOST_USER="mailer",
+        EMAIL_HOST_PASSWORD="secret",
+        DEFAULT_FROM_EMAIL="Table Tennis Manager <noreply@example.com>",
+        LEGAL_CONTROLLER_NAME="Example Controller",
+        LEGAL_CONTACT_EMAIL="privacy@example.com",
+        LEGAL_COUNTRY="Brazil",
+    )
+    def test_release_readiness_accepts_complete_production_configuration(self):
+        output = StringIO()
+
+        production_database = {
+            "default": {
+                "ENGINE": "django.db.backends.postgresql",
+                "NAME": "table_tennis_manager",
+            }
+        }
+        with patch.object(settings, "DATABASES", production_database):
+            call_command("check_release_readiness", stdout=output)
+
+        self.assertIn("Release configuration checks passed", output.getvalue())
+
+    def test_release_readiness_blocks_local_development_configuration(self):
+        with self.assertRaisesMessage(CommandError, "Release blocked"):
+            call_command("check_release_readiness", stdout=StringIO())
 
 
 class MultilingualPageTitleTests(TestCase):
