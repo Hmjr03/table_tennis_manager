@@ -56,6 +56,13 @@ or payment provider.
 
 ## Release decision
 
+Run the automated configuration gate in the production environment and attach
+its successful output to the release record:
+
+```bash
+python manage.py check_release_readiness
+```
+
 - Release commit:
 - Environment and URL:
 - Reviewer:
