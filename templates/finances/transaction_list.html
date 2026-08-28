@@ -14,11 +14,13 @@
         <a href="{% url 'finances:create' %}" class="primary-button">{% translate "Add transaction" %}</a>
     </div>
 
+    {% if total_transaction_count %}
     <div class="finance-summary-grid">
         <article class="finance-summary-card finance-income"><span>{% translate "Income" %}</span><strong>€ {{ income|floatformat:2 }}</strong><p>{{ selected_month|date:"F Y" }}</p></article>
         <article class="finance-summary-card finance-expense"><span>{% translate "Expenses" %}</span><strong>€ {{ expenses|floatformat:2 }}</strong><p>{{ selected_month|date:"F Y" }}</p></article>
         <article class="finance-summary-card finance-balance"><span>{% translate "Balance" %}</span><strong>€ {{ balance|floatformat:2 }}</strong><p>{% translate "Income minus expenses" %}</p></article>
     </div>
+    {% endif %}
 
     <div class="filter-card finance-filter-card">
         <form method="get" class="finance-filter-form">
@@ -31,7 +33,7 @@
         </form>
     </div>
 
-    <div class="finance-table-card">
+    <div class="finance-table-card{% if not total_transaction_count %} finance-table-card-empty{% endif %}">
         {% if page_obj.object_list %}
             <div class="finance-table-scroll">
                 <table class="finance-table">
@@ -53,7 +55,17 @@
             </div>
             {% if page_obj.has_other_pages %}<nav class="pagination" aria-label="{% translate 'Finance pagination' %}">{% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&month={{ month_value }}&q={{ current_query|urlencode }}&area={{ current_area }}&type={{ current_type }}&status={{ current_status }}">{% translate "Previous" %}</a>{% endif %}<span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>{% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&month={{ month_value }}&q={{ current_query|urlencode }}&area={{ current_area }}&type={{ current_type }}&status={{ current_status }}">{% translate "Next" %}</a>{% endif %}</nav>{% endif %}
         {% else %}
-            <div class="empty-state"><span class="empty-state-icon">€</span><h2>{% translate "No transactions found" %}</h2><p>{% translate "Add your first transaction or adjust the selected filters." %}</p><a href="{% url 'finances:create' %}" class="primary-button">{% translate "Add transaction" %}</a></div>
+            <div class="empty-state empty-state-professional"><span class="empty-state-icon">€</span><p class="eyebrow">{% translate "Financial organization" %}</p>
+                {% if total_transaction_count %}
+                    <h2>{% translate "No transactions in this view" %}</h2>
+                    <p>{% translate "Try another month, clear the filters or add a transaction for this period." %}</p>
+                    <div class="empty-state-actions"><a href="{% url 'finances:list' %}" class="secondary-button">{% translate "Current month" %}</a><a href="{% url 'finances:create' %}" class="primary-button">{% translate "Add transaction" %}</a></div>
+                {% else %}
+                    <h2>{% translate "Build your financial overview" %}</h2>
+                    <p>{% translate "Record your first income or expense to understand personal and professional cash flow." %}</p>
+                    <a href="{% url 'finances:create' %}" class="primary-button">{% translate "Add your first transaction" %}</a>
+                {% endif %}
+            </div>
         {% endif %}
     </div>
 </section>

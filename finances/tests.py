@@ -84,6 +84,21 @@ class TransactionViewTests(TestCase):
         response = self.client.get(reverse("finances:list"))
         self.assertEqual(response.status_code, 302)
 
+    def test_finance_page_guides_first_transaction(self):
+        response = self.client.get(reverse("finances:list"))
+        self.assertContains(response, "Build your financial overview")
+        self.assertContains(response, "Add your first transaction")
+
+    def test_empty_month_is_distinguished_from_first_use(self):
+        self.create_transaction(
+            description="Earlier expense",
+            transaction_type=Transaction.TransactionType.EXPENSE,
+            amount=Decimal("10.00"),
+            date=timezone.localdate().replace(year=2020, month=1, day=10),
+        )
+        response = self.client.get(reverse("finances:list"))
+        self.assertContains(response, "No transactions in this view")
+
     def test_month_summary_calculates_income_expenses_and_balance(self):
         self.create_transaction(
             description="Sponsorship",
@@ -210,7 +225,7 @@ class TransactionViewTests(TestCase):
 
         self.assertContains(response, "Gestão financeira")
         self.assertContains(response, "Área financeira")
-        self.assertContains(response, "Nenhuma transação encontrada")
+        self.assertContains(response, "Construa sua visão financeira")
         self.assertContains(response, "Buscar")
         self.assertContains(response, "Todas as áreas")
 

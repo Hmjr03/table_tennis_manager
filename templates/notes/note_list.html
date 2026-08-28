@@ -37,7 +37,25 @@
         </div>
         {% if page_obj.has_other_pages %}<nav class="pagination" aria-label="{% translate 'Notes pagination' %}">{% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&q={{ current_query|urlencode }}&category={{ current_category }}{% if show_archived %}&archived=1{% endif %}">{% translate "Previous" %}</a>{% endif %}<span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>{% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&q={{ current_query|urlencode }}&category={{ current_category }}{% if show_archived %}&archived=1{% endif %}">{% translate "Next" %}</a>{% endif %}</nav>{% endif %}
     {% else %}
-        <div class="empty-state"><span class="empty-state-icon">📝</span><h2>{% if show_archived %}No archived notes{% else %}No notes found{% endif %}</h2><p>{% translate "Capture your first idea, decision or reminder." %}</p><a href="{% url 'notes:create' %}" class="primary-button">{% translate "Add note" %}</a></div>
+        <div class="empty-state empty-state-professional"><span class="empty-state-icon">📝</span><p class="eyebrow">{% translate "Knowledge workspace" %}</p>
+            {% if show_archived %}
+                <h2>{% translate "No archived notes" %}</h2>
+                <p>{% translate "Archived notes will remain available here whenever you need them." %}</p>
+                <a href="{% url 'notes:list' %}" class="secondary-button">{% translate "Return to active notes" %}</a>
+            {% elif has_active_filters %}
+                <h2>{% translate "No notes match these filters" %}</h2>
+                <p>{% translate "Clear the filters to return to all active notes." %}</p>
+                <a href="{% url 'notes:list' %}" class="secondary-button">{% translate "Clear filters" %}</a>
+            {% elif total_note_count and not active_note_count %}
+                <h2>{% translate "No active notes" %}</h2>
+                <p>{% translate "Your saved notes are archived and remain available whenever you need them." %}</p>
+                <a href="{% url 'notes:list' %}?archived=1" class="secondary-button">{% translate "View archived notes" %}</a>
+            {% else %}
+                <h2>{% translate "Capture your first important note" %}</h2>
+                <p>{% translate "Save a tactical idea, decision or reminder so it remains easy to find." %}</p>
+                <a href="{% url 'notes:create' %}" class="primary-button">{% translate "Add your first note" %}</a>
+            {% endif %}
+        </div>
     {% endif %}
 </section>
 {% endblock %}

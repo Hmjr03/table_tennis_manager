@@ -89,6 +89,15 @@ class CompetitionViewTests(CompetitionTestMixin, TestCase):
         self.assertContains(response, own.name)
         self.assertNotContains(response, other.name)
 
+    def test_competition_list_distinguishes_first_use_and_empty_search(self):
+        response = self.client.get(reverse("competitions:list"))
+        self.assertContains(response, "Add your first competition")
+
+        self.create_competition(self.owner)
+        response = self.client.get(reverse("competitions:list"), {"q": "missing"})
+        self.assertContains(response, "No competitions match these filters")
+        self.assertContains(response, "Clear filters")
+
     def test_user_can_create_competition_with_own_player(self):
         player = Player.objects.create(
             user=self.owner,

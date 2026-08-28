@@ -138,6 +138,9 @@ def calendar_view(request):
             "previous_year": previous_year,
             "next_month": next_month,
             "next_year": next_year,
+            "has_events_anywhere": CalendarEvent.objects.filter(
+                owner=request.user
+            ).exists(),
         },
     )
 
