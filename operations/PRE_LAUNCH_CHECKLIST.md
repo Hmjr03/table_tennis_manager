@@ -6,6 +6,9 @@ deployment alone is not a release approval.
 
 ## 1. Product and user journeys
 
+Use the isolated procedure in `operations/ACCEPTANCE_TESTING.md` for the local
+acceptance pass. Never seed demonstration data into production.
+
 - [ ] Registration, email verification, sign-in and password recovery work.
 - [ ] A user can create, edit and delete their own players, matches,
       competitions, calendar events, transactions and notes.

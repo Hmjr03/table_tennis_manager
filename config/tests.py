@@ -94,6 +94,33 @@ class ReleaseReadinessCommandTests(SimpleTestCase):
             call_command("check_release_readiness", stdout=StringIO())
 
 
+@override_settings(DEBUG=True)
+class AcceptanceWorkspaceCommandTests(TestCase):
+    def test_command_refuses_the_normal_database(self):
+        with self.assertRaisesMessage(CommandError, "isolated database"):
+            call_command("create_acceptance_workspace", stdout=StringIO())
+
+    def test_command_creates_a_complete_isolated_demo(self):
+        isolated_database = settings.DATABASES.copy()
+        isolated_database["default"] = settings.DATABASES["default"].copy()
+        isolated_database["default"]["NAME"] = "/tmp/ttm_acceptance-test.sqlite3"
+
+        with patch.object(settings, "DATABASES", isolated_database):
+            output = StringIO()
+            call_command("create_acceptance_workspace", stdout=output)
+            call_command("create_acceptance_workspace", stdout=output)
+
+        user = User.objects.get(username="acceptance-demo")
+        self.assertTrue(user.check_password("TableTennisDemo2026!"))
+        self.assertEqual(user.players.count(), 1)
+        self.assertEqual(user.matches.count(), 1)
+        self.assertEqual(user.competitions.count(), 1)
+        self.assertGreaterEqual(user.calendar_events.count(), 1)
+        self.assertEqual(user.transactions.count(), 1)
+        self.assertEqual(user.notes.count(), 1)
+        self.assertIn("Acceptance workspace is ready", output.getvalue())
+
+
 class MultilingualPageTitleTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
