@@ -256,6 +256,18 @@ class MatchListViewTests(MatchTestMixin, TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Private Opponent")
 
+    def test_empty_filtered_results_offer_a_clear_action(self):
+        self.client.force_login(self.user)
+        response = self.client.get(self.url, {"q": "does-not-exist"})
+        self.assertContains(response, "No matches match these filters")
+        self.assertContains(response, "Clear filters")
+
+    def test_first_match_guidance_is_shown_when_player_has_no_matches(self):
+        Match.objects.filter(owner=self.user).delete()
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertContains(response, "Record your first match")
+
 
 class MatchDetailSecurityTests(MatchTestMixin, TestCase):
     def setUp(self):

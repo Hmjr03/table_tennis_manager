@@ -119,7 +119,6 @@
             <article class="dashboard-card"><span class="dashboard-card-label">{% translate "Current streak" %}</span><strong>{{ performance_current_streak }}</strong><p>{% translate "Consecutive wins" %}</p></article>
         </div>
     </section>
-
     {% if page_obj.object_list %}
         <div class="matches-list">
             {% for match in page_obj %}
@@ -205,21 +204,24 @@
             </nav>
         {% endif %}
     {% else %}
-        <div class="empty-state">
+        <div class="empty-state empty-state-professional">
             <span class="empty-state-icon">🏓</span>
-
-            <h2>{% translate "No matches found" %}</h2>
-
-            <p>
-                {% translate "Start building your match history by recording your first table tennis match." %}
-            </p>
-
-            <a
-                href="{% url 'matches:create' %}"
-                class="primary-button"
-            >
-                {% translate "Add your first match" %}
-            </a>
+            {% if not players %}
+                <p class="eyebrow">{% translate "First step" %}</p>
+                <h2>{% translate "Create a player before recording matches" %}</h2>
+                <p>{% translate "Every match belongs to an athlete profile. Create the profile first, then return here to record results." %}</p>
+                <a href="{% url 'players:create' %}" class="primary-button">{% translate "Create your first player" %}</a>
+            {% elif has_active_filters %}
+                <p class="eyebrow">{% translate "Search results" %}</p>
+                <h2>{% translate "No matches match these filters" %}</h2>
+                <p>{% translate "Clear the filters to return to your complete match history." %}</p>
+                <a href="{% url 'matches:list' %}" class="secondary-button">{% translate "Clear filters" %}</a>
+            {% else %}
+                <p class="eyebrow">{% translate "Match history" %}</p>
+                <h2>{% translate "Record your first match" %}</h2>
+                <p>{% translate "Add the opponent, competition and result to begin building reliable performance analysis." %}</p>
+                <a href="{% url 'matches:create' %}" class="primary-button">{% translate "Add your first match" %}</a>
+            {% endif %}
         </div>
     {% endif %}
 </section>

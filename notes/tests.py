@@ -52,6 +52,22 @@ class NoteViewTests(TestCase):
         response = self.client.get(reverse("notes:list"))
         self.assertEqual(response.status_code, 302)
 
+    def test_notes_page_guides_first_note(self):
+        response = self.client.get(reverse("notes:list"))
+        self.assertContains(response, "Capture your first important note")
+
+    def test_notes_page_distinguishes_empty_search_and_archived_notes(self):
+        note = self.create_note(title="Archived decision", is_archived=True)
+
+        response = self.client.get(reverse("notes:list"))
+        self.assertContains(response, "No active notes")
+        self.assertContains(response, "View archived notes")
+
+        note.is_archived = False
+        note.save(update_fields=["is_archived"])
+        response = self.client.get(reverse("notes:list"), {"q": "missing"})
+        self.assertContains(response, "No notes match these filters")
+
     def test_notes_page_isolated_by_owner(self):
         self.create_note(title="Visible tactical note")
         self.create_note(title="Private tactical note", owner=self.other_user)

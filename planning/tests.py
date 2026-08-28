@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -166,6 +166,21 @@ class CalendarViewTests(TestCase):
             response,
             "planning/calendar.html",
         )
+
+        self.assertContains(response, "Your calendar is ready")
+
+    def test_empty_selected_month_is_distinguished_from_first_use(self):
+        CalendarEvent.objects.create(
+            owner=self.user,
+            title="Event in another month",
+            event_type=CalendarEvent.EventType.TRAINING,
+            start_datetime=timezone.make_aware(datetime(2026, 1, 10, 10, 0)),
+            end_datetime=timezone.make_aware(datetime(2026, 1, 10, 11, 0)),
+        )
+        response = self.client.get(
+            reverse("planning:calendar"), {"year": 2026, "month": 2}
+        )
+        self.assertContains(response, "No activities scheduled this month")
 
     def test_calendar_displays_user_events(self):
         start_datetime = timezone.now().replace(

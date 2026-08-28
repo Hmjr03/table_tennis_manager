@@ -72,6 +72,23 @@
 
     </div>
 
+    {% if not events_by_date %}
+        <aside class="calendar-empty-guide">
+            <div class="calendar-empty-guide-icon" aria-hidden="true">📅</div>
+            <div>
+                <p class="eyebrow">{% translate "Month overview" %}</p>
+                {% if has_events_anywhere %}
+                    <h2>{% translate "No activities scheduled this month" %}</h2>
+                    <p>{% translate "Use the month navigation to review your schedule or add a new commitment." %}</p>
+                {% else %}
+                    <h2>{% translate "Your calendar is ready" %}</h2>
+                    <p>{% translate "Add your first training session, competition, trip or personal commitment." %}</p>
+                {% endif %}
+            </div>
+            <a href="{% url 'planning:create' %}" class="primary-button">{% translate "Add first event" %}</a>
+        </aside>
+    {% endif %}
+
 
     <div class="calendar-card">
 

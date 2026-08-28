@@ -16,6 +16,10 @@ def note_list(request):
     show_archived = request.GET.get("archived") == "1"
     category = request.GET.get("category", "").strip()
     query = request.GET.get("q", "").strip()
+    owner_notes = Note.objects.filter(owner=request.user)
+    total_note_count = owner_notes.count()
+    active_note_count = owner_notes.filter(is_archived=False).count()
+    has_active_filters = bool(category or query)
 
     notes = Note.objects.filter(
         owner=request.user,
@@ -41,6 +45,9 @@ def note_list(request):
             "current_category": category,
             "current_query": query,
             "show_archived": show_archived,
+            "total_note_count": total_note_count,
+            "active_note_count": active_note_count,
+            "has_active_filters": has_active_filters,
         },
     )
 

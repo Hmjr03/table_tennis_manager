@@ -23,6 +23,7 @@ def competition_list(request):
     )
     status = request.GET.get("status", "").strip()
     query = request.GET.get("q", "").strip()
+    has_active_filters = bool(status or query)
     if status:
         competitions = competitions.filter(status=status)
     if query:
@@ -42,6 +43,7 @@ def competition_list(request):
             "status_choices": Competition.Status.choices,
             "current_status": status,
             "current_query": query,
+            "has_active_filters": has_active_filters,
             "upcoming_count": Competition.objects.filter(
                 owner=request.user,
                 start_date__gte=today,

@@ -14,6 +14,7 @@
         <a href="{% url 'competitions:create' %}" class="primary-button">+ {% translate "Add competition" %}</a>
     </header>
 
+    {% if total_count %}
     <div class="competition-summary-grid">
         <article><span>{% translate "Registered competitions" %}</span><strong>{{ total_count }}</strong></article>
         <article><span>{% translate "Upcoming" %}</span><strong>{{ upcoming_count }}</strong></article>
@@ -37,6 +38,7 @@
             <a class="secondary-button" href="{% url 'competitions:list' %}">{% translate "Clear" %}</a>
         </div>
     </form>
+    {% endif %}
 
     {% if competitions %}
         <div class="competition-card-grid">
@@ -60,12 +62,18 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="players-empty-state">
+        <div class="players-empty-state empty-state-professional">
             <div class="empty-state-visual"><span class="empty-state-icon">🏆</span></div>
             <p class="eyebrow">{% translate "Competition center" %}</p>
-            <h2>{% translate "Organize your first competition" %}</h2>
-            <p>{% translate "Create a competition to connect its calendar, participating athletes and match results." %}</p>
-            <a href="{% url 'competitions:create' %}" class="primary-button">{% translate "Add competition" %}</a>
+            {% if has_active_filters %}
+                <h2>{% translate "No competitions match these filters" %}</h2>
+                <p>{% translate "Clear the filters to return to your complete competition history." %}</p>
+                <a href="{% url 'competitions:list' %}" class="secondary-button">{% translate "Clear filters" %}</a>
+            {% else %}
+                <h2>{% translate "Organize your first competition" %}</h2>
+                <p>{% translate "Create a competition to connect its calendar, participating athletes and match results." %}</p>
+                <a href="{% url 'competitions:create' %}" class="primary-button">{% translate "Add your first competition" %}</a>
+            {% endif %}
         </div>
     {% endif %}
 </section>

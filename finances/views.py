@@ -43,6 +43,10 @@ def transaction_list(request):
     transaction_type = request.GET.get("type", "").strip()
     status = request.GET.get("status", "").strip()
     query = request.GET.get("q", "").strip()
+    total_transaction_count = Transaction.objects.filter(
+        owner=request.user
+    ).count()
+    has_active_filters = bool(area or transaction_type or status or query)
 
     if area in Transaction.Area.values:
         transactions = transactions.filter(area=area)
@@ -80,6 +84,8 @@ def transaction_list(request):
             "current_type": transaction_type,
             "current_status": status,
             "current_query": query,
+            "total_transaction_count": total_transaction_count,
+            "has_active_filters": has_active_filters,
         },
     )
 

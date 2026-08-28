@@ -22,6 +22,8 @@ def match_list(request):
     status = request.GET.get("status", "").strip()
     player_id = request.GET.get("player", "").strip()
     query = request.GET.get("q", "").strip()
+    total_match_count = matches.count()
+    has_active_filters = bool(status or player_id or query)
 
     performance_matches = Match.objects.filter(
         owner=request.user,
@@ -93,6 +95,8 @@ def match_list(request):
             "current_status": status,
             "current_player": player_id,
             "current_query": query,
+            "total_match_count": total_match_count,
+            "has_active_filters": has_active_filters,
             "performance_total": performance_total,
             "performance_wins": performance_wins,
             "performance_losses": performance_losses,
