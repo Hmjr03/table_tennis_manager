@@ -9588,6 +9588,7 @@ p {
 .finance-page {
     display: grid;
     gap: 28px;
+    min-width: 0;
 }
 
 .finance-summary-grid {
@@ -9642,13 +9643,21 @@ p {
 
 .finance-table-card {
     overflow: hidden;
+    min-width: 0;
+    max-width: 100%;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 20px;
     box-shadow: 0 12px 35px rgba(15, 23, 42, .05);
 }
 
-.finance-table-scroll { overflow-x: auto; }
+.finance-table-scroll {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+}
 .finance-table { width: 100%; border-collapse: collapse; }
 .finance-table th, .finance-table td { padding: 16px 18px; border-bottom: 1px solid #e2e8f0; text-align: left; vertical-align: middle; }
 .finance-table th { color: #64748b; background: #f8fafc; font-size: 10px; font-weight: 850; letter-spacing: .8px; text-transform: uppercase; }
@@ -9677,6 +9686,10 @@ p {
 .finance-row-actions a { color: #2563eb; font-weight: 750; text-decoration: none; }
 .finance-row-actions .finance-delete-link { color: #dc2626; }
 .finance-row-actions a:hover { text-decoration: underline; }
+
+.finance-table .sr-only {
+    inset: 0 auto auto 0;
+}
 
 .finance-checkbox { display: inline-flex !important; align-items: center; gap: 10px; cursor: pointer; }
 .finance-checkbox input { width: 18px; height: 18px; }
