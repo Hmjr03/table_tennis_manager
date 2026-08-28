@@ -193,7 +193,12 @@ class ProgressiveWebAppTests(TestCase):
     def test_service_worker_uses_current_static_cache_version(self):
         response = self.client.get(reverse("service-worker"))
 
-        self.assertContains(response, 'CACHE_VERSION = "ttm-static-v3"')
+        self.assertContains(response, 'CACHE_VERSION = "ttm-static-v4"')
+
+    def test_stylesheet_url_changes_with_the_current_interface_release(self):
+        response = self.client.get(reverse("accounts:login"))
+
+        self.assertContains(response, "/static/css/styles.css?v=4")
 
     def test_offline_page_explains_data_protection(self):
         response = self.client.get(
@@ -221,6 +226,19 @@ class ProgressiveWebAppTests(TestCase):
                     header = icon_file.read(24)
                 self.assertEqual(header[:8], b"\x89PNG\r\n\x1a\n")
                 self.assertEqual(struct.unpack(">II", header[16:24]), dimensions)
+
+    def test_finance_table_is_contained_on_small_screens(self):
+        stylesheet = (
+            Path(__file__).resolve().parent.parent
+            / "static"
+            / "css"
+            / "styles.css"
+        ).read_text()
+
+        self.assertIn(".finance-page {", stylesheet)
+        self.assertIn("overscroll-behavior-inline: contain", stylesheet)
+        self.assertIn("-webkit-overflow-scrolling: touch", stylesheet)
+        self.assertIn(".finance-table .sr-only", stylesheet)
 
 
 class HealthCheckTests(TestCase):
