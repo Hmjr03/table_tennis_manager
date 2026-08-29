@@ -147,6 +147,38 @@ class MultilingualPageTitleTests(TestCase):
                 self.assertContains(response, expected_title)
 
 
+class AccessibilityShellTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="accessibility-audit",
+            email="accessibility@example.com",
+            password="test-password",
+        )
+        self.client.force_login(self.user)
+
+    def test_application_has_one_banner_and_a_keyboard_skip_link(self):
+        response = self.client.get(reverse("dashboard:home"))
+
+        self.assertContains(response, '<a class="skip-link" href="#main-content">')
+        self.assertContains(
+            response,
+            '<main id="main-content" class="main-content" tabindex="-1">',
+        )
+        self.assertEqual(
+            response.content.decode().count('<header class="site-header">'),
+            1,
+        )
+
+    def test_primary_navigation_identifies_the_current_section(self):
+        response = self.client.get(reverse("finances:list"))
+
+        self.assertContains(response, 'aria-label="Primary navigation"')
+        self.assertContains(
+            response,
+            f'href="{reverse("finances:list")}" aria-current="page"',
+        )
+
+
 class ProgressiveWebAppTests(TestCase):
     def test_manifest_has_stable_identity_and_installable_assets(self):
         response = self.client.get(reverse("pwa-manifest"))
@@ -193,12 +225,12 @@ class ProgressiveWebAppTests(TestCase):
     def test_service_worker_uses_current_static_cache_version(self):
         response = self.client.get(reverse("service-worker"))
 
-        self.assertContains(response, 'CACHE_VERSION = "ttm-static-v4"')
+        self.assertContains(response, 'CACHE_VERSION = "ttm-static-v5"')
 
     def test_stylesheet_url_changes_with_the_current_interface_release(self):
         response = self.client.get(reverse("accounts:login"))
 
-        self.assertContains(response, "/static/css/styles.css?v=4")
+        self.assertContains(response, "/static/css/styles.css?v=5")
 
     def test_offline_page_explains_data_protection(self):
         response = self.client.get(
