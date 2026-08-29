@@ -225,12 +225,12 @@ class ProgressiveWebAppTests(TestCase):
     def test_service_worker_uses_current_static_cache_version(self):
         response = self.client.get(reverse("service-worker"))
 
-        self.assertContains(response, 'CACHE_VERSION = "ttm-static-v5"')
+        self.assertContains(response, 'CACHE_VERSION = "ttm-static-v6"')
 
     def test_stylesheet_url_changes_with_the_current_interface_release(self):
         response = self.client.get(reverse("accounts:login"))
 
-        self.assertContains(response, "/static/css/styles.css?v=5")
+        self.assertContains(response, "/static/css/styles.css?v=6")
 
     def test_offline_page_explains_data_protection(self):
         response = self.client.get(

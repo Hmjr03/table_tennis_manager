@@ -7,6 +7,8 @@ from players.models import Player
 
 
 def onboarding_summary(user):
+    player_exists = Player.objects.filter(user=user).exists()
+
     steps = (
         {
             "key": "player",
@@ -15,7 +17,8 @@ def onboarding_summary(user):
                 "Build the athlete profile that will connect matches and analysis."
             ),
             "url": reverse("players:create"),
-            "completed": Player.objects.filter(user=user).exists(),
+            "completed": player_exists,
+            "available": True,
         },
         {
             "key": "commitment",
@@ -27,6 +30,7 @@ def onboarding_summary(user):
             "completed": CalendarEvent.objects.filter(owner=user)
             .exclude(event_type=CalendarEvent.EventType.COMPETITION)
             .exists(),
+            "available": True,
         },
         {
             "key": "match",
@@ -36,6 +40,7 @@ def onboarding_summary(user):
             ),
             "url": reverse("matches:create"),
             "completed": Match.objects.filter(owner=user).exists(),
+            "available": player_exists,
         },
     )
     completed_count = sum(step["completed"] for step in steps)

@@ -7498,7 +7498,8 @@ p {
 }
 
 .onboarding-step-action,
-.onboarding-complete-label {
+.onboarding-complete-label,
+.onboarding-locked-label {
     align-self: center;
     margin-left: auto;
     color: #1d4ed8;
@@ -7510,6 +7511,10 @@ p {
 
 .onboarding-complete-label {
     color: #15803d;
+}
+
+.onboarding-locked-label {
+    color: #64748b;
 }
 
 .onboarding-resume {
@@ -7548,7 +7553,8 @@ p {
     }
 
     .onboarding-step-action,
-    .onboarding-complete-label {
+    .onboarding-complete-label,
+    .onboarding-locked-label {
         grid-column: 2;
         margin-left: 0;
     }

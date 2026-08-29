@@ -71,7 +71,20 @@ class DashboardViewTests(TestCase):
         self.assertContains(response, "0 of 3 completed")
         self.assertContains(response, reverse("players:create"))
         self.assertContains(response, reverse("planning:create"))
+        self.assertNotContains(response, reverse("matches:create"))
+        self.assertContains(response, "Create a player first")
+
+    def test_match_onboarding_step_unlocks_after_player_creation(self):
+        Player.objects.create(
+            user=self.user,
+            first_name="Ready",
+            last_name="Athlete",
+        )
+
+        response = self.client.get(reverse("dashboard:home"))
+
         self.assertContains(response, reverse("matches:create"))
+        self.assertNotContains(response, "Create a player first")
 
     def test_onboarding_progress_uses_only_current_user_data(self):
         Player.objects.create(
