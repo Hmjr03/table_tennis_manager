@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import override
 
 from finances.forms import TransactionForm
 from finances.models import Transaction
@@ -41,6 +42,18 @@ class TransactionFormTests(TestCase):
         form = TransactionForm(data=self.form_data(description="AB"))
         self.assertFalse(form.is_valid())
         self.assertIn("description", form.errors)
+
+    def test_required_choice_prompts_are_translated(self):
+        expected_prompts = {
+            "pt-br": "Selecione o tipo de transação",
+            "es": "Selecciona el tipo de transacción",
+        }
+
+        for language, expected in expected_prompts.items():
+            with self.subTest(language=language), override(language):
+                form = TransactionForm()
+                prompt = form.fields["transaction_type"].choices[0][1]
+                self.assertEqual(str(prompt), expected)
 
 
 class TransactionViewTests(TestCase):

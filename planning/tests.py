@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.utils.translation import override
 
 from planning.forms import CalendarEventForm
 from planning.models import CalendarEvent
@@ -83,6 +84,20 @@ class CalendarEventFormTests(TestCase):
         )
 
         self.assertTrue(form.is_valid())
+
+    def test_optional_competition_prompt_is_translated(self):
+        expected_prompts = {
+            "pt-br": "Nenhuma competição vinculada",
+            "es": "Ninguna competición vinculada",
+        }
+
+        for language, expected in expected_prompts.items():
+            with self.subTest(language=language), override(language):
+                form = CalendarEventForm()
+                self.assertEqual(
+                    str(form.fields["competition_record"].empty_label),
+                    expected,
+                )
 
 
 class CalendarEventModelTests(TestCase):

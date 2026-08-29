@@ -88,6 +88,11 @@ class MatchForm(forms.ModelForm):
                 self.fields["competition_record"].queryset.none()
             )
 
+        self.fields["player"].empty_label = _("Select player")
+        self.fields["competition_record"].empty_label = _(
+            "No linked competition"
+        )
+
         self.fields["player"].label = _("Player")
         self.fields["opponent_name"].label = _("Opponent")
         self.fields["competition_record"].label = _("Registered competition")
