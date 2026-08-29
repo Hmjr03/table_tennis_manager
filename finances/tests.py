@@ -38,6 +38,21 @@ class TransactionFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("amount", form.errors)
 
+    def test_amount_accepts_decimal_comma_for_portuguese_and_spanish(self):
+        for language in ("pt-br", "es"):
+            with self.subTest(language=language), override(language):
+                form = TransactionForm(
+                    data=self.form_data(amount="125,50")
+                )
+                self.assertTrue(form.is_valid(), form.errors)
+                self.assertEqual(form.cleaned_data["amount"], Decimal("125.50"))
+
+    def test_amount_uses_mobile_decimal_keyboard(self):
+        field = TransactionForm().fields["amount"]
+
+        self.assertEqual(field.widget.input_type, "text")
+        self.assertEqual(field.widget.attrs["inputmode"], "decimal")
+
     def test_description_must_have_three_characters(self):
         form = TransactionForm(data=self.form_data(description="AB"))
         self.assertFalse(form.is_valid())

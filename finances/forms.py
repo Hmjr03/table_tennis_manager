@@ -1,10 +1,34 @@
+from decimal import Decimal
+
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from finances.models import Transaction
 
 
+class FlexibleDecimalField(forms.DecimalField):
+    def to_python(self, value):
+        if isinstance(value, str):
+            normalized_value = value.strip()
+            if "," in normalized_value and "." not in normalized_value:
+                value = normalized_value.replace(",", ".")
+        return super().to_python(value)
+
+
 class TransactionForm(forms.ModelForm):
+    amount = FlexibleDecimalField(
+        min_value=Decimal("0.01"),
+        max_digits=12,
+        decimal_places=2,
+        label=_("Amount"),
+        widget=forms.TextInput(
+            attrs={
+                "inputmode": "decimal",
+                "autocomplete": "off",
+                "placeholder": _("Example: 125.50"),
+            }
+        ),
+    )
     date = forms.DateField(
         input_formats=["%Y-%m-%d"],
         widget=forms.DateInput(
@@ -29,7 +53,6 @@ class TransactionForm(forms.ModelForm):
             "notes",
         )
         widgets = {
-            "amount": forms.NumberInput(attrs={"min": "0.01", "step": "0.01"}),
             "description": forms.TextInput(attrs={"placeholder": _("What was this transaction for?")}),
             "notes": forms.Textarea(attrs={"rows": 4, "placeholder": _("Optional details")}),
         }
