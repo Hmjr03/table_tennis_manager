@@ -2190,3 +2190,6 @@ msgstr "Navegação principal"
 
 msgid "Create a player first"
 msgstr "Crie primeiro um jogador"
+
+msgid "Create a player before recording a match."
+msgstr "Crie um jogador antes de registrar uma partida."

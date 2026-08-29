@@ -272,6 +272,11 @@ class CompetitionViewTests(CompetitionTestMixin, TestCase):
 
     def test_linked_competition_prefills_new_match_and_event(self):
         competition = self.create_competition(self.owner)
+        Player.objects.create(
+            user=self.owner,
+            first_name="Shortcut",
+            last_name="Player",
+        )
 
         match_response = self.client.get(
             reverse("matches:create"),
@@ -310,6 +315,11 @@ class CompetitionViewTests(CompetitionTestMixin, TestCase):
         self.assertContains(spanish_response, "Añadir competición")
 
     def test_invalid_competition_shortcut_is_ignored_safely(self):
+        Player.objects.create(
+            user=self.owner,
+            first_name="Shortcut",
+            last_name="Player",
+        )
         match_response = self.client.get(
             reverse("matches:create"),
             {"competition": "invalid"},
