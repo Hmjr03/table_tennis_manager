@@ -126,6 +126,13 @@ def match_detail(request, pk):
 
 @login_required
 def match_create(request):
+    if not request.user.players.exists():
+        messages.info(
+            request,
+            _("Create a player before recording a match."),
+        )
+        return redirect("players:create")
+
     if request.method == "POST":
         form = MatchForm(
             request.POST,

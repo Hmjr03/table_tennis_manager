@@ -379,6 +379,30 @@ class MatchCreateSecurityTests(MatchTestMixin, TestCase):
         self.assertContains(response, reverse("matches:list"))
 
 
+class MatchCreatePrerequisiteTests(MatchTestMixin, TestCase):
+    def setUp(self):
+        self.user = self.create_user()
+        self.client.force_login(self.user)
+
+    def test_user_without_player_is_guided_to_player_creation(self):
+        response = self.client.get(reverse("matches:create"), follow=True)
+
+        self.assertRedirects(response, reverse("players:create"))
+        self.assertContains(
+            response,
+            "Create a player before recording a match.",
+        )
+
+    def test_match_post_without_player_cannot_create_a_record(self):
+        response = self.client.post(
+            reverse("matches:create"),
+            {"opponent_name": "Unavailable opponent"},
+        )
+
+        self.assertRedirects(response, reverse("players:create"))
+        self.assertFalse(Match.objects.filter(owner=self.user).exists())
+
+
 class MatchUpdateSecurityTests(MatchTestMixin, TestCase):
     def setUp(self):
         self.user = self.create_user()
