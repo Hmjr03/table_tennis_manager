@@ -184,6 +184,13 @@ class AuthenticationTests(TestCase):
         response = self.client.get(reverse("dashboard:home"))
         self.assertContains(response, "club-manager")
 
+    def test_authenticated_user_is_redirected_away_from_login(self):
+        self.client.force_login(self.user)
+
+        response = self.client.get(reverse("accounts:login"))
+
+        self.assertRedirects(response, reverse("dashboard:home"))
+
     def test_legacy_account_dashboard_redirects_to_current_dashboard(self):
         self.client.force_login(self.user)
 
