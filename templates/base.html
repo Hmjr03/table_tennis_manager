@@ -40,7 +40,7 @@
 
     <link
         rel="stylesheet"
-        href="{% static 'css/styles.css' %}?v=4"
+        href="{% static 'css/styles.css' %}?v=5"
     >
 
     <link rel="manifest" href="{% url 'pwa-manifest' %}">
@@ -61,18 +61,15 @@
 
 <body>
 
+<a class="skip-link" href="#main-content">{% translate "Skip to main content" %}</a>
 
-<header>
-
-    {% include "includes/navbar.html" %}
-
-</header>
+{% include "includes/navbar.html" %}
 
 
 
 
 
-<main class="main-content">
+<main id="main-content" class="main-content" tabindex="-1">
 
 
     <div class="container">

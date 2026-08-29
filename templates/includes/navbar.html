@@ -16,7 +16,7 @@
             </span>
         </a>
 
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="{% translate 'Primary navigation' %}">
 
             <button
                 type="button"
@@ -31,35 +31,35 @@
 
             {% if user.is_authenticated %}
 
-                <a href="{% url 'dashboard:home' %}">
+                <a href="{% url 'dashboard:home' %}"{% if request.resolver_match.app_name == "dashboard" %} aria-current="page"{% endif %}>
                     {% translate "Dashboard" %}
                 </a>
 
-                <a href="{% url 'players:list' %}">
+                <a href="{% url 'players:list' %}"{% if request.resolver_match.app_name == "players" %} aria-current="page"{% endif %}>
                     {% translate "Players" %}
                 </a>
 
-                <a href="{% url 'matches:list' %}">
+                <a href="{% url 'matches:list' %}"{% if request.resolver_match.app_name == "matches" %} aria-current="page"{% endif %}>
                     {% translate "Matches" %}
                 </a>
 
-                <a href="{% url 'competitions:list' %}">
+                <a href="{% url 'competitions:list' %}"{% if request.resolver_match.app_name == "competitions" %} aria-current="page"{% endif %}>
                     {% translate "Competitions" %}
                 </a>
 
-                <a href="{% url 'planning:calendar' %}">
+                <a href="{% url 'planning:calendar' %}"{% if request.resolver_match.app_name == "planning" %} aria-current="page"{% endif %}>
                     {% translate "Calendar" %}
                 </a>
 
-                <a href="{% url 'finances:list' %}">
+                <a href="{% url 'finances:list' %}"{% if request.resolver_match.app_name == "finances" %} aria-current="page"{% endif %}>
                     {% translate "Finances" %}
                 </a>
 
-                <a href="{% url 'notes:list' %}">
+                <a href="{% url 'notes:list' %}"{% if request.resolver_match.app_name == "notes" %} aria-current="page"{% endif %}>
                     {% translate "Notes" %}
                 </a>
 
-                <a href="{% url 'subscriptions:plans' %}">
+                <a href="{% url 'subscriptions:plans' %}"{% if request.resolver_match.app_name == "subscriptions" %} aria-current="page"{% endif %}>
                     {% translate "Plans" %}
                 </a>
 

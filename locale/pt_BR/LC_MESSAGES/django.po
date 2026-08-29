@@ -2181,3 +2181,9 @@ msgid "Clear the filters to return to your complete competition history."
 msgstr "Limpe os filtros para voltar ao histórico completo de competições."
 msgid "Add your first competition"
 msgstr "Adicionar primeira competição"
+
+msgid "Skip to main content"
+msgstr "Ir para o conteúdo principal"
+
+msgid "Primary navigation"
+msgstr "Navegação principal"
