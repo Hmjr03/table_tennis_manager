@@ -49,6 +49,8 @@
                         </div>
                         {% if step.completed %}
                             <span class="onboarding-complete-label">{% translate "Completed" %}</span>
+                        {% elif not step.available %}
+                            <span class="onboarding-locked-label">{% translate "Create a player first" %}</span>
                         {% else %}
                             <a href="{{ step.url }}" class="onboarding-step-action">{% translate "Start" %} →</a>
                         {% endif %}

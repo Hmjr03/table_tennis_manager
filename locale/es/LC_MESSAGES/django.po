@@ -2187,3 +2187,6 @@ msgstr "Ir al contenido principal"
 
 msgid "Primary navigation"
 msgstr "Navegación principal"
+
+msgid "Create a player first"
+msgstr "Crea primero un jugador"
