@@ -79,6 +79,9 @@ class CalendarEventForm(forms.ModelForm):
 
     def __init__(self, *args, owner=None, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["competition_record"].empty_label = _(
+            "No linked competition"
+        )
         if owner is not None:
             self.fields["competition_record"].queryset = (
                 owner.competitions.all().order_by("start_date", "name")
@@ -165,6 +168,9 @@ class EventClassificationForm(forms.ModelForm):
 
     def __init__(self, *args, owner=None, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["competition_record"].empty_label = _(
+            "No linked competition"
+        )
         if owner is not None:
             self.fields["competition_record"].queryset = owner.competitions.all()
         else:

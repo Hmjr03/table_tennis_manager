@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import override
 
 from matches.forms import MatchForm
 from matches.models import Match
@@ -192,6 +193,20 @@ class MatchFormSecurityTests(MatchTestMixin, TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertIn("player", form.errors)
+
+    def test_player_prompt_is_translated(self):
+        expected_prompts = {
+            "pt-br": "Selecione o jogador",
+            "es": "Selecciona el jugador",
+        }
+
+        for language, expected in expected_prompts.items():
+            with self.subTest(language=language), override(language):
+                form = MatchForm(owner=self.user)
+                self.assertEqual(
+                    str(form.fields["player"].empty_label),
+                    expected,
+                )
 
 
 class MatchListViewTests(MatchTestMixin, TestCase):

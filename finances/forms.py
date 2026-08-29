@@ -44,6 +44,21 @@ class TransactionForm(forms.ModelForm):
 
     def __init__(self, *args, owner=None, **kwargs):
         super().__init__(*args, **kwargs)
+        choice_prompts = {
+            "transaction_type": _("Select transaction type"),
+            "area": _("Select area"),
+            "category": _("Select category"),
+        }
+        for field_name, prompt in choice_prompts.items():
+            field = self.fields[field_name]
+            field.choices = [
+                ("", prompt),
+                *(choice for choice in field.choices if choice[0]),
+            ]
+
+        self.fields["competition_record"].empty_label = _(
+            "No linked competition"
+        )
         if owner is not None:
             self.fields["competition_record"].queryset = (
                 owner.competitions.all().order_by("start_date", "name")

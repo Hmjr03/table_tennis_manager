@@ -2193,3 +2193,18 @@ msgstr "Crea primero un jugador"
 
 msgid "Create a player before recording a match."
 msgstr "Crea un jugador antes de registrar un partido."
+
+msgid "Select transaction type"
+msgstr "Selecciona el tipo de transacción"
+
+msgid "Select area"
+msgstr "Selecciona el área"
+
+msgid "Select category"
+msgstr "Selecciona la categoría"
+
+msgid "Select player"
+msgstr "Selecciona el jugador"
+
+msgid "No linked competition"
+msgstr "Ninguna competición vinculada"
