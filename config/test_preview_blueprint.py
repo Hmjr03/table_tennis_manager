@@ -13,6 +13,7 @@ class PreviewBlueprintTests(TestCase):
         self.assertEqual(self.content.count("plan: free"), 2)
         self.assertNotIn("plan: starter", self.content)
         self.assertNotIn("plan: basic-", self.content)
+        self.assertNotIn("maxShutdownDelaySeconds", self.content)
 
     def test_preview_resources_are_isolated(self):
         self.assertIn("name: table-tennis-manager-preview", self.content)
