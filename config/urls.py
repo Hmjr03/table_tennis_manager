@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.templatetags.static import static
 from django.urls import include, path
+from django.views.generic import RedirectView
 
 from accounts import views
 from config.views import (
@@ -13,6 +15,14 @@ from config.views import (
 
 
 urlpatterns = [
+    path(
+        "favicon.ico",
+        RedirectView.as_view(
+            url=static("icons/favicon.ico"),
+            permanent=True,
+        ),
+        name="favicon",
+    ),
     path(
         "manifest.webmanifest",
         pwa_manifest,
