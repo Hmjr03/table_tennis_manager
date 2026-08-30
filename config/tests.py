@@ -180,6 +180,16 @@ class AccessibilityShellTests(TestCase):
 
 
 class ProgressiveWebAppTests(TestCase):
+    def test_root_favicon_redirects_to_the_static_brand_asset(self):
+        response = self.client.get(reverse("favicon"))
+
+        self.assertRedirects(
+            response,
+            "/static/icons/favicon.ico",
+            status_code=301,
+            fetch_redirect_response=False,
+        )
+
     def test_manifest_has_stable_identity_and_installable_assets(self):
         response = self.client.get(reverse("pwa-manifest"))
 

@@ -1,6 +1,6 @@
 from django.db import connections
 from django.db.utils import OperationalError
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import render
 from django.templatetags.static import static
 from django.urls import reverse
@@ -14,6 +14,11 @@ from django.views.decorators.http import require_GET
 def health_check(request):
     """Backward-compatible readiness endpoint."""
     return readiness_check(request)
+
+
+@require_GET
+def favicon(request):
+    return HttpResponsePermanentRedirect(static("icons/favicon.ico"))
 
 
 @require_GET

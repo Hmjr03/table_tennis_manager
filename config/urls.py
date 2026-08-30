@@ -3,6 +3,7 @@ from django.urls import include, path
 
 from accounts import views
 from config.views import (
+    favicon,
     health_check,
     liveness_check,
     offline_page,
@@ -13,6 +14,11 @@ from config.views import (
 
 
 urlpatterns = [
+    path(
+        "favicon.ico",
+        favicon,
+        name="favicon",
+    ),
     path(
         "manifest.webmanifest",
         pwa_manifest,
