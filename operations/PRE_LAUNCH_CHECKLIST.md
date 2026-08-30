@@ -39,7 +39,7 @@ acceptance pass. Never seed demonstration data into production.
 Follow `operations/EMAIL_AND_DOMAIN.md` and attach the provider and DNS
 verification evidence to the release record.
 
-- [ ] The production sender domain and SMTP provider are configured.
+- [ ] The production sender domain and transactional email provider are configured.
 - [ ] Verification and password-reset emails arrive in major email providers.
 - [ ] SPF, DKIM and DMARC records pass the provider's verification.
 - [ ] The temporary Render address passes acceptance before the custom domain.

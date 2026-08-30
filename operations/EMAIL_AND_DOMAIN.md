@@ -1,8 +1,9 @@
 # Transactional email and sender-domain runbook
 
-Use this runbook before inviting external users. The application supports any
-reputable SMTP provider; provider credentials and DNS records must never be
-committed to Git.
+Use this runbook before inviting external users. The recommended configuration
+on Render is Resend through its HTTPS API. SMTP remains supported on hosts that
+permit outbound SMTP connections. Provider credentials and DNS records must
+never be committed to Git.
 
 ## 1. Sender identity
 
@@ -15,7 +16,21 @@ committed to Git.
 
 ## 2. Application configuration
 
+### Recommended: Resend API on Render
+
 Configure these environment variables in the production hosting dashboard:
+
+```text
+DJANGO_EMAIL_BACKEND=anymail.backends.resend.EmailBackend
+RESEND_API_KEY=<secret created in the Resend dashboard>
+DJANGO_DEFAULT_FROM_EMAIL=Table Tennis Manager <noreply@verified-domain.example>
+DJANGO_PASSWORD_RESET_TIMEOUT=3600
+```
+
+The Resend key must be stored only as a secret environment variable. Do not
+paste it into source code, documentation, screenshots, tickets or chat.
+
+### Alternative: SMTP on a compatible host
 
 ```text
 DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend

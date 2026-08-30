@@ -6,6 +6,27 @@ class Command(BaseCommand):
     help = "Audit the configuration required for a safe production release."
 
     def handle(self, *args, **options):
+        smtp_backend = "django.core.mail.backends.smtp.EmailBackend"
+        resend_backend = "anymail.backends.resend.EmailBackend"
+        email_backend_supported = settings.EMAIL_BACKEND in {
+            smtp_backend,
+            resend_backend,
+        }
+        if settings.EMAIL_BACKEND == smtp_backend:
+            email_credentials_configured = all(
+                (
+                    settings.EMAIL_HOST,
+                    settings.EMAIL_HOST_USER,
+                    settings.EMAIL_HOST_PASSWORD,
+                )
+            )
+        elif settings.EMAIL_BACKEND == resend_backend:
+            email_credentials_configured = bool(
+                settings.ANYMAIL.get("RESEND_API_KEY")
+            )
+        else:
+            email_credentials_configured = False
+
         checks = [
             (not settings.DEBUG, "Debug mode is disabled"),
             (
@@ -38,15 +59,9 @@ class Command(BaseCommand):
                 != "django.db.backends.sqlite3",
                 "A production database is configured",
             ),
+            (email_backend_supported, "A production email backend is configured"),
             (
-                settings.EMAIL_BACKEND
-                == "django.core.mail.backends.smtp.EmailBackend",
-                "Transactional email uses SMTP",
-            ),
-            (
-                bool(settings.EMAIL_HOST)
-                and bool(settings.EMAIL_HOST_USER)
-                and bool(settings.EMAIL_HOST_PASSWORD),
+                email_credentials_configured,
                 "Email provider credentials are configured",
             ),
             (
