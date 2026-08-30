@@ -11,14 +11,14 @@ the Blueprint.
 ## Before deployment
 
 1. Push the tested release to the repository's default branch.
-2. Choose an SMTP provider and have these values ready:
+2. Create a Resend account and have these values ready:
    - sender, for example `Table Tennis Manager <noreply@your-domain>`;
-   - SMTP host;
-   - SMTP username;
-   - SMTP password or API credential.
+   - verified sender domain;
+   - verified From address;
+   - Resend API key.
 3. Keep the first URL private while completing acceptance tests.
 
-Never place SMTP credentials, database URLs, secret keys or Render API keys in
+Never place email credentials, database URLs, secret keys or Render API keys in
 the repository, screenshots or support messages.
 
 ## Create the private environment
@@ -27,7 +27,7 @@ the repository, screenshots or support messages.
 2. Connect the `Hmjr03/table_tennis_manager` repository.
 3. Select the repository's default branch and the `render.yaml` Blueprint.
 4. Review the paid `starter` web service and `basic-256mb` database.
-5. Enter the SMTP values requested by Render. It generates the Django secret
+5. Enter the Resend values requested by Render. It generates the Django secret
    automatically and connects PostgreSQL through its private network.
 6. Apply the Blueprint and wait for the health check to become healthy.
 

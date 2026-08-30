@@ -34,19 +34,11 @@ services:
       - key: LEGAL_COUNTRY
         value: Brazil
       - key: DJANGO_EMAIL_BACKEND
-        value: django.core.mail.backends.smtp.EmailBackend
+        value: anymail.backends.resend.EmailBackend
       - key: DJANGO_DEFAULT_FROM_EMAIL
         sync: false
-      - key: DJANGO_EMAIL_HOST
+      - key: RESEND_API_KEY
         sync: false
-      - key: DJANGO_EMAIL_PORT
-        value: "587"
-      - key: DJANGO_EMAIL_HOST_USER
-        sync: false
-      - key: DJANGO_EMAIL_HOST_PASSWORD
-        sync: false
-      - key: DJANGO_EMAIL_USE_TLS
-        value: "True"
 
 databases:
   - name: table-tennis-manager-db

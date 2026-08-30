@@ -93,6 +93,40 @@ class ReleaseReadinessCommandTests(SimpleTestCase):
         with self.assertRaisesMessage(CommandError, "Release blocked"):
             call_command("check_release_readiness", stdout=StringIO())
 
+    @override_settings(
+        DEBUG=False,
+        SECRET_KEY="production-secret-key-for-resend-tests",
+        ALLOWED_HOSTS=["app.example.com"],
+        CSRF_TRUSTED_ORIGINS=["https://app.example.com"],
+        SESSION_COOKIE_SECURE=True,
+        CSRF_COOKIE_SECURE=True,
+        SECURE_SSL_REDIRECT=True,
+        SECURE_HSTS_SECONDS=3600,
+        EMAIL_BACKEND="anymail.backends.resend.EmailBackend",
+        ANYMAIL={"RESEND_API_KEY": "re_test_key"},
+        DEFAULT_FROM_EMAIL="Table Tennis Manager <noreply@example.com>",
+        LEGAL_CONTROLLER_NAME="Example Controller",
+        LEGAL_CONTACT_EMAIL="privacy@example.com",
+        LEGAL_COUNTRY="Brazil",
+    )
+    def test_release_readiness_accepts_resend_api_backend(self):
+        production_database = {
+            "default": {
+                "ENGINE": "django.db.backends.postgresql",
+                "NAME": "table_tennis_manager",
+            }
+        }
+        with patch.object(settings, "DATABASES", production_database):
+            call_command("check_release_readiness", stdout=StringIO())
+
+    @override_settings(
+        EMAIL_BACKEND="anymail.backends.resend.EmailBackend",
+        ANYMAIL={"RESEND_API_KEY": ""},
+    )
+    def test_release_readiness_rejects_resend_without_api_key(self):
+        with self.assertRaisesMessage(CommandError, "Release blocked"):
+            call_command("check_release_readiness", stdout=StringIO())
+
 
 @override_settings(DEBUG=True)
 class AcceptanceWorkspaceCommandTests(TestCase):
