@@ -9,10 +9,12 @@
         <p class="eyebrow">{% translate "Plans" %}</p>
         <h1>{% translate "A plan for every stage of your journey" %}</h1>
         <p>{% translate "Start with the essentials and grow without losing your sporting history." %}</p>
-        <div class="plans-preview-notice">
-            <strong>{% translate "Commercial preview" %}</strong>
-            <span>{% translate "Paid subscriptions are not active yet. No charge can be made from this page." %}</span>
-        </div>
+        {% if not billing_enabled %}
+            <div class="plans-preview-notice">
+                <strong>{% translate "Commercial preview" %}</strong>
+                <span>{% translate "Paid subscriptions are not active yet. No charge can be made from this page." %}</span>
+            </div>
+        {% endif %}
     </header>
 
     <div class="plans-grid">
@@ -24,11 +26,18 @@
                             <p class="plan-audience">{{ plan.audience }}</p>
                             <h2>{{ plan.name }}</h2>
                         </div>
-                        {% if current_plan == plan.code %}
+                        {% if current_plan == plan.code and current_subscription.has_product_access %}
                             <span class="current-plan-badge">{% translate "Current plan" %}</span>
                         {% endif %}
                     </div>
                     <p class="plan-description">{{ plan.description }}</p>
+                    {% if plan.monthly_price %}
+                        <div class="plan-pricing">
+                            <strong>{{ plan.monthly_price }}</strong>
+                            <span>{{ plan.yearly_price }} · {% translate "save R$ 59.80" %}</span>
+                            <small>{% translate "7-day free trial without a card" %}</small>
+                        </div>
+                    {% endif %}
                     <p class="plan-capacity">
                         {% blocktranslate count limit=plan.player_limit %}Up to {{ limit }} player profile{% plural %}Up to {{ limit }} player profiles{% endblocktranslate %}
                     </p>
@@ -38,8 +47,21 @@
                         {% endfor %}
                     </ul>
                 </div>
-                {% if current_plan == plan.code %}
+                {% if current_plan == plan.code and current_subscription.has_product_access %}
                     <span class="plan-action plan-action-current">{% translate "Active on your account" %}</span>
+                {% elif user.is_authenticated and billing_enabled %}
+                    <form method="post" action="{% url 'subscriptions:create_checkout' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="plan" value="{{ plan.code }}">
+                        <label>
+                            <span class="sr-only">{% translate "Billing cycle" %}</span>
+                            <select name="interval">
+                                <option value="MONTHLY">{% translate "Monthly" %}</option>
+                                <option value="YEARLY">{% translate "Yearly" %}</option>
+                            </select>
+                        </label>
+                        <button class="plan-action" type="submit">{% translate "Choose plan" %}</button>
+                    </form>
                 {% elif user.is_authenticated %}
                     <span class="plan-action">{% translate "Coming soon" %}</span>
                 {% else %}
@@ -48,6 +70,13 @@
             </article>
         {% endfor %}
     </div>
+
+    {% if billing_enabled and user.is_authenticated and user.subscription.stripe_customer_id %}
+        <form method="post" action="{% url 'subscriptions:billing_portal' %}">
+            {% csrf_token %}
+            <button class="plan-action" type="submit">{% translate "Manage subscription" %}</button>
+        </form>
+    {% endif %}
 
     <footer class="plans-assurance">
         <h2>{% translate "Built for a safe launch" %}</h2>

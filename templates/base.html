@@ -74,6 +74,16 @@
 
     <div class="container">
 
+        {% if account_subscription.is_trial_active %}
+            <aside class="trial-banner" role="status">
+                <strong>{% translate "Professional trial" %}</strong>
+                <span>
+                    {% blocktranslate count days=account_subscription.trial_days_remaining %}{{ days }} day remaining{% plural %}{{ days }} days remaining{% endblocktranslate %}
+                </span>
+                <a href="{% url 'subscriptions:plans' %}">{% translate "View plans" %}</a>
+            </aside>
+        {% endif %}
+
 
         {% if messages %}
 

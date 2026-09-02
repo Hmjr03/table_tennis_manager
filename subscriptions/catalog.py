@@ -14,6 +14,8 @@ class PlanDefinition:
     player_limit: int | None
     features: tuple[str, ...]
     highlighted: bool = False
+    monthly_price: str | None = None
+    yearly_price: str | None = None
 
 
 PLAN_CATALOG = (
@@ -41,6 +43,8 @@ PLAN_CATALOG = (
             _("Advanced analysis and exports planned"),
         ),
         highlighted=True,
+        monthly_price=_("R$ 29.90/month"),
+        yearly_price=_("R$ 299/year"),
     ),
     PlanDefinition(
         code=Subscription.Plan.ORGANIZATION,

@@ -129,6 +129,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "subscriptions.middleware.SubscriptionAccessMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -164,6 +165,7 @@ TEMPLATES = [
                     "django.contrib.messages.context_processors."
                     "messages"
                 ),
+                "subscriptions.context_processors.subscription_access",
             ],
         },
     },
@@ -382,6 +384,39 @@ ANYMAIL = {
 
 PASSWORD_RESET_TIMEOUT = int(
     os.getenv("DJANGO_PASSWORD_RESET_TIMEOUT", "3600")
+)
+
+
+# =====================================================
+# BILLING
+# =====================================================
+
+# Billing is deliberately opt-in. Deploying this code cannot create charges
+# until the flag and all provider credentials are configured explicitly.
+STRIPE_BILLING_ENABLED = env_bool("STRIPE_BILLING_ENABLED", False)
+STRIPE_LIVE_MODE = env_bool("STRIPE_LIVE_MODE", False)
+STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY", "").strip()
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "").strip()
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "").strip()
+STRIPE_PRICE_PROFESSIONAL_MONTHLY = os.getenv(
+    "STRIPE_PRICE_PROFESSIONAL_MONTHLY", ""
+).strip()
+STRIPE_PRICE_PROFESSIONAL_YEARLY = os.getenv(
+    "STRIPE_PRICE_PROFESSIONAL_YEARLY", ""
+).strip()
+STRIPE_PRICE_ORGANIZATION_MONTHLY = os.getenv(
+    "STRIPE_PRICE_ORGANIZATION_MONTHLY", ""
+).strip()
+STRIPE_PRICE_ORGANIZATION_YEARLY = os.getenv(
+    "STRIPE_PRICE_ORGANIZATION_YEARLY", ""
+).strip()
+
+# Trial rollout is separate from billing so existing users can never be
+# locked out by an incomplete payment configuration.
+SUBSCRIPTION_TRIAL_ENABLED = env_bool("SUBSCRIPTION_TRIAL_ENABLED", False)
+SUBSCRIPTION_TRIAL_DAYS = int(os.getenv("SUBSCRIPTION_TRIAL_DAYS", "7"))
+SUBSCRIPTION_ACCESS_ENFORCED = env_bool(
+    "SUBSCRIPTION_ACCESS_ENFORCED", False
 )
 
 
