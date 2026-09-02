@@ -2211,3 +2211,15 @@ msgstr "Nenhuma competição vinculada"
 
 msgid "Example: 125.50"
 msgstr "Exemplo: 125,50"
+
+msgid "R$ 29.90/month"
+msgstr "R$ 29,90/mês"
+
+msgid "R$ 299/year"
+msgstr "R$ 299/ano"
+
+msgid "save R$ 59.80"
+msgstr "economize R$ 59,80"
+
+msgid "7-day free trial without a card"
+msgstr "Teste gratuito de 7 dias sem cartão"
