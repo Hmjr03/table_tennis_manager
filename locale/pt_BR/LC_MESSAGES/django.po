@@ -2059,8 +2059,8 @@ msgstr "Ativo na sua conta"
 msgid "Built for a safe launch"
 msgstr "Preparado para um lançamento seguro"
 
-msgid "Prices, billing cycle, cancellation and refund conditions will be shown clearly before paid subscriptions are enabled."
-msgstr "Preços, ciclo de cobrança e condições de cancelamento e reembolso serão apresentados claramente antes da ativação das assinaturas pagas."
+msgid "Prices and billing cycles are shown before purchase. Subscriptions renew automatically until canceled. Cancellation and refund rights follow the Terms of Use and applicable law."
+msgstr "Preços e ciclos de cobrança são apresentados antes da compra. As assinaturas são renovadas automaticamente até o cancelamento. Os direitos de cancelamento e reembolso seguem os Termos de Uso e a legislação aplicável."
 
 #, python-format
 msgid "Up to %(limit)s player profile"
