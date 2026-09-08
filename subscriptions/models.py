@@ -95,18 +95,34 @@ class Subscription(models.Model):
         return max(1, int((seconds + 86399) // 86400))
 
     @property
-    def has_product_access(self):
-        if self.status == self.Status.ACTIVE and self.plan in {
+    def stripe_mode_matches_environment(self):
+        expected_mode = (
+            self.StripeMode.LIVE
+            if settings.STRIPE_LIVE_MODE
+            else self.StripeMode.TEST
+        )
+        return self.stripe_mode == expected_mode
+
+    @property
+    def has_paid_access(self):
+        return (
+            self.status == self.Status.ACTIVE
+            and self.plan in {
             self.Plan.PROFESSIONAL,
             self.Plan.ORGANIZATION,
-        }:
-            expected_mode = (
-                self.StripeMode.LIVE
-                if settings.STRIPE_LIVE_MODE
-                else self.StripeMode.TEST
-            )
-            return self.stripe_mode == expected_mode
-        return self.is_trial_active
+            }
+            and self.stripe_mode_matches_environment
+        )
+
+    @property
+    def has_current_billing_account(self):
+        return bool(
+            self.stripe_customer_id and self.stripe_mode_matches_environment
+        )
+
+    @property
+    def has_product_access(self):
+        return self.has_paid_access or self.is_trial_active
 
 
 class StripeWebhookEvent(models.Model):

@@ -177,6 +177,47 @@ class ProfessionalTrialTests(TestCase):
         self.assertContains(response, "Professional trial")
         self.assertContains(response, "7 days remaining")
 
+    @override_settings(
+        STRIPE_BILLING_ENABLED=True,
+        SUBSCRIPTION_TRIAL_ENABLED=True,
+        SUBSCRIPTION_TRIAL_DAYS=7,
+    )
+    def test_trial_user_can_choose_monthly_or_yearly_professional_plan(self):
+        user = User.objects.create_user(
+            username="trial-checkout-user",
+            email="trial-checkout@example.com",
+            password="SecurePass123!",
+        )
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("subscriptions:plans"))
+
+        self.assertContains(response, 'value="MONTHLY"', count=1)
+        self.assertContains(response, 'value="YEARLY"', count=1)
+        self.assertContains(response, 'value="PROFESSIONAL"', count=1)
+        self.assertNotContains(response, 'value="ORGANIZATION"')
+        self.assertNotContains(response, 'value="STARTER"')
+
+    @override_settings(
+        STRIPE_BILLING_ENABLED=True,
+        STRIPE_LIVE_MODE=True,
+    )
+    def test_test_customer_does_not_show_live_billing_portal(self):
+        user = User.objects.create_user(
+            username="test-portal-user",
+            email="test-portal@example.com",
+            password="SecurePass123!",
+        )
+        subscription = user.subscription
+        subscription.stripe_customer_id = "cus_test_customer"
+        subscription.stripe_mode = Subscription.StripeMode.TEST
+        subscription.save()
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("subscriptions:plans"))
+
+        self.assertNotContains(response, reverse("subscriptions:billing_portal"))
+
     @override_settings(SUBSCRIPTION_ACCESS_ENFORCED=True)
     def test_expired_trial_is_redirected_to_plans(self):
         user = User.objects.create_user(

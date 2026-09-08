@@ -47,9 +47,9 @@
                         {% endfor %}
                     </ul>
                 </div>
-                {% if current_plan == plan.code and current_subscription.has_product_access %}
+                {% if current_plan == plan.code and current_subscription.has_paid_access %}
                     <span class="plan-action plan-action-current">{% translate "Active on your account" %}</span>
-                {% elif user.is_authenticated and billing_enabled %}
+                {% elif user.is_authenticated and billing_enabled and plan.monthly_price %}
                     <form method="post" action="{% url 'subscriptions:create_checkout' %}">
                         {% csrf_token %}
                         <input type="hidden" name="plan" value="{{ plan.code }}">
@@ -71,7 +71,7 @@
         {% endfor %}
     </div>
 
-    {% if billing_enabled and user.is_authenticated and user.subscription.stripe_customer_id %}
+    {% if billing_enabled and user.is_authenticated and user.subscription.has_current_billing_account %}
         <form method="post" action="{% url 'subscriptions:billing_portal' %}">
             {% csrf_token %}
             <button class="plan-action" type="submit">{% translate "Manage subscription" %}</button>
