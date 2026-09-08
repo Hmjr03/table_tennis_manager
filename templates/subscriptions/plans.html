@@ -15,6 +15,12 @@
                 <span>{% translate "Paid subscriptions are not active yet. No charge can be made from this page." %}</span>
             </div>
         {% endif %}
+        {% if current_subscription.is_trial_expired %}
+            <div class="plans-preview-notice" role="status">
+                <strong>{% translate "Your free trial has ended" %}</strong>
+                <span>{% translate "Choose the Professional plan to restore access while keeping your saved data." %}</span>
+            </div>
+        {% endif %}
     </header>
 
     <div class="plans-grid">

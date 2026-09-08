@@ -2250,3 +2250,18 @@ msgstr[1] "%(days)s días restantes"
 
 msgid "View plans"
 msgstr "Ver planes"
+
+msgid "Your free trial has ended"
+msgstr "Tu prueba gratuita ha terminado"
+
+msgid "Choose the Professional plan to restore access while keeping your saved data."
+msgstr "Elige el plan Profesional para recuperar el acceso sin perder los datos guardados."
+
+msgid "Checkout completed. Your subscription will be activated as soon as payment is confirmed."
+msgstr "Checkout completado. Tu suscripción se activará en cuanto se confirme el pago."
+
+msgid "Checkout canceled. No charge was made."
+msgstr "Checkout cancelado. No se realizó ningún cargo."
+
+msgid "Your email has been confirmed. Your 7-day Professional trial is ready to use, with no card required."
+msgstr "Tu correo ha sido confirmado. Tu prueba de 7 días del plan Profesional está lista para usar, sin necesidad de tarjeta."

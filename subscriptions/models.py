@@ -95,6 +95,14 @@ class Subscription(models.Model):
         return max(1, int((seconds + 86399) // 86400))
 
     @property
+    def is_trial_expired(self):
+        return (
+            self.status == self.Status.TRIALING
+            and self.trial_ends_at is not None
+            and self.trial_ends_at <= timezone.now()
+        )
+
+    @property
     def stripe_mode_matches_environment(self):
         expected_mode = (
             self.StripeMode.LIVE

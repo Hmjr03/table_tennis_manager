@@ -32,6 +32,20 @@ def plans(request):
             else Subscription.Plan.STARTER
         )
 
+    payment = request.GET.get("payment")
+    if payment == "success":
+        messages.success(
+            request,
+            _(
+                "Checkout completed. Your subscription will be activated as soon as payment is confirmed."
+            ),
+        )
+    elif payment == "canceled":
+        messages.info(
+            request,
+            _("Checkout canceled. No charge was made."),
+        )
+
     return render(
         request,
         "subscriptions/plans.html",

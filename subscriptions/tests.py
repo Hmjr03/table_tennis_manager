@@ -73,6 +73,19 @@ class SubscriptionFoundationTests(TestCase):
         self.assertNotContains(response, "Active on your account")
         self.assertEqual(Subscription.objects.filter(user=user).count(), 1)
 
+    def test_checkout_return_messages_do_not_claim_unconfirmed_activation(self):
+        success_response = self.client.get(
+            reverse("subscriptions:plans"),
+            {"payment": "success"},
+        )
+        canceled_response = self.client.get(
+            reverse("subscriptions:plans"),
+            {"payment": "canceled"},
+        )
+
+        self.assertContains(success_response, "as soon as payment is confirmed")
+        self.assertContains(canceled_response, "No charge was made")
+
     def test_plans_page_is_translated_to_portuguese_and_spanish(self):
         expectations = (
             ("pt-br", "Um plano para cada etapa da sua jornada"),
@@ -238,6 +251,9 @@ class ProfessionalTrialTests(TestCase):
 
         plans_response = self.client.get(reverse("subscriptions:plans"))
         self.assertNotContains(plans_response, "Active on your account")
+        self.assertContains(plans_response, "Your free trial has ended")
+        self.assertContains(plans_response, "keeping your saved data")
+        self.assertTrue(subscription.is_trial_expired)
 
     @override_settings(SUBSCRIPTION_ACCESS_ENFORCED=True)
     def test_starter_account_without_trial_is_redirected_to_plans(self):
