@@ -44,9 +44,9 @@ services:
       - key: STRIPE_LIVE_MODE
         value: "False"
       - key: STRIPE_PRICE_PROFESSIONAL_MONTHLY
-        value: price_1UBDAWEsVM71g2d35YM4rjLD
+        value: price_1UDJyFQ1p49V9NbD1ySkI0Fg
       - key: STRIPE_PRICE_PROFESSIONAL_YEARLY
-        value: price_1UBDEJEsVM71g2d3q5g6AHUp
+        value: price_1UDJyEQ1p49V9NbDtJj42k4p
       - key: SUBSCRIPTION_TRIAL_ENABLED
         value: "False"
       - key: SUBSCRIPTION_TRIAL_DAYS
