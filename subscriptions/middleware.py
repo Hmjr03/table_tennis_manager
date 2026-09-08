@@ -26,6 +26,8 @@ class SubscriptionAccessMiddleware:
             return False
         if not request.user.is_authenticated:
             return False
+        if request.user.is_staff or request.user.is_superuser:
+            return False
         if request.path == "/" or request.path.startswith(self.EXEMPT_PREFIXES):
             return False
         try:

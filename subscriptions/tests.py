@@ -211,6 +211,20 @@ class ProfessionalTrialTests(TestCase):
 
         self.assertRedirects(response, reverse("subscriptions:plans"))
 
+    @override_settings(SUBSCRIPTION_ACCESS_ENFORCED=True)
+    def test_staff_account_keeps_administrative_access(self):
+        user = User.objects.create_user(
+            username="staff-user",
+            email="staff@example.com",
+            password="SecurePass123!",
+            is_staff=True,
+        )
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("dashboard:home"))
+
+        self.assertEqual(response.status_code, 200)
+
 
 class StripeEnvironmentIsolationTests(TestCase):
     def setUp(self):
