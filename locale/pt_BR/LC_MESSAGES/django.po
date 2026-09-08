@@ -2238,3 +2238,15 @@ msgstr "Escolher plano"
 
 msgid "Manage subscription"
 msgstr "Gerenciar assinatura"
+
+msgid "Professional trial"
+msgstr "Teste do plano Profissional"
+
+#, python-format
+msgid "%(days)s day remaining"
+msgid_plural "%(days)s days remaining"
+msgstr[0] "%(days)s dia restante"
+msgstr[1] "%(days)s dias restantes"
+
+msgid "View plans"
+msgstr "Ver planos"
