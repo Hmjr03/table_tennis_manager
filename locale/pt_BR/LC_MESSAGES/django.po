@@ -2265,3 +2265,6 @@ msgstr "Checkout cancelado. Nenhuma cobrança foi realizada."
 
 msgid "Your email has been confirmed. Your 7-day Professional trial is ready to use, with no card required."
 msgstr "Seu e-mail foi confirmado. Seu teste de 7 dias do plano Profissional está pronto para uso, sem necessidade de cartão."
+
+msgid "Your 7-day Professional trial starts only after you confirm your email. No card is required."
+msgstr "Seu teste gratuito de 7 dias do plano Profissional começa somente após a confirmação do e-mail. Nenhum cartão é necessário."

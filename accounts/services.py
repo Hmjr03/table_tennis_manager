@@ -27,6 +27,7 @@ def send_account_activation_email(request, user):
             {
                 "activation_url": activation_url,
                 "user": user,
+                "trial_enabled": settings.SUBSCRIPTION_TRIAL_ENABLED,
             },
         )
         html_message = render_to_string(
@@ -34,6 +35,7 @@ def send_account_activation_email(request, user):
             {
                 "activation_url": activation_url,
                 "user": user,
+                "trial_enabled": settings.SUBSCRIPTION_TRIAL_ENABLED,
             },
         )
 

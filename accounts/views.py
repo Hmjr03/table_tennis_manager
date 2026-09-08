@@ -10,6 +10,7 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.utils import timezone
 from django.conf import settings
+from datetime import timedelta
 
 from accounts.data_portability import export_user_data
 from accounts.forms import (
@@ -24,6 +25,7 @@ from accounts.services import (
     send_account_activation_email,
     send_account_deletion_email,
 )
+from subscriptions.models import Subscription
 
 
 def home(request):
@@ -78,8 +80,23 @@ def activate(request, uidb64, token):
         user is not None
         and default_token_generator.check_token(user, token)
     ):
-        user.is_active = True
-        user.save(update_fields=["is_active"])
+        with transaction.atomic():
+            user.is_active = True
+            user.save(update_fields=["is_active"])
+
+            if settings.SUBSCRIPTION_TRIAL_ENABLED:
+                subscription, _ = Subscription.objects.get_or_create(
+                    user=user,
+                )
+                if subscription.status == Subscription.Status.TRIALING:
+                    subscription.plan = Subscription.Plan.PROFESSIONAL
+                    subscription.trial_ends_at = (
+                        timezone.now()
+                        + timedelta(days=settings.SUBSCRIPTION_TRIAL_DAYS)
+                    )
+                    subscription.save(
+                        update_fields=["plan", "trial_ends_at"]
+                    )
         login(request, user)
         return render(request, "accounts/activation_complete.html")
 

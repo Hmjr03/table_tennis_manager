@@ -2,6 +2,9 @@
 
 {% translate "Welcome to Table Tennis Manager. Confirm your email to activate your account securely." %}
 
+{% if trial_enabled %}{% translate "Your 7-day Professional trial starts only after you confirm your email. No card is required." %}
+{% endif %}
+
 {% translate "Use the verification link below:" %}
 {{ activation_url }}
 

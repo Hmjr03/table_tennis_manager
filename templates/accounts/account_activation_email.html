@@ -10,6 +10,7 @@
           <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;">{% translate "Verify your email" %}</h1>
           <p style="margin:0 0 12px;line-height:1.6;">{% blocktranslate with username=user.get_username %}Hello {{ username }},{% endblocktranslate %}</p>
           <p style="margin:0 0 24px;line-height:1.6;">{% translate "Welcome to Table Tennis Manager. Confirm your email to activate your account securely." %}</p>
+          {% if trial_enabled %}<p style="margin:0 0 24px;line-height:1.6;"><strong>{% translate "Your 7-day Professional trial starts only after you confirm your email. No card is required." %}</strong></p>{% endif %}
           <p style="margin:0 0 28px;"><a href="{{ activation_url }}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:10px;">{% translate "Verify email" %}</a></p>
           <p style="margin:0 0 8px;color:#64748b;font-size:14px;line-height:1.6;">{% translate "This link expires in one hour and can be used only once. If you did not create this account, you can ignore this email." %}</p>
           <p style="margin:20px 0 6px;color:#64748b;font-size:13px;">{% translate "If the button does not work, copy and paste this address into your browser:" %}</p>

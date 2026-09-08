@@ -329,8 +329,13 @@ class EmailVerificationTests(TestCase):
         )
         return User.objects.get(username="new-athlete")
 
+    @override_settings(
+        SUBSCRIPTION_TRIAL_ENABLED=True,
+        SUBSCRIPTION_TRIAL_DAYS=7,
+    )
     def test_valid_link_activates_and_logs_user_in(self):
         user = self.register_user()
+        original_trial_end = user.subscription.trial_ends_at
         activation_path = re.search(
             r"https?://[^/]+(/accounts/activate/[^\s]+)",
             mail.outbox[0].body,
@@ -344,10 +349,24 @@ class EmailVerificationTests(TestCase):
             "accounts/activation_complete.html",
         )
         user.refresh_from_db()
+        user.subscription.refresh_from_db()
         self.assertTrue(user.is_active)
+        self.assertGreater(
+            user.subscription.trial_ends_at,
+            original_trial_end,
+        )
         self.assertEqual(
             str(self.client.session["_auth_user_id"]),
             str(user.pk),
+        )
+
+    @override_settings(SUBSCRIPTION_TRIAL_ENABLED=True)
+    def test_activation_email_explains_when_trial_starts(self):
+        self.register_user()
+
+        self.assertIn(
+            "7-day Professional trial starts only after you confirm",
+            mail.outbox[0].body,
         )
 
     def test_activation_link_can_be_used_only_once(self):
