@@ -2223,3 +2223,18 @@ msgstr "economize R$ 59,80"
 
 msgid "7-day free trial without a card"
 msgstr "Teste gratuito de 7 dias sem cartão"
+
+msgid "Billing cycle"
+msgstr "Ciclo de cobrança"
+
+msgid "Monthly"
+msgstr "Mensal"
+
+msgid "Yearly"
+msgstr "Anual"
+
+msgid "Choose plan"
+msgstr "Escolher plano"
+
+msgid "Manage subscription"
+msgstr "Gerenciar assinatura"
