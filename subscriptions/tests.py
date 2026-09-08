@@ -8,6 +8,11 @@ from datetime import timedelta
 from unittest.mock import Mock, patch
 
 from subscriptions.models import Subscription
+from subscriptions.services import (
+    BillingConfigurationError,
+    create_billing_portal_session,
+    create_checkout_session,
+)
 
 
 User = get_user_model()
@@ -54,7 +59,7 @@ class SubscriptionFoundationTests(TestCase):
         self.assertNotContains(response, "checkout")
         self.assertNotContains(response, "card number")
 
-    def test_authenticated_user_sees_current_plan(self):
+    def test_starter_user_does_not_see_inactive_plan_as_current(self):
         user = User.objects.create_user(
             username="current-user",
             email="current@example.com",
@@ -64,8 +69,8 @@ class SubscriptionFoundationTests(TestCase):
 
         response = self.client.get(reverse("subscriptions:plans"))
 
-        self.assertContains(response, "Current plan")
-        self.assertContains(response, "Active on your account")
+        self.assertNotContains(response, "Current plan")
+        self.assertNotContains(response, "Active on your account")
         self.assertEqual(Subscription.objects.filter(user=user).count(), 1)
 
     def test_plans_page_is_translated_to_portuguese_and_spanish(self):
@@ -194,7 +199,7 @@ class ProfessionalTrialTests(TestCase):
         self.assertNotContains(plans_response, "Active on your account")
 
     @override_settings(SUBSCRIPTION_ACCESS_ENFORCED=True)
-    def test_existing_active_account_remains_available(self):
+    def test_starter_account_without_trial_is_redirected_to_plans(self):
         user = User.objects.create_user(
             username="existing-user",
             email="existing@example.com",
@@ -204,4 +209,79 @@ class ProfessionalTrialTests(TestCase):
 
         response = self.client.get(reverse("dashboard:home"))
 
-        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, reverse("subscriptions:plans"))
+
+
+class StripeEnvironmentIsolationTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="mode-user",
+            email="mode@example.com",
+            password="SecurePass123!",
+        )
+
+    @override_settings(
+        STRIPE_BILLING_ENABLED=True,
+        STRIPE_LIVE_MODE=True,
+        STRIPE_SECRET_KEY="sk_live_example",
+        STRIPE_PRICE_PROFESSIONAL_MONTHLY="price_live_monthly",
+    )
+    @patch("subscriptions.services._stripe")
+    def test_live_checkout_does_not_reuse_test_customer(self, stripe_mock):
+        subscription = self.user.subscription
+        subscription.stripe_customer_id = "cus_test_customer"
+        subscription.stripe_mode = Subscription.StripeMode.TEST
+        subscription.save()
+        stripe_mock.return_value.checkout.Session.create.return_value = Mock(
+            url="https://billing.example/session"
+        )
+
+        create_checkout_session(
+            user=self.user,
+            plan=Subscription.Plan.PROFESSIONAL,
+            interval=Subscription.BillingInterval.MONTHLY,
+            success_url="https://example.com/success",
+            cancel_url="https://example.com/cancel",
+        )
+
+        parameters = stripe_mock.return_value.checkout.Session.create.call_args.kwargs
+        self.assertNotIn("customer", parameters)
+        self.assertEqual(parameters["customer_email"], self.user.email)
+        self.assertEqual(parameters["metadata"]["stripe_mode"], "LIVE")
+
+    @override_settings(
+        STRIPE_BILLING_ENABLED=True,
+        STRIPE_LIVE_MODE=True,
+        STRIPE_SECRET_KEY="sk_live_example",
+    )
+    def test_live_portal_rejects_test_customer(self):
+        subscription = self.user.subscription
+        subscription.stripe_customer_id = "cus_test_customer"
+        subscription.stripe_mode = Subscription.StripeMode.TEST
+        subscription.save()
+
+        with self.assertRaises(BillingConfigurationError):
+            create_billing_portal_session(
+                user=self.user,
+                return_url="https://example.com/plans",
+            )
+
+    @override_settings(STRIPE_LIVE_MODE=True)
+    def test_test_subscription_does_not_grant_live_access(self):
+        subscription = self.user.subscription
+        subscription.plan = Subscription.Plan.PROFESSIONAL
+        subscription.status = Subscription.Status.ACTIVE
+        subscription.stripe_mode = Subscription.StripeMode.TEST
+        subscription.save()
+
+        self.assertFalse(subscription.has_product_access)
+
+    @override_settings(STRIPE_LIVE_MODE=True)
+    def test_live_subscription_grants_live_access(self):
+        subscription = self.user.subscription
+        subscription.plan = Subscription.Plan.PROFESSIONAL
+        subscription.status = Subscription.Status.ACTIVE
+        subscription.stripe_mode = Subscription.StripeMode.LIVE
+        subscription.save()
+
+        self.assertTrue(subscription.has_product_access)

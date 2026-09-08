@@ -38,6 +38,14 @@ VALID_INTERVALS = {
 }
 
 
+def _stripe_mode():
+    return (
+        Subscription.StripeMode.LIVE
+        if settings.STRIPE_LIVE_MODE
+        else Subscription.StripeMode.TEST
+    )
+
+
 def _stripe():
     try:
         import stripe
@@ -85,11 +93,12 @@ def create_checkout_session(*, user, plan, interval, success_url, cancel_url):
     _require_enabled()
     price_id = _price_id(plan, interval)
     stripe = _stripe()
-    subscription, _ = Subscription.objects.get_or_create(user=user)
+    subscription, _created = Subscription.objects.get_or_create(user=user)
     metadata = {
         "user_id": str(user.pk),
         "plan": plan,
         "billing_interval": interval,
+        "stripe_mode": _stripe_mode(),
     }
     parameters = {
         "mode": "subscription",
@@ -100,7 +109,10 @@ def create_checkout_session(*, user, plan, interval, success_url, cancel_url):
         "metadata": metadata,
         "subscription_data": {"metadata": metadata},
     }
-    if subscription.stripe_customer_id:
+    if (
+        subscription.stripe_customer_id
+        and subscription.stripe_mode == _stripe_mode()
+    ):
         parameters["customer"] = subscription.stripe_customer_id
     else:
         parameters["customer_email"] = user.email
@@ -114,8 +126,11 @@ def create_checkout_session(*, user, plan, interval, success_url, cancel_url):
 
 def create_billing_portal_session(*, user, return_url):
     _require_enabled()
-    subscription, _ = Subscription.objects.get_or_create(user=user)
-    if not subscription.stripe_customer_id:
+    subscription, _created = Subscription.objects.get_or_create(user=user)
+    if (
+        not subscription.stripe_customer_id
+        or subscription.stripe_mode != _stripe_mode()
+    ):
         raise BillingConfigurationError(
             _("There is no billing account to manage yet.")
         )
@@ -194,6 +209,7 @@ def _sync_subscription(payload):
     subscription.stripe_customer_id = stripe_customer_id or None
     subscription.stripe_subscription_id = stripe_subscription_id or None
     subscription.stripe_price_id = price_id
+    subscription.stripe_mode = _stripe_mode()
     subscription.cancel_at_period_end = bool(
         _value(payload, "cancel_at_period_end", False)
     )
@@ -240,6 +256,7 @@ def process_webhook(payload, signature):
                 subscription.stripe_subscription_id = (
                     _value(obj, "subscription") or None
                 )
+                subscription.stripe_mode = _stripe_mode()
                 subscription.save()
             record.status = StripeWebhookEvent.Status.PROCESSED
         elif event_type in {

@@ -5,6 +5,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Subscription(models.Model):
+    class StripeMode(models.TextChoices):
+        TEST = "TEST", _("Test")
+        LIVE = "LIVE", _("Production")
+
     class Plan(models.TextChoices):
         STARTER = "STARTER", _("Starter")
         PROFESSIONAL = "PROFESSIONAL", _("Professional")
@@ -56,6 +60,12 @@ class Subscription(models.Model):
         unique=True,
     )
     stripe_price_id = models.CharField(max_length=255, blank=True, default="")
+    stripe_mode = models.CharField(
+        max_length=10,
+        choices=StripeMode.choices,
+        blank=True,
+        default="",
+    )
     cancel_at_period_end = models.BooleanField(default=False)
     trial_ends_at = models.DateTimeField(null=True, blank=True)
     current_period_ends_at = models.DateTimeField(null=True, blank=True)
@@ -86,8 +96,16 @@ class Subscription(models.Model):
 
     @property
     def has_product_access(self):
-        if self.status == self.Status.ACTIVE:
-            return True
+        if self.status == self.Status.ACTIVE and self.plan in {
+            self.Plan.PROFESSIONAL,
+            self.Plan.ORGANIZATION,
+        }:
+            expected_mode = (
+                self.StripeMode.LIVE
+                if settings.STRIPE_LIVE_MODE
+                else self.StripeMode.TEST
+            )
+            return self.stripe_mode == expected_mode
         return self.is_trial_active
 
 
