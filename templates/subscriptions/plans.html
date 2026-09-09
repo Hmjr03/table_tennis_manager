@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% translate "Plans" %} | Table Tennis Manager{% endblock %}
+{% block title %}{% translate "Plans" %} | ETM Manager{% endblock %}
 
 {% block content %}
 <section class="plans-page container">
@@ -40,8 +40,10 @@
                     {% if plan.monthly_price %}
                         <div class="plan-pricing">
                             <strong>{{ plan.monthly_price }}</strong>
-                            <span>{{ plan.yearly_price }} · {% translate "save R$ 59.80" %}</span>
-                            <small>{% translate "7-day free trial without a card" %}</small>
+                            <span>{{ plan.yearly_price }} · {{ plan.yearly_savings }}</span>
+                            {% if plan.trial_available %}
+                                <small>{% translate "7-day free trial without a card" %}</small>
+                            {% endif %}
                         </div>
                     {% endif %}
                     <p class="plan-capacity">

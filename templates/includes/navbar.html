@@ -12,11 +12,21 @@
             </span>
 
             <span>
-                Table Tennis Manager
+                ETM Manager
             </span>
         </a>
 
-        <nav class="main-nav" aria-label="{% translate 'Primary navigation' %}">
+        <button
+            type="button"
+            class="mobile-nav-toggle"
+            aria-expanded="false"
+            aria-controls="primary-navigation"
+        >
+            <span class="sr-only">{% translate "Open navigation menu" %}</span>
+            <span class="mobile-nav-toggle__bars" aria-hidden="true"></span>
+        </button>
+
+        <nav id="primary-navigation" class="main-nav" aria-label="{% translate 'Primary navigation' %}">
 
             <button
                 type="button"

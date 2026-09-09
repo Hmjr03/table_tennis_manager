@@ -8,7 +8,7 @@ from accounts.models import User
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         (
-            "Table Tennis Manager",
+            "ETM Manager",
             {
                 "fields": (
                     "role",
@@ -23,7 +23,7 @@ class CustomUserAdmin(UserAdmin):
 
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
-            "Table Tennis Manager",
+            "ETM Manager",
             {
                 "fields": (
                     "email",

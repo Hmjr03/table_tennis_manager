@@ -29,6 +29,7 @@ class InvalidWebhook(BillingError):
 
 
 PAID_PLANS = {
+    Subscription.Plan.STARTER,
     Subscription.Plan.PROFESSIONAL,
     Subscription.Plan.ORGANIZATION,
 }

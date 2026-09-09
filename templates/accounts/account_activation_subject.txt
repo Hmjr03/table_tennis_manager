@@ -1,1 +1,1 @@
-{% load i18n %}{% translate "Verify your Table Tennis Manager account" %}
+{% load i18n %}{% translate "Verify your ETM Manager account" %}

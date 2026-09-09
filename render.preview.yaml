@@ -34,7 +34,7 @@ services:
       - key: DJANGO_EMAIL_BACKEND
         value: django.core.mail.backends.console.EmailBackend
       - key: DJANGO_DEFAULT_FROM_EMAIL
-        value: Table Tennis Manager Preview <noreply@localhost>
+        value: ETM Manager Preview <noreply@localhost>
 
 databases:
   - name: table-tennis-manager-preview-db

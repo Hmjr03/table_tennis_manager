@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models import Count, F
@@ -7,6 +8,13 @@ from django.utils.translation import gettext as _
 from matches.models import Match
 from players.forms import PlayerForm
 from players.models import Player
+from subscriptions.catalog import plan_definition
+from subscriptions.models import Subscription
+
+
+def _player_limit_for(user):
+    subscription, _created = Subscription.objects.get_or_create(user=user)
+    return plan_definition(subscription.plan).player_limit
 
 
 @login_required
@@ -92,6 +100,21 @@ def player_detail(request, pk):
 
 @login_required
 def player_create(request):
+    player_limit = _player_limit_for(request.user)
+    if (
+        player_limit is not None
+        and Player.objects.filter(user=request.user).count() >= player_limit
+    ):
+        messages.error(
+            request,
+            _(
+                "Your current plan allows up to %(limit)s player profiles. "
+                "Choose a plan with more capacity to add another player."
+            )
+            % {"limit": player_limit},
+        )
+        return redirect("subscriptions:plans")
+
     if request.method == "POST":
         form = PlayerForm(request.POST)
 

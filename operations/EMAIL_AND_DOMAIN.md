@@ -10,7 +10,7 @@ never be committed to Git.
 1. Choose a dedicated transactional subdomain, such as
    `mail.tabletennismanager.com`.
 2. Use a recognizable sender, for example
-   `Table Tennis Manager <noreply@tabletennismanager.com>`.
+   `ETM Manager <noreply@tabletennismanager.com>`.
 3. Keep a monitored support address visible on the legal and support pages.
 4. Separate transactional email from future marketing campaigns.
 
@@ -23,7 +23,7 @@ Configure these environment variables in the production hosting dashboard:
 ```text
 DJANGO_EMAIL_BACKEND=anymail.backends.resend.EmailBackend
 RESEND_API_KEY=<secret created in the Resend dashboard>
-DJANGO_DEFAULT_FROM_EMAIL=Table Tennis Manager <noreply@verified-domain.example>
+DJANGO_DEFAULT_FROM_EMAIL=ETM Manager <noreply@verified-domain.example>
 DJANGO_PASSWORD_RESET_TIMEOUT=3600
 ```
 
@@ -34,7 +34,7 @@ paste it into source code, documentation, screenshots, tickets or chat.
 
 ```text
 DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-DJANGO_DEFAULT_FROM_EMAIL=Table Tennis Manager <noreply@tabletennismanager.com>
+DJANGO_DEFAULT_FROM_EMAIL=ETM Manager <noreply@tabletennismanager.com>
 DJANGO_EMAIL_HOST=<provider SMTP hostname>
 DJANGO_EMAIL_PORT=587
 DJANGO_EMAIL_HOST_USER=<provider SMTP username>

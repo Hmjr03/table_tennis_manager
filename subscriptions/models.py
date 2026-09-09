@@ -116,8 +116,9 @@ class Subscription(models.Model):
         return (
             self.status == self.Status.ACTIVE
             and self.plan in {
-            self.Plan.PROFESSIONAL,
-            self.Plan.ORGANIZATION,
+                self.Plan.STARTER,
+                self.Plan.PROFESSIONAL,
+                self.Plan.ORGANIZATION,
             }
             and self.stripe_mode_matches_environment
         )

@@ -24,14 +24,14 @@
 
     <meta
         name="description"
-        content="{% translate 'Table Tennis Manager - Track players, matches and performance.' %}"
+        content="{% translate 'ETM Manager - Track players, matches and performance.' %}"
     >
 
 
     <title>
 
         {% block title %}
-            Table Tennis Manager
+            ETM Manager
         {% endblock %}
 
     </title>
@@ -40,7 +40,7 @@
 
     <link
         rel="stylesheet"
-        href="{% static 'css/styles.css' %}?v=6"
+        href="{% static 'css/styles.css' %}?v=7"
     >
 
     <link rel="manifest" href="{% url 'pwa-manifest' %}">
@@ -76,7 +76,7 @@
 
         {% if account_subscription.is_trial_active %}
             <aside class="trial-banner" role="status">
-                <strong>{% translate "Professional trial" %}</strong>
+                <strong>{% translate "Individual trial" %}</strong>
                 <span>
                     {% blocktranslate count days=account_subscription.trial_days_remaining %}{{ days }} day remaining{% plural %}{{ days }} days remaining{% endblocktranslate %}
                 </span>
@@ -132,7 +132,7 @@
 
         <div class="footer-content">
             <p>
-                © 2026 Table Tennis Manager.
+                © 2026 ETM Manager.
                 {% translate "Built for competitive athletes." %}
             </p>
             <nav class="footer-legal-nav" aria-label="{% translate 'Legal information' %}">
@@ -164,7 +164,7 @@
         <img src="{% static 'icons/icon-192.png' %}" alt="">
     </div>
     <div class="pwa-install-dialog__content">
-        <strong id="pwa-install-title">{% translate "Install Table Tennis Manager" %}</strong>
+        <strong id="pwa-install-title">{% translate "Install ETM Manager" %}</strong>
         <p id="pwa-install-message">{% translate "Install the app for faster access from your home screen." %}</p>
     </div>
     <button type="button" id="pwa-install-confirm" class="primary-button">
@@ -181,7 +181,8 @@
 
 {% endblock %}
 
-<script src="{% static 'js/pwa.js' %}" defer></script>
+    <script src="{% static 'js/navigation.js' %}" defer></script>
+    <script src="{% static 'js/pwa.js' %}" defer></script>
 
 
 

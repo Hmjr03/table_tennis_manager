@@ -50,7 +50,7 @@ def pwa_manifest(request):
     response = JsonResponse(
         {
             "id": "/",
-            "name": "Table Tennis Manager",
+            "name": "ETM Manager",
             "short_name": "TT Manager",
             "description": _(
                 "Manage athletes, matches, competitions and performance."

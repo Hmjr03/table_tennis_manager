@@ -1,10 +1,10 @@
-# Table Tennis Manager
+# ETM Manager
 
 A professional web platform for table tennis athletes, coaches, and clubs.
 
 ## Vision
 
-Table Tennis Manager aims to provide tools for:
+ETM Manager aims to provide tools for:
 
 - Athlete management
 - Match tracking

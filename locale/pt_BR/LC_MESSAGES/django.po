@@ -502,8 +502,8 @@ msgstr "Receitas"
 msgid "Income minus expenses"
 msgstr "Receitas menos despesas"
 
-msgid "Join Table Tennis Manager and start managing your journey."
-msgstr "Entre no Table Tennis Manager e comece a gerenciar sua jornada."
+msgid "Join ETM Manager and start managing your journey."
+msgstr "Entre no ETM Manager e comece a gerenciar sua jornada."
 
 msgid "Keep competitive data accurate"
 msgstr "Mantenha os dados competitivos precisos"
@@ -1036,8 +1036,8 @@ msgstr "Mostrar notas arquivadas"
 msgid "Sign in"
 msgstr "Entrar"
 
-msgid "Sign in to your Table Tennis Manager account."
-msgstr "Entre na sua conta do Table Tennis Manager."
+msgid "Sign in to your ETM Manager account."
+msgstr "Entre na sua conta do ETM Manager."
 
 msgid "Sponsorship"
 msgstr "Patrocínio"
@@ -1072,8 +1072,8 @@ msgstr "Domingo"
 msgid "TABLE TENNIS MANAGEMENT PLATFORM"
 msgstr "PLATAFORMA DE GESTÃO DO TÊNIS DE MESA"
 
-msgid "Table Tennis Manager - Track players, matches and performance."
-msgstr "Table Tennis Manager — acompanhe atletas, partidas e desempenho."
+msgid "ETM Manager - Track players, matches and performance."
+msgstr "ETM Manager — acompanhe atletas, partidas e desempenho."
 
 msgid "Table tennis athlete"
 msgstr "Atleta de tênis de mesa"
@@ -1273,8 +1273,8 @@ msgstr "Você está prestes a remover permanentemente"
 msgid "You are about to permanently remove:"
 msgstr "Você está prestes a remover permanentemente:"
 
-msgid "Your Table Tennis Manager workspace."
-msgstr "Seu espaço de trabalho no Table Tennis Manager."
+msgid "Your ETM Manager workspace."
+msgstr "Seu espaço de trabalho no ETM Manager."
 
 msgid "Your athlete database is ready to be built. Create your first player profile to start tracking competitive development."
 msgstr "Sua base de atletas está pronta para ser criada. Cadastre o primeiro perfil para acompanhar o desenvolvimento competitivo."
@@ -1666,8 +1666,8 @@ msgstr "Sua nova senha está ativa. Agora você pode entrar com segurança."
 msgid "Hello %(username)s,"
 msgstr "Olá, %(username)s,"
 
-msgid "We received a request to reset the password for your Table Tennis Manager account."
-msgstr "Recebemos uma solicitação para redefinir a senha da sua conta no Table Tennis Manager."
+msgid "We received a request to reset the password for your ETM Manager account."
+msgstr "Recebemos uma solicitação para redefinir a senha da sua conta no ETM Manager."
 
 msgid "Use the secure link below to create a new password:"
 msgstr "Use o link seguro abaixo para criar uma nova senha:"
@@ -1675,11 +1675,11 @@ msgstr "Use o link seguro abaixo para criar uma nova senha:"
 msgid "This link expires in one hour and can be used only once. If you did not request this change, you can safely ignore this email."
 msgstr "Este link expira em uma hora e pode ser usado apenas uma vez. Se você não solicitou esta alteração, pode ignorar este e-mail com segurança."
 
-msgid "Table Tennis Manager team"
-msgstr "Equipe Table Tennis Manager"
+msgid "ETM Manager team"
+msgstr "Equipe ETM Manager"
 
-msgid "Reset your Table Tennis Manager password"
-msgstr "Redefina sua senha do Table Tennis Manager"
+msgid "Reset your ETM Manager password"
+msgstr "Redefina sua senha do ETM Manager"
 
 msgid "Did not receive the verification email?"
 msgstr "Não recebeu o e-mail de verificação?"
@@ -1738,8 +1738,8 @@ msgstr "E-mail de verificação solicitado"
 msgid "If a pending account exists for that email, a new verification link has been sent."
 msgstr "Se existir uma conta pendente para esse e-mail, um novo link de verificação foi enviado."
 
-msgid "Welcome to Table Tennis Manager. Confirm your email to activate your account securely."
-msgstr "Boas-vindas ao Table Tennis Manager. Confirme seu e-mail para ativar sua conta com segurança."
+msgid "Welcome to ETM Manager. Confirm your email to activate your account securely."
+msgstr "Boas-vindas ao ETM Manager. Confirme seu e-mail para ativar sua conta com segurança."
 
 msgid "Use the verification link below:"
 msgstr "Use o link de verificação abaixo:"
@@ -1747,8 +1747,8 @@ msgstr "Use o link de verificação abaixo:"
 msgid "This link expires in one hour and can be used only once. If you did not create this account, you can ignore this email."
 msgstr "Este link expira em uma hora e pode ser usado apenas uma vez. Se você não criou esta conta, pode ignorar este e-mail."
 
-msgid "Verify your Table Tennis Manager account"
-msgstr "Verifique sua conta do Table Tennis Manager"
+msgid "Verify your ETM Manager account"
+msgstr "Verifique sua conta do ETM Manager"
 
 msgid "I have read and accept the Terms of Use."
 msgstr "Li e aceito os Termos de Uso."
@@ -1780,8 +1780,8 @@ msgstr "Informações claras sobre como seus dados são utilizados e protegidos.
 msgid "Rules for using the platform"
 msgstr "Regras para utilizar a plataforma"
 
-msgid "The commitments that keep Table Tennis Manager safe and reliable."
-msgstr "Os compromissos que mantêm o Table Tennis Manager seguro e confiável."
+msgid "The commitments that keep ETM Manager safe and reliable."
+msgstr "Os compromissos que mantêm o ETM Manager seguro e confiável."
 
 msgid "Version"
 msgstr "Versão"
@@ -1912,8 +1912,8 @@ msgstr "Conta excluída"
 msgid "Your account and associated application data have been permanently removed."
 msgstr "Sua conta e os dados associados ao aplicativo foram removidos permanentemente."
 
-msgid "We received a request to permanently delete your Table Tennis Manager account and associated data."
-msgstr "Recebemos uma solicitação para excluir permanentemente sua conta do Table Tennis Manager e os dados associados."
+msgid "We received a request to permanently delete your ETM Manager account and associated data."
+msgstr "Recebemos uma solicitação para excluir permanentemente sua conta do ETM Manager e os dados associados."
 
 msgid "Review and confirm the request using the secure link below:"
 msgstr "Revise e confirme a solicitação usando o link seguro abaixo:"
@@ -1921,14 +1921,14 @@ msgstr "Revise e confirme a solicitação usando o link seguro abaixo:"
 msgid "This link expires in one hour. If you did not request deletion, ignore this email and your account will remain active."
 msgstr "Este link expira em uma hora. Se você não solicitou a exclusão, ignore este e-mail e sua conta permanecerá ativa."
 
-msgid "Confirm deletion of your Table Tennis Manager account"
-msgstr "Confirme a exclusão da sua conta do Table Tennis Manager"
+msgid "Confirm deletion of your ETM Manager account"
+msgstr "Confirme a exclusão da sua conta do ETM Manager"
 
 msgid "Manage athletes, matches, competitions and performance."
 msgstr "Gerencie atletas, partidas, competições e desempenho."
 
-msgid "Install Table Tennis Manager"
-msgstr "Instale o Table Tennis Manager"
+msgid "Install ETM Manager"
+msgstr "Instale o ETM Manager"
 
 msgid "Install the app for faster access from your home screen."
 msgstr "Instale o aplicativo para acessá-lo mais rapidamente pela tela inicial."
@@ -1951,8 +1951,8 @@ msgstr "Suas informações privadas não foram armazenadas offline. Reconecte-se
 msgid "Try again"
 msgstr "Tentar novamente"
 
-msgid "Confirm your email to activate your Table Tennis Manager account."
-msgstr "Confirme seu e-mail para ativar sua conta do Table Tennis Manager."
+msgid "Confirm your email to activate your ETM Manager account."
+msgstr "Confirme seu e-mail para ativar sua conta do ETM Manager."
 
 msgid "Verify email"
 msgstr "Verificar e-mail"
@@ -2239,8 +2239,8 @@ msgstr "Escolher plano"
 msgid "Manage subscription"
 msgstr "Gerenciar assinatura"
 
-msgid "Professional trial"
-msgstr "Teste do plano Profissional"
+msgid "Individual trial"
+msgstr "Teste do plano Individual"
 
 #, python-format
 msgid "%(days)s day remaining"
@@ -2263,8 +2263,48 @@ msgstr "Checkout concluído. Sua assinatura será ativada assim que o pagamento 
 msgid "Checkout canceled. No charge was made."
 msgstr "Checkout cancelado. Nenhuma cobrança foi realizada."
 
-msgid "Your email has been confirmed. Your 7-day Professional trial is ready to use, with no card required."
-msgstr "Seu e-mail foi confirmado. Seu teste de 7 dias do plano Profissional está pronto para uso, sem necessidade de cartão."
+msgid "Your email has been confirmed. Your 7-day Individual trial is ready to use, with no card required."
+msgstr "Seu e-mail foi confirmado. Seu teste de 7 dias do plano Individual está pronto para uso, sem necessidade de cartão."
 
-msgid "Your 7-day Professional trial starts only after you confirm your email. No card is required."
-msgstr "Seu teste gratuito de 7 dias do plano Profissional começa somente após a confirmação do e-mail. Nenhum cartão é necessário."
+msgid "Your 7-day Individual trial starts only after you confirm your email. No card is required."
+msgstr "Seu teste gratuito de 7 dias do plano Individual começa somente após a confirmação do e-mail. Nenhum cartão é necessário."
+
+msgid "Individual"
+msgstr "Individual"
+
+msgid "Everything in Individual"
+msgstr "Tudo do plano Individual"
+
+msgid "Up to 300 player profiles"
+msgstr "Até 300 perfis de jogadores"
+
+msgid "Open navigation menu"
+msgstr "Abrir menu de navegação"
+
+msgid "R$ 14.90/month"
+msgstr "R$ 14,90/mês"
+
+msgid "R$ 149/year"
+msgstr "R$ 149/ano"
+
+msgid "save R$ 29.80"
+msgstr "economize R$ 29,80"
+
+msgid "Expanded capacity for coaches and professionals"
+msgstr "Capacidade ampliada para treinadores e profissionais"
+
+msgid "Centralized sporting and administrative history"
+msgstr "Histórico esportivo e administrativo centralizado"
+
+msgid "R$ 99.90/month"
+msgstr "R$ 99,90/mês"
+
+msgid "R$ 999/year"
+msgstr "R$ 999/ano"
+
+msgid "save R$ 199.80"
+msgstr "economize R$ 199,80"
+
+#, python-format
+msgid "Your current plan allows up to %(limit)s player profiles. Choose a plan with more capacity to add another player."
+msgstr "Seu plano atual permite até %(limit)s perfis de jogadores. Escolha um plano com maior capacidade para adicionar outro jogador."

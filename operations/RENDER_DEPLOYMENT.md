@@ -3,7 +3,7 @@
 Complete `operations/PRE_LAUNCH_CHECKLIST.md` before inviting external users or
 accepting payment.
 
-This runbook publishes Table Tennis Manager without placing passwords or API
+This runbook publishes ETM Manager without placing passwords or API
 keys in Git. The Blueprint creates a paid web service and a paid PostgreSQL
 database in Frankfurt. Review Render's displayed monthly price before applying
 the Blueprint.
@@ -12,7 +12,7 @@ the Blueprint.
 
 1. Push the tested release to the repository's default branch.
 2. Create a Resend account and have these values ready:
-   - sender, for example `Table Tennis Manager <noreply@your-domain>`;
+   - sender, for example `ETM Manager <noreply@your-domain>`;
    - verified sender domain;
    - verified From address;
    - Resend API key.

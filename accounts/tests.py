@@ -365,7 +365,7 @@ class EmailVerificationTests(TestCase):
         self.register_user()
 
         self.assertIn(
-            "7-day Professional trial starts only after you confirm",
+            "7-day Individual trial starts only after you confirm",
             mail.outbox[0].body,
         )
 

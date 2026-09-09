@@ -89,7 +89,7 @@ def activate(request, uidb64, token):
                     user=user,
                 )
                 if subscription.status == Subscription.Status.TRIALING:
-                    subscription.plan = Subscription.Plan.PROFESSIONAL
+                    subscription.plan = Subscription.Plan.STARTER
                     subscription.trial_ends_at = (
                         timezone.now()
                         + timedelta(days=settings.SUBSCRIPTION_TRIAL_DAYS)
@@ -152,7 +152,7 @@ def export_account_data(request):
         json_dumps_params={"indent": 2, "ensure_ascii": False},
     )
     response["Content-Disposition"] = (
-        'attachment; filename="table-tennis-manager-data.json"'
+        'attachment; filename="etm-manager-data.json"'
     )
     response["X-Content-Type-Options"] = "nosniff"
     return response

@@ -158,7 +158,7 @@ class ProfessionalTrialTests(TestCase):
         SUBSCRIPTION_TRIAL_ENABLED=True,
         SUBSCRIPTION_TRIAL_DAYS=7,
     )
-    def test_new_user_receives_seven_day_professional_trial(self):
+    def test_new_user_receives_seven_day_individual_trial(self):
         before = timezone.now() + timedelta(days=7)
         user = User.objects.create_user(
             username="trial-user",
@@ -167,7 +167,7 @@ class ProfessionalTrialTests(TestCase):
         )
         after = timezone.now() + timedelta(days=7)
 
-        self.assertEqual(user.subscription.plan, Subscription.Plan.PROFESSIONAL)
+        self.assertEqual(user.subscription.plan, Subscription.Plan.STARTER)
         self.assertEqual(user.subscription.status, Subscription.Status.TRIALING)
         self.assertGreaterEqual(user.subscription.trial_ends_at, before)
         self.assertLessEqual(user.subscription.trial_ends_at, after)
@@ -187,7 +187,7 @@ class ProfessionalTrialTests(TestCase):
 
         response = self.client.get(reverse("dashboard:home"))
 
-        self.assertContains(response, "Professional trial")
+        self.assertContains(response, "Individual trial")
         self.assertContains(response, "7 days remaining")
 
     @override_settings(
@@ -195,7 +195,7 @@ class ProfessionalTrialTests(TestCase):
         SUBSCRIPTION_TRIAL_ENABLED=True,
         SUBSCRIPTION_TRIAL_DAYS=7,
     )
-    def test_trial_user_can_choose_monthly_or_yearly_professional_plan(self):
+    def test_trial_user_can_choose_monthly_or_yearly_for_all_available_plans(self):
         user = User.objects.create_user(
             username="trial-checkout-user",
             email="trial-checkout@example.com",
@@ -205,11 +205,11 @@ class ProfessionalTrialTests(TestCase):
 
         response = self.client.get(reverse("subscriptions:plans"))
 
-        self.assertContains(response, 'value="MONTHLY"', count=1)
-        self.assertContains(response, 'value="YEARLY"', count=1)
+        self.assertContains(response, 'value="MONTHLY"', count=3)
+        self.assertContains(response, 'value="YEARLY"', count=3)
         self.assertContains(response, 'value="PROFESSIONAL"', count=1)
-        self.assertNotContains(response, 'value="ORGANIZATION"')
-        self.assertNotContains(response, 'value="STARTER"')
+        self.assertContains(response, 'value="ORGANIZATION"', count=1)
+        self.assertContains(response, 'value="STARTER"', count=1)
 
     @override_settings(
         STRIPE_BILLING_ENABLED=True,

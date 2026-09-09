@@ -70,7 +70,7 @@ class ReleaseReadinessCommandTests(SimpleTestCase):
         EMAIL_HOST="smtp.example.com",
         EMAIL_HOST_USER="mailer",
         EMAIL_HOST_PASSWORD="secret",
-        DEFAULT_FROM_EMAIL="Table Tennis Manager <noreply@example.com>",
+        DEFAULT_FROM_EMAIL="ETM Manager <noreply@example.com>",
         LEGAL_CONTROLLER_NAME="Example Controller",
         LEGAL_CONTACT_EMAIL="privacy@example.com",
         LEGAL_COUNTRY="Brazil",
@@ -104,7 +104,7 @@ class ReleaseReadinessCommandTests(SimpleTestCase):
         SECURE_HSTS_SECONDS=3600,
         EMAIL_BACKEND="anymail.backends.resend.EmailBackend",
         ANYMAIL={"RESEND_API_KEY": "re_test_key"},
-        DEFAULT_FROM_EMAIL="Table Tennis Manager <noreply@example.com>",
+        DEFAULT_FROM_EMAIL="ETM Manager <noreply@example.com>",
         LEGAL_CONTROLLER_NAME="Example Controller",
         LEGAL_CONTACT_EMAIL="privacy@example.com",
         LEGAL_COUNTRY="Brazil",
@@ -165,11 +165,11 @@ class MultilingualPageTitleTests(TestCase):
 
     def test_primary_page_titles_are_translated_in_spanish(self):
         expected_titles = {
-            "/dashboard/": "Panel | Table Tennis Manager",
-            "/matches/": "Partidos | Table Tennis Manager",
-            "/planning/calendar/": "Calendario | Table Tennis Manager",
-            "/finances/": "Finanzas | Table Tennis Manager",
-            "/notes/": "Notas | Table Tennis Manager",
+            "/dashboard/": "Panel | ETM Manager",
+            "/matches/": "Partidos | ETM Manager",
+            "/planning/calendar/": "Calendario | ETM Manager",
+            "/finances/": "Finanzas | ETM Manager",
+            "/notes/": "Notas | ETM Manager",
         }
 
         for path, expected_title in expected_titles.items():
@@ -274,7 +274,7 @@ class ProgressiveWebAppTests(TestCase):
     def test_stylesheet_url_changes_with_the_current_interface_release(self):
         response = self.client.get(reverse("accounts:login"))
 
-        self.assertContains(response, "/static/css/styles.css?v=6")
+        self.assertContains(response, "/static/css/styles.css?v=7")
 
     def test_offline_page_explains_data_protection(self):
         response = self.client.get(

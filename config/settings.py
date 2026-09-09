@@ -365,7 +365,7 @@ EMAIL_BACKEND = os.getenv(
 
 DEFAULT_FROM_EMAIL = os.getenv(
     "DJANGO_DEFAULT_FROM_EMAIL",
-    "Table Tennis Manager <noreply@localhost>",
+    "ETM Manager <noreply@localhost>",
 )
 
 EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
@@ -398,6 +398,12 @@ STRIPE_LIVE_MODE = env_bool("STRIPE_LIVE_MODE", False)
 STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY", "").strip()
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "").strip()
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "").strip()
+STRIPE_PRICE_STARTER_MONTHLY = os.getenv(
+    "STRIPE_PRICE_STARTER_MONTHLY", ""
+).strip()
+STRIPE_PRICE_STARTER_YEARLY = os.getenv(
+    "STRIPE_PRICE_STARTER_YEARLY", ""
+).strip()
 STRIPE_PRICE_PROFESSIONAL_MONTHLY = os.getenv(
     "STRIPE_PRICE_PROFESSIONAL_MONTHLY", ""
 ).strip()

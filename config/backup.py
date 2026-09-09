@@ -105,7 +105,7 @@ def create_database_backup(directory):
             temporary_path.unlink()
 
     metadata = {
-        "application": "Table Tennis Manager",
+        "application": "ETM Manager",
         "created_at": timezone.now().isoformat(),
         "database_engine": vendor,
         "filename": final_path.name,

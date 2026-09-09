@@ -13,7 +13,7 @@ def create_starter_subscription(sender, instance, created, **kwargs):
         defaults = {}
         if settings.SUBSCRIPTION_TRIAL_ENABLED:
             defaults = {
-                "plan": Subscription.Plan.PROFESSIONAL,
+                "plan": Subscription.Plan.STARTER,
                 "status": Subscription.Status.TRIALING,
                 "trial_ends_at": timezone.now()
                 + timedelta(days=settings.SUBSCRIPTION_TRIAL_DAYS),

@@ -10,6 +10,7 @@ from matches.models import Match
 from players.forms import PlayerForm
 
 from players.models import Player
+from subscriptions.models import Subscription
 
 
 User = get_user_model()
@@ -370,6 +371,31 @@ class PlayerCreateViewTests(PlayerTestMixin, TestCase):
             response,
             _("Last name must contain at least 2 characters."),
         )
+
+    def test_individual_plan_cannot_exceed_one_player_profile(self):
+        self.create_player(self.user)
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(response, reverse("subscriptions:plans"))
+        messages = list(response.wsgi_request._messages)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("up to 1 player profiles", str(messages[0]))
+
+    def test_organization_plan_allows_more_than_five_player_profiles(self):
+        subscription = self.user.subscription
+        subscription.plan = Subscription.Plan.ORGANIZATION
+        subscription.save(update_fields=["plan"])
+        for index in range(6):
+            self.create_player(
+                self.user,
+                first_name=f"Player{index}",
+                last_name="Organization",
+            )
+
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
 
 
 class PlayerDetailViewTests(PlayerTestMixin, TestCase):

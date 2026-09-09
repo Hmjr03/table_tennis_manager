@@ -1,6 +1,6 @@
 # Backup and recovery runbook
 
-This runbook protects Table Tennis Manager data. Backups contain personal,
+This runbook protects ETM Manager data. Backups contain personal,
 financial and sports information and must be treated as confidential.
 
 ## Recovery objectives

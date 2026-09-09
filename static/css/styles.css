@@ -1,5 +1,5 @@
 /* =====================================================
-   TABLE TENNIS MANAGER
+   ETM MANAGER
    Professional Design System
 ===================================================== */
 
@@ -533,6 +533,58 @@ p {
         34px;
 
 
+}
+
+.mobile-nav-toggle {
+    display: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: var(--text);
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.mobile-nav-toggle__bars,
+.mobile-nav-toggle__bars::before,
+.mobile-nav-toggle__bars::after {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.mobile-nav-toggle__bars {
+    position: relative;
+}
+
+.mobile-nav-toggle__bars::before,
+.mobile-nav-toggle__bars::after {
+    position: absolute;
+    left: 0;
+    content: "";
+}
+
+.mobile-nav-toggle__bars::before { top: -6px; }
+.mobile-nav-toggle__bars::after { top: 6px; }
+
+.mobile-nav-toggle[aria-expanded="true"] .mobile-nav-toggle__bars {
+    background: transparent;
+}
+
+.mobile-nav-toggle[aria-expanded="true"] .mobile-nav-toggle__bars::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.mobile-nav-toggle[aria-expanded="true"] .mobile-nav-toggle__bars::after {
+    top: 0;
+    transform: rotate(-45deg);
 }
 
 
@@ -6644,6 +6696,85 @@ p {
 
 @media (max-width: 850px) {
 
+    body.mobile-nav-open {
+        overflow: hidden;
+    }
+
+    .site-header {
+        overflow: visible;
+    }
+
+    .header-content {
+        position: relative;
+        min-height: 70px;
+        height: auto;
+        padding: 12px 0;
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .logo {
+        min-width: 0;
+        font-size: 1.05rem;
+    }
+
+    .logo > span:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mobile-nav-toggle {
+        display: grid;
+        flex: 0 0 44px;
+        margin-left: auto;
+    }
+
+    .main-nav {
+        position: absolute;
+        top: calc(100% + 1px);
+        right: 0;
+        left: 0;
+        display: none;
+        width: 100%;
+        max-height: calc(100vh - 92px);
+        padding: 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        overflow-y: auto;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 0 0 18px 18px;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, .14);
+    }
+
+    .main-nav.is-open {
+        display: flex;
+    }
+
+    .main-nav > a,
+    .main-nav > button,
+    .main-nav > form {
+        width: 100%;
+        flex: none;
+    }
+
+    .main-nav a,
+    .main-nav .nav-button,
+    .main-nav .pwa-install-button {
+        display: block;
+        width: 100%;
+        padding: 11px 12px;
+        text-align: left;
+        border-radius: 10px;
+    }
+
+    .language-switcher select {
+        width: 100%;
+    }
+
 
 
     .main-content {
@@ -10690,28 +10821,20 @@ p {
 
 @media (max-width: 600px) {
     .trial-banner { align-items: flex-start; flex-direction: column; }
-    .site-header {
-        overflow-x: hidden;
+    .plans-hero h1 {
+        font-size: clamp(2.15rem, 11vw, 3rem);
+        line-height: 1.05;
+        overflow-wrap: anywhere;
     }
 
-    .header-content {
-        height: auto;
-        min-width: 0;
+    .plan-card-heading {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
-    .main-nav {
-        max-width: 100%;
-        min-width: 0;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 6px;
-        scrollbar-width: thin;
-    }
-
-    .main-nav > a,
-    .main-nav > button,
-    .main-nav > form {
-        flex: 0 0 auto;
+    .plan-card,
+    .plans-assurance {
+        overflow-wrap: anywhere;
     }
 
     .dashboard-welcome h1 {
@@ -10768,4 +10891,56 @@ p {
     .compact-calendar-event-meeting { background: #0891b2; }
     .compact-calendar-event-personal { background: #db2777; }
     .compact-calendar-event-other { background: #64748b; }
+}
+
+/* Definitive responsive application header overrides. */
+@media (max-width: 850px) {
+    .site-header { overflow: visible; }
+    .header-content {
+        position: relative;
+        min-height: 70px;
+        height: auto;
+        padding: 12px 0;
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+    }
+    .logo {
+        min-width: 0;
+        max-width: calc(100% - 58px);
+        font-size: 1.05rem;
+    }
+    .mobile-nav-toggle {
+        display: grid;
+        flex: 0 0 44px;
+        margin-left: auto;
+    }
+    .main-nav {
+        position: absolute;
+        top: calc(100% + 1px);
+        right: 0;
+        left: 0;
+        display: none;
+        width: 100%;
+        max-width: none;
+        max-height: calc(100vh - 92px);
+        padding: 14px;
+        flex-direction: column;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        gap: 6px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 0 0 18px 18px;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, .14);
+    }
+    .main-nav.is-open { display: flex; }
+    .main-nav > a,
+    .main-nav > button,
+    .main-nav > form {
+        width: 100%;
+        flex: none;
+    }
 }
