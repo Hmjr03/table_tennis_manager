@@ -51,7 +51,7 @@ def pwa_manifest(request):
         {
             "id": "/",
             "name": "ETM Manager",
-            "short_name": "TT Manager",
+            "short_name": "ETM Manager",
             "description": _(
                 "Manage athletes, matches, competitions and performance."
             ),

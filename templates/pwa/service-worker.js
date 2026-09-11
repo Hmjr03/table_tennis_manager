@@ -1,6 +1,6 @@
 {% load static %}
-const CACHE_VERSION = "ttm-static-v6";
-const CACHE_PREFIX = "ttm-static-";
+const CACHE_VERSION = "etm-static-v7";
+const CACHE_PREFIX = "etm-static-";
 const OFFLINE_URL = "{% url 'offline' %}";
 const PRECACHE_URLS = [
     OFFLINE_URL,

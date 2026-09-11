@@ -7837,6 +7837,115 @@ p {
     background: #dcfce7;
 }
 
+.plan-checkout-form {
+    display: grid;
+    gap: 14px;
+}
+
+.billing-cycle-field {
+    display: grid;
+    gap: 8px;
+}
+
+.billing-cycle-field__label {
+    color: #52627a;
+    font-size: .75rem;
+    font-weight: 850;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.billing-cycle-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 54px;
+    overflow: hidden;
+    color: #172033;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fe 100%);
+    border: 1px solid #cbd7e8;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(31, 48, 88, .07), inset 0 1px 0 rgba(255, 255, 255, .9);
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.billing-cycle-select:hover {
+    border-color: #8eabe0;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, .11), inset 0 1px 0 rgba(255, 255, 255, .9);
+}
+
+.billing-cycle-select:focus-within {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .14), 0 10px 24px rgba(37, 99, 235, .12);
+}
+
+.billing-cycle-select__icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    margin-left: 8px;
+    flex: 0 0 38px;
+    color: #1d4ed8;
+    background: #eaf1ff;
+    border-radius: 10px;
+}
+
+.billing-cycle-select__icon svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.billing-cycle-select select {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 48px 0 12px;
+    color: #172033;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.billing-cycle-select__chevron {
+    position: absolute;
+    right: 19px;
+    width: 9px;
+    height: 9px;
+    pointer-events: none;
+    border-right: 2px solid #52627a;
+    border-bottom: 2px solid #52627a;
+    transform: translateY(-3px) rotate(45deg);
+}
+
+.plan-checkout-form .plan-action {
+    width: 100%;
+    min-height: 52px;
+    border: 1px solid #bfd0ef;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.plan-checkout-form .plan-action:hover {
+    background: #e2ecff;
+    box-shadow: 0 10px 22px rgba(37, 99, 235, .12);
+    transform: translateY(-1px);
+}
+
+.plan-checkout-form .plan-action:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, .25);
+    outline-offset: 3px;
+}
+
 .plans-assurance {
     margin-top: 30px;
     padding: 26px 30px;
@@ -7877,6 +7986,11 @@ p {
 
     .plan-card {
         padding: 24px;
+    }
+
+    .billing-cycle-select,
+    .billing-cycle-select select {
+        min-height: 58px;
     }
 }
 

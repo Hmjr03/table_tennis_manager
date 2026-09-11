@@ -98,6 +98,21 @@ class SubscriptionFoundationTests(TestCase):
                 response = self.client.get(reverse("subscriptions:plans"))
                 self.assertContains(response, expected_text)
 
+    def test_checkout_cycle_uses_the_branded_accessible_control(self):
+        user = User.objects.create_user(
+            username="plan-control-user",
+            email="plan-control@example.com",
+            password="SecurePass123!",
+        )
+        self.client.force_login(user)
+
+        with self.settings(STRIPE_BILLING_ENABLED=True):
+            response = self.client.get(reverse("subscriptions:plans"))
+
+        self.assertContains(response, 'class="billing-cycle-field"')
+        self.assertContains(response, 'class="billing-cycle-select"')
+        self.assertContains(response, 'name="interval" aria-label="Billing cycle"')
+
 
 class BillingSafetyTests(TestCase):
     def setUp(self):

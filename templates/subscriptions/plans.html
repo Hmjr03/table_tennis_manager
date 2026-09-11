@@ -58,15 +58,23 @@
                 {% if current_plan == plan.code and current_subscription.has_paid_access %}
                     <span class="plan-action plan-action-current">{% translate "Active on your account" %}</span>
                 {% elif user.is_authenticated and billing_enabled and plan.monthly_price %}
-                    <form method="post" action="{% url 'subscriptions:create_checkout' %}">
+                    <form class="plan-checkout-form" method="post" action="{% url 'subscriptions:create_checkout' %}">
                         {% csrf_token %}
                         <input type="hidden" name="plan" value="{{ plan.code }}">
-                        <label>
-                            <span class="sr-only">{% translate "Billing cycle" %}</span>
-                            <select name="interval">
-                                <option value="MONTHLY">{% translate "Monthly" %}</option>
-                                <option value="YEARLY">{% translate "Yearly" %}</option>
-                            </select>
+                        <label class="billing-cycle-field">
+                            <span class="billing-cycle-field__label">{% translate "Billing cycle" %}</span>
+                            <span class="billing-cycle-select">
+                                <span class="billing-cycle-select__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <path d="M7 3v3m10-3v3M4.5 9.5h15M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/>
+                                    </svg>
+                                </span>
+                                <select name="interval" aria-label="{% translate 'Billing cycle' %}">
+                                    <option value="MONTHLY">{% translate "Monthly" %}</option>
+                                    <option value="YEARLY">{% translate "Yearly" %}</option>
+                                </select>
+                                <span class="billing-cycle-select__chevron" aria-hidden="true"></span>
+                            </span>
                         </label>
                         <button class="plan-action" type="submit">{% translate "Choose plan" %}</button>
                     </form>

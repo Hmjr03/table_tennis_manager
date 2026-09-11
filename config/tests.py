@@ -234,6 +234,7 @@ class ProgressiveWebAppTests(TestCase):
         self.assertEqual(manifest["start_url"], reverse("dashboard:home"))
         self.assertEqual(manifest["scope"], "/")
         self.assertEqual(manifest["display"], "standalone")
+        self.assertEqual(manifest["short_name"], "ETM Manager")
         self.assertEqual(
             {icon["sizes"] for icon in manifest["icons"]},
             {"192x192", "512x512"},
@@ -269,12 +270,12 @@ class ProgressiveWebAppTests(TestCase):
     def test_service_worker_uses_current_static_cache_version(self):
         response = self.client.get(reverse("service-worker"))
 
-        self.assertContains(response, 'CACHE_VERSION = "ttm-static-v6"')
+        self.assertContains(response, 'CACHE_VERSION = "etm-static-v7"')
 
     def test_stylesheet_url_changes_with_the_current_interface_release(self):
         response = self.client.get(reverse("accounts:login"))
 
-        self.assertContains(response, "/static/css/styles.css?v=7")
+        self.assertContains(response, "/static/css/styles.css?v=8")
 
     def test_offline_page_explains_data_protection(self):
         response = self.client.get(
