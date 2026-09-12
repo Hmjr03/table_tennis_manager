@@ -9,6 +9,13 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 
 
+ANDROID_PACKAGE_ID = "com.escolatmmanager.app"
+ANDROID_UPLOAD_CERTIFICATE_SHA256 = (
+    "01:6F:C6:5F:DD:90:93:4B:A4:BD:25:32:37:86:DD:74:"
+    "E7:D5:88:2B:5C:32:9B:A8:D7:0E:38:A9:E9:97:FA:3E"
+)
+
+
 @require_GET
 @never_cache
 def health_check(request):
@@ -19,6 +26,30 @@ def health_check(request):
 @require_GET
 def favicon(request):
     return HttpResponsePermanentRedirect(static("icons/favicon.ico"))
+
+
+@require_GET
+def android_asset_links(request):
+    """Authorize the signed ETM Manager Android app to open this domain."""
+    response = JsonResponse(
+        [
+            {
+                "relation": [
+                    "delegate_permission/common.handle_all_urls",
+                ],
+                "target": {
+                    "namespace": "android_app",
+                    "package_name": ANDROID_PACKAGE_ID,
+                    "sha256_cert_fingerprints": [
+                        ANDROID_UPLOAD_CERTIFICATE_SHA256,
+                    ],
+                },
+            }
+        ],
+        safe=False,
+    )
+    response["Cache-Control"] = "public, max-age=3600"
+    return response
 
 
 @require_GET

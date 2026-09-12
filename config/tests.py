@@ -244,6 +244,29 @@ class ProgressiveWebAppTests(TestCase):
             {icon["purpose"] for icon in manifest["icons"]},
         )
 
+    def test_android_asset_links_authorizes_the_signed_application(self):
+        response = self.client.get(reverse("android-asset-links"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "application/json")
+        self.assertIn("public", response["Cache-Control"])
+        statement = response.json()[0]
+        self.assertEqual(
+            statement["relation"],
+            ["delegate_permission/common.handle_all_urls"],
+        )
+        self.assertEqual(
+            statement["target"]["package_name"],
+            "com.escolatmmanager.app",
+        )
+        self.assertEqual(
+            statement["target"]["sha256_cert_fingerprints"],
+            [
+                "01:6F:C6:5F:DD:90:93:4B:A4:BD:25:32:37:86:DD:74:"
+                "E7:D5:88:2B:5C:32:9B:A8:D7:0E:38:A9:E9:97:FA:3E"
+            ],
+        )
+
     def test_manifest_is_localized(self):
         with self.settings(LANGUAGE_CODE="pt-br"):
             response = self.client.get(

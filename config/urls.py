@@ -3,6 +3,7 @@ from django.urls import include, path
 
 from accounts import views
 from config.views import (
+    android_asset_links,
     favicon,
     health_check,
     liveness_check,
@@ -14,6 +15,11 @@ from config.views import (
 
 
 urlpatterns = [
+    path(
+        ".well-known/assetlinks.json",
+        android_asset_links,
+        name="android-asset-links",
+    ),
     path(
         "favicon.ico",
         favicon,
