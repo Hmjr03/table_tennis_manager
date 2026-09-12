@@ -15,6 +15,12 @@
                 <span>{% translate "Paid subscriptions are not active yet. No charge can be made from this page." %}</span>
             </div>
         {% endif %}
+        {% if is_android_app %}
+            <div class="plans-preview-notice" role="status">
+                <strong>{% translate "Android app" %}</strong>
+                <span>{% translate "Subscriptions are managed on the ETM Manager website outside this app. If you already have a subscription, sign in with the same account to access your plan." %}</span>
+            </div>
+        {% endif %}
         {% if current_subscription.is_trial_expired %}
             <div class="plans-preview-notice" role="status">
                 <strong>{% translate "Your free trial has ended" %}</strong>
@@ -57,8 +63,10 @@
                 </div>
                 {% if current_plan == plan.code and current_subscription.has_paid_access %}
                     <span class="plan-action plan-action-current">{% translate "Active on your account" %}</span>
+                {% elif is_android_app and plan.monthly_price %}
+                    <span class="plan-action plan-action-current">{% translate "Available with an active subscription" %}</span>
                 {% elif user.is_authenticated and billing_enabled and plan.monthly_price %}
-                    <form class="plan-checkout-form" method="post" action="{% url 'subscriptions:create_checkout' %}">
+                    <form class="plan-checkout-form" data-external-payment method="post" action="{% url 'subscriptions:create_checkout' %}">
                         {% csrf_token %}
                         <input type="hidden" name="plan" value="{{ plan.code }}">
                         <label class="billing-cycle-field">
@@ -87,8 +95,8 @@
         {% endfor %}
     </div>
 
-    {% if billing_enabled and user.is_authenticated and user.subscription.has_current_billing_account %}
-        <form method="post" action="{% url 'subscriptions:billing_portal' %}">
+    {% if billing_enabled and not is_android_app and user.is_authenticated and user.subscription.has_current_billing_account %}
+        <form data-external-payment method="post" action="{% url 'subscriptions:billing_portal' %}">
             {% csrf_token %}
             <button class="plan-action" type="submit">{% translate "Manage subscription" %}</button>
         </form>

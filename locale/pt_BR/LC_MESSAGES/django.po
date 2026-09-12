@@ -2308,3 +2308,15 @@ msgstr "economize R$ 199,80"
 #, python-format
 msgid "Your current plan allows up to %(limit)s player profiles. Choose a plan with more capacity to add another player."
 msgstr "Seu plano atual permite até %(limit)s perfis de jogadores. Escolha um plano com maior capacidade para adicionar outro jogador."
+
+msgid "Android app"
+msgstr "Aplicativo Android"
+
+msgid "Subscriptions are managed on the ETM Manager website outside this app. If you already have a subscription, sign in with the same account to access your plan."
+msgstr "As assinaturas são administradas no site do ETM Manager, fora deste aplicativo. Se você já possui uma assinatura, entre com a mesma conta para acessar seu plano."
+
+msgid "Available with an active subscription"
+msgstr "Disponível com uma assinatura ativa"
+
+msgid "Subscriptions for the Android app are managed outside the app."
+msgstr "As assinaturas do aplicativo Android são administradas fora do aplicativo."

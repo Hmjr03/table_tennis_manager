@@ -113,6 +113,35 @@ class SubscriptionFoundationTests(TestCase):
         self.assertContains(response, 'class="billing-cycle-select"')
         self.assertContains(response, 'name="interval" aria-label="Billing cycle"')
 
+    @override_settings(STRIPE_BILLING_ENABLED=True)
+    def test_android_app_shows_plans_without_external_checkout(self):
+        user = User.objects.create_user(
+            username="android-plan-user",
+            email="android-plan@example.com",
+            password="SecurePass123!",
+        )
+        self.client.force_login(user)
+
+        response = self.client.get(
+            reverse("subscriptions:plans"),
+            {"platform": "android"},
+        )
+
+        self.assertContains(response, "Subscriptions are managed")
+        self.assertContains(response, "Available with an active subscription")
+        self.assertNotContains(response, 'class="plan-checkout-form"')
+        self.assertNotContains(response, 'action="/plans/start/"')
+
+        self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "pt-br"
+        portuguese_response = self.client.get(
+            reverse("subscriptions:plans"),
+            {"platform": "android"},
+        )
+        self.assertContains(
+            portuguese_response,
+            "As assinaturas são administradas no site do ETM Manager",
+        )
+
 
 class BillingSafetyTests(TestCase):
     def setUp(self):
@@ -155,6 +184,24 @@ class BillingSafetyTests(TestCase):
             "https://billing.example/session",
             fetch_redirect_response=False,
         )
+
+    @override_settings(STRIPE_BILLING_ENABLED=True)
+    @patch("subscriptions.views.create_checkout_session")
+    def test_android_checkout_request_cannot_open_stripe(self, create_session):
+        response = self.client.post(
+            reverse("subscriptions:create_checkout"),
+            {
+                "plan": "PROFESSIONAL",
+                "interval": "MONTHLY",
+                "platform": "android",
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("subscriptions:plans") + "?platform=android",
+        )
+        create_session.assert_not_called()
 
     @override_settings(STRIPE_BILLING_ENABLED=True)
     @patch("subscriptions.views.create_billing_portal_session")

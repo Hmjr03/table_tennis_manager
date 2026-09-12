@@ -20,6 +20,7 @@ from subscriptions.services import (
 
 
 def plans(request):
+    is_android_app = request.GET.get("platform") == "android"
     current_plan = None
     current_subscription = None
     if request.user.is_authenticated:
@@ -54,6 +55,7 @@ def plans(request):
             "current_plan": current_plan,
             "current_subscription": current_subscription,
             "billing_enabled": settings.STRIPE_BILLING_ENABLED,
+            "is_android_app": is_android_app,
         },
     )
 
@@ -61,6 +63,14 @@ def plans(request):
 @login_required
 @require_POST
 def create_checkout(request):
+    if request.POST.get("platform") == "android":
+        messages.info(
+            request,
+            _(
+                "Subscriptions for the Android app are managed outside the app."
+            ),
+        )
+        return redirect(reverse("subscriptions:plans") + "?platform=android")
     try:
         session = create_checkout_session(
             user=request.user,
@@ -82,6 +92,14 @@ def create_checkout(request):
 @login_required
 @require_POST
 def billing_portal(request):
+    if request.POST.get("platform") == "android":
+        messages.info(
+            request,
+            _(
+                "Subscriptions for the Android app are managed outside the app."
+            ),
+        )
+        return redirect(reverse("subscriptions:plans") + "?platform=android")
     try:
         session = create_billing_portal_session(
             user=request.user,
