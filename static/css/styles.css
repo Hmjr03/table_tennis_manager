@@ -10297,9 +10297,18 @@ p {
     .players-summary-item { min-height: 104px; }
     .players-section-header { align-items: flex-start; flex-direction: column; }
     .players-page .player-card { padding: 22px; }
-    .players-page .player-card-header { align-items: flex-start; flex-wrap: wrap; }
-    .players-page .player-card-identity { flex: 1; }
-    .player-status { margin-left: 82px; margin-top: -22px; }
+    .players-page .player-card-header {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr);
+        align-items: start;
+        gap: 14px 18px;
+    }
+    .players-page .player-card-identity { min-width: 0; }
+    .players-page .player-status {
+        grid-column: 1 / -1;
+        justify-self: start;
+        margin: 0;
+    }
     .players-page .player-details { grid-template-columns: 1fr; }
     .players-page .player-card-footer { align-items: stretch; flex-direction: column; }
     .players-page .player-card-footer a { width: 100%; }
