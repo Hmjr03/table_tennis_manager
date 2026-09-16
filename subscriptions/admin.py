@@ -7,7 +7,7 @@ from subscriptions.models import StripeWebhookEvent, Subscription
 class SubscriptionAdmin(admin.ModelAdmin):
     list_display = (
         "user", "plan", "status", "billing_interval",
-        "cancel_at_period_end", "updated_at",
+        "complimentary_access", "cancel_at_period_end", "updated_at",
     )
     list_filter = ("plan", "status", "billing_interval")
     search_fields = ("user__username", "user__email")

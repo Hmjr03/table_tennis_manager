@@ -67,6 +67,10 @@ class Subscription(models.Model):
         default="",
     )
     cancel_at_period_end = models.BooleanField(default=False)
+    complimentary_access = models.BooleanField(
+        "Acesso de cortesia", default=False,
+        help_text="Acesso sem cobrança e sem vencimento, revogável pela administração.",
+    )
     trial_ends_at = models.DateTimeField(null=True, blank=True)
     current_period_ends_at = models.DateTimeField(null=True, blank=True)
     canceled_at = models.DateTimeField(null=True, blank=True)
@@ -131,7 +135,7 @@ class Subscription(models.Model):
 
     @property
     def has_product_access(self):
-        return self.has_paid_access or self.is_trial_active
+        return self.complimentary_access or self.has_paid_access or self.is_trial_active
 
 
 class StripeWebhookEvent(models.Model):
