@@ -11,7 +11,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
     )
     list_filter = ("plan", "status", "billing_interval")
     search_fields = ("user__username", "user__email")
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at", "closed_test_ends_at")
 
 
 @admin.register(StripeWebhookEvent)

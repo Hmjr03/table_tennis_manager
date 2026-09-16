@@ -74,7 +74,12 @@
 
     <div class="container">
 
-        {% if account_subscription.is_trial_active %}
+        {% if account_subscription.has_closed_test_access %}
+            <aside class="trial-banner" role="status">
+                <strong>Teste fechado / Closed test</strong>
+                <span>{{ account_subscription.closed_test_ends_at|date:"d/m/Y" }}</span>
+            </aside>
+        {% elif account_subscription.is_trial_active %}
             <aside class="trial-banner" role="status">
                 <strong>{% translate "Individual trial" %}</strong>
                 <span>

@@ -72,6 +72,7 @@ class Subscription(models.Model):
         help_text="Acesso sem cobrança e sem vencimento, revogável pela administração.",
     )
     trial_ends_at = models.DateTimeField(null=True, blank=True)
+    closed_test_ends_at = models.DateTimeField(null=True, blank=True, editable=False)
     current_period_ends_at = models.DateTimeField(null=True, blank=True)
     canceled_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -86,6 +87,8 @@ class Subscription(models.Model):
     @property
     def is_trial_active(self):
         return (
+            not self.has_closed_test_access
+            and
             self.status == self.Status.TRIALING
             and self.trial_ends_at is not None
             and self.trial_ends_at > timezone.now()
@@ -101,6 +104,8 @@ class Subscription(models.Model):
     @property
     def is_trial_expired(self):
         return (
+            not self.has_closed_test_access
+            and
             self.status == self.Status.TRIALING
             and self.trial_ends_at is not None
             and self.trial_ends_at <= timezone.now()
@@ -135,7 +140,21 @@ class Subscription(models.Model):
 
     @property
     def has_product_access(self):
-        return self.complimentary_access or self.has_paid_access or self.is_trial_active
+        return self.has_closed_test_access or self.complimentary_access or self.has_paid_access or self.is_trial_active
+
+    @property
+    def has_closed_test_access(self):
+        return bool(self.closed_test_ends_at and self.closed_test_ends_at > timezone.now())
+
+
+class ClosedTestInvitation(models.Model):
+    """One authorized 30-day grant per normalized email; never automatically renewed."""
+
+    email_digest = models.CharField(max_length=64, unique=True)
+    redeemed_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Closed test invitation {self.pk}"
 
 
 class StripeWebhookEvent(models.Model):

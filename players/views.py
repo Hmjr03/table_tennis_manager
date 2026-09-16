@@ -14,7 +14,8 @@ from subscriptions.models import Subscription
 
 def _player_limit_for(user):
     subscription, _created = Subscription.objects.get_or_create(user=user)
-    return plan_definition(subscription.plan).player_limit
+    effective_plan = Subscription.Plan.ORGANIZATION if subscription.has_closed_test_access else subscription.plan
+    return plan_definition(effective_plan).player_limit
 
 
 @login_required
