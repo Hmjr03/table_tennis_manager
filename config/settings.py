@@ -420,7 +420,7 @@ STRIPE_PRICE_ORGANIZATION_YEARLY = os.getenv(
 # Trial rollout is separate from billing so existing users can never be
 # locked out by an incomplete payment configuration.
 SUBSCRIPTION_TRIAL_ENABLED = env_bool("SUBSCRIPTION_TRIAL_ENABLED", False)
-SUBSCRIPTION_TRIAL_DAYS = int(os.getenv("SUBSCRIPTION_TRIAL_DAYS", "7"))
+SUBSCRIPTION_TRIAL_DAYS = int(os.getenv("SUBSCRIPTION_TRIAL_DAYS", "30"))
 SUBSCRIPTION_ACCESS_ENFORCED = env_bool(
     "SUBSCRIPTION_ACCESS_ENFORCED", False
 )

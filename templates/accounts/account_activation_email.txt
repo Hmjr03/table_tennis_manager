@@ -2,7 +2,7 @@
 
 {% translate "Welcome to ETM Manager. Confirm your email to activate your account securely." %}
 
-{% if trial_enabled %}{% translate "Your 7-day Individual trial starts only after you confirm your email. No card is required." %}
+{% if trial_enabled %}{% translate "Your 30-day Individual trial starts only after you confirm your email. No card is required." %}
 {% endif %}
 
 {% translate "Use the verification link below:" %}

@@ -2221,8 +2221,8 @@ msgstr "R$ 299/ano"
 msgid "save R$ 59.80"
 msgstr "economize R$ 59,80"
 
-msgid "7-day free trial without a card"
-msgstr "Teste gratuito de 7 dias sem cartão"
+msgid "30-day free trial without a card"
+msgstr "Teste gratuito de 30 dias sem cartão"
 
 msgid "Billing cycle"
 msgstr "Ciclo de cobrança"
@@ -2263,11 +2263,11 @@ msgstr "Checkout concluído. Sua assinatura será ativada assim que o pagamento 
 msgid "Checkout canceled. No charge was made."
 msgstr "Checkout cancelado. Nenhuma cobrança foi realizada."
 
-msgid "Your email has been confirmed. Your 7-day Individual trial is ready to use, with no card required."
-msgstr "Seu e-mail foi confirmado. Seu teste de 7 dias do plano Individual está pronto para uso, sem necessidade de cartão."
+msgid "Your email has been confirmed. Your 30-day Individual trial is ready to use, with no card required."
+msgstr "Seu e-mail foi confirmado. Seu teste de 30 dias do plano Individual está pronto para uso, sem necessidade de cartão."
 
-msgid "Your 7-day Individual trial starts only after you confirm your email. No card is required."
-msgstr "Seu teste gratuito de 7 dias do plano Individual começa somente após a confirmação do e-mail. Nenhum cartão é necessário."
+msgid "Your 30-day Individual trial starts only after you confirm your email. No card is required."
+msgstr "Seu teste gratuito de 30 dias do plano Individual começa somente após a confirmação do e-mail. Nenhum cartão é necessário."
 
 msgid "Individual"
 msgstr "Individual"

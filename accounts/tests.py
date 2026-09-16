@@ -331,7 +331,7 @@ class EmailVerificationTests(TestCase):
 
     @override_settings(
         SUBSCRIPTION_TRIAL_ENABLED=True,
-        SUBSCRIPTION_TRIAL_DAYS=7,
+        SUBSCRIPTION_TRIAL_DAYS=30,
     )
     def test_valid_link_activates_and_logs_user_in(self):
         user = self.register_user()
@@ -355,6 +355,11 @@ class EmailVerificationTests(TestCase):
             user.subscription.trial_ends_at,
             original_trial_end,
         )
+        self.assertAlmostEqual(
+            (user.subscription.trial_ends_at - timezone.now()).total_seconds(),
+            30 * 24 * 60 * 60,
+            delta=10,
+        )
         self.assertEqual(
             str(self.client.session["_auth_user_id"]),
             str(user.pk),
@@ -365,7 +370,7 @@ class EmailVerificationTests(TestCase):
         self.register_user()
 
         self.assertIn(
-            "7-day Individual trial starts only after you confirm",
+            "30-day Individual trial starts only after you confirm",
             mail.outbox[0].body,
         )
 

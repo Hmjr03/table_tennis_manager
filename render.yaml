@@ -50,7 +50,7 @@ services:
       - key: SUBSCRIPTION_TRIAL_ENABLED
         value: "False"
       - key: SUBSCRIPTION_TRIAL_DAYS
-        value: "7"
+        value: "30"
       - key: SUBSCRIPTION_ACCESS_ENFORCED
         value: "False"
 
