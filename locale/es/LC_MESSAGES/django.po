@@ -2323,3 +2323,9 @@ msgstr "Las suscripciones de la aplicación Android se gestionan fuera de la apl
 
 msgid "Registered competition"
 msgstr "Competición registrada"
+
+msgid "Example: Serve and receive training"
+msgstr "Ej.: Entrenamiento de saque y recepción"
+
+msgid "Goals, participants or other useful details (optional)"
+msgstr "Objetivos, participantes u otros detalles útiles (opcional)"

@@ -52,13 +52,13 @@ class CalendarEventForm(forms.ModelForm):
         widgets = {
             "title": forms.TextInput(
                 attrs={
-                    "placeholder": _("Event title"),
+                    "placeholder": _("Example: Serve and receive training"),
                 }
             ),
             "description": forms.Textarea(
                 attrs={
-                    "placeholder": _("Describe this event..."),
-                    "rows": 5,
+                    "placeholder": _("Goals, participants or other useful details (optional)"),
+                    "rows": 3,
                 }
             ),
             "event_type": forms.Select(),
@@ -186,6 +186,6 @@ class EventDescriptionForm(forms.ModelForm):
         labels = {"description": _("Description")}
         widgets = {
             "description": forms.Textarea(
-                attrs={"rows": 6, "placeholder": _("Describe this event...")}
+                attrs={"rows": 6, "placeholder": _("Goals, participants or other useful details (optional)")}
             ),
         }
