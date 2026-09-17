@@ -2320,3 +2320,6 @@ msgstr "Disponível com uma assinatura ativa"
 
 msgid "Subscriptions for the Android app are managed outside the app."
 msgstr "As assinaturas do aplicativo Android são administradas fora do aplicativo."
+
+msgid "Registered competition"
+msgstr "Competição cadastrada"

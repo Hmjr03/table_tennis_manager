@@ -30,6 +30,18 @@ class TransactionFormTests(TestCase):
         data.update(overrides)
         return data
 
+    def test_transaction_labels_are_translated(self):
+        for language, competition, date in (
+            ("pt-br", "Competição cadastrada", "Data"),
+            ("es", "Competición registrada", "Fecha"),
+        ):
+            with self.subTest(language=language), override(language):
+                html = TransactionForm().as_p()
+                self.assertIn(competition, html)
+                self.assertIn(date + ":", html)
+                self.assertNotIn("Registered competition", html)
+                self.assertNotIn(">Date:", html)
+
     def test_valid_transaction_form(self):
         self.assertTrue(TransactionForm(data=self.form_data()).is_valid())
 

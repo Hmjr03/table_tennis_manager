@@ -30,6 +30,7 @@ class TransactionForm(forms.ModelForm):
         ),
     )
     date = forms.DateField(
+        label=_("Date"),
         input_formats=["%Y-%m-%d"],
         widget=forms.DateInput(
             format="%Y-%m-%d",
