@@ -1,0 +1,27 @@
+.public-site { color: #172b49; padding-bottom: 32px; }
+.public-hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:48px; align-items:center; padding:48px 0 64px; }
+.public-hero h1 { font-size:clamp(2.25rem,4.5vw,3.7rem); line-height:1.08; letter-spacing:-.035em; margin:16px 0 24px; max-width:13ch; }
+.public-site p { line-height:1.65; color:#52627a; }
+.public-hero .public-lead { font-size:1.25rem; color:#172b49; max-width:38ch; }
+.public-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+.public-trial-note { font-size:.85rem; color:#52627a; margin-top:14px; }
+.public-demo-label { font-size:.75rem; font-weight:600; }
+.public-preview .season-summary { box-shadow:0 18px 48px #18376812; }
+.public-preview .season-summary .dashboard-section-heading h2 {font-size:1.2rem;}
+.public-preview .season-summary .dashboard-card {padding:12px;}
+.public-preview .season-summary .dashboard-card-label {font-size:.65rem;}
+.public-preview .season-summary .dashboard-card strong {font-size:1.65rem;}
+.public-section {padding:40px 0;border-top:1px solid #dce4ef;scroll-margin-top:110px;}
+.public-section h2 {font-size:clamp(1.45rem,2.5vw,2rem);line-height:1.25;margin:0 0 24px;}
+.public-section h3 {font-size:1.05rem;line-height:1.4;margin:0 0 8px;}
+.public-steps {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;counter-reset:steps;list-style:none;padding:0;}
+.public-steps li::before {counter-increment:steps;content:'0' counter(steps);display:block;font-size:.8rem;font-weight:800;color:#2563eb;margin-bottom:12px;}
+.public-roles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;}
+.public-help {display:grid;grid-template-columns:1.4fr 1fr;gap:48px;}
+.public-help details {border-bottom:1px solid #dce4ef;padding:16px 0;}
+.public-help summary {font-weight:650;cursor:pointer;line-height:1.5;}
+.public-help aside {padding:24px;border-radius:20px;background:#eaf0fa;align-self:start;overflow-wrap:anywhere;}
+.public-help a:not(.primary-button),.public-section>a {color:#174b9d;text-decoration:underline;text-underline-offset:3px;}
+.public-site :focus-visible {outline:3px solid #2563eb;outline-offset:4px;}
+@media(max-width:850px){.public-hero{grid-template-columns:1fr;gap:24px;padding:28px 0 36px;}.public-hero h1{max-width:18ch;}.public-preview{max-width:560px;}.public-help{grid-template-columns:1fr;gap:24px;}}
+@media(max-width:600px){.public-steps,.public-roles{grid-template-columns:1fr;gap:20px;}.public-section{padding:28px 0;}.public-actions>a{width:100%;text-align:center;}.public-preview .season-summary{padding:12px;}.public-help aside{padding:20px;}.public-site p{font-size:.95rem;}}

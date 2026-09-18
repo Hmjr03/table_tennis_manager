@@ -2329,3 +2329,171 @@ msgstr "Ej.: Entrenamiento de saque y recepción"
 
 msgid "Goals, participants or other useful details (optional)"
 msgstr "Objetivos, participantes u otros detalles útiles (opcional)"
+
+msgid "Table tennis, organized."
+msgstr "Tu tenis de mesa, organizado."
+
+msgid "Keep matches, training, competitions and finances in one place."
+msgstr ""
+"Reúne partidos, entrenamientos, competiciones y finanzas en un solo lugar."
+
+msgid ""
+"A workspace for athletes, coaches and clubs who want a clear view of their "
+"sporting routine."
+msgstr ""
+"Un espacio para atletas, entrenadores y clubes que quieren una visión clara "
+"de su rutina deportiva."
+
+msgid "Try free for 30 days"
+msgstr "Probar gratis durante 30 días"
+
+msgid "No card required. Your trial starts after email confirmation."
+msgstr "Sin tarjeta. La prueba comienza al confirmar tu correo."
+
+msgid "See how it works"
+msgstr "Conocer la aplicación"
+
+msgid "How it works"
+msgstr "Cómo funciona"
+
+msgid "Help"
+msgstr "Ayuda"
+
+msgid "Product preview · fictional demonstration data"
+msgstr "Vista previa · datos ficticios de demostración"
+
+msgid "Your season at a glance"
+msgstr "Tu temporada de un vistazo"
+
+msgid "From your first match to your next competition"
+msgstr "Del primer partido a la próxima competición"
+
+msgid "Create your account"
+msgstr "Crea tu cuenta"
+
+msgid ""
+"Choose your profile and confirm your email to start your Individual trial."
+msgstr ""
+"Elige tu perfil y confirma tu correo para iniciar la prueba del plan "
+"Individual."
+
+msgid "Record your routine"
+msgstr "Registra tu rutina"
+
+msgid "Add your player profile, a match or your next training session."
+msgstr "Añade tu perfil de jugador, un partido o tu próximo entrenamiento."
+
+msgid "Follow your progress"
+msgstr "Sigue tu evolución"
+
+msgid "Review results and keep your calendar and finances organized."
+msgstr "Consulta resultados y organiza tu calendario y tus finanzas."
+
+msgid "Tools for your role"
+msgstr "Herramientas para tu perfil"
+
+msgid "Coaches"
+msgstr "Entrenadores"
+
+msgid "Clubs"
+msgstr "Clubes"
+
+msgid "Keep your match history, statistics and sporting commitments together."
+msgstr ""
+"Reúne tu historial de partidos, estadísticas y compromisos deportivos."
+
+msgid "Organize player profiles, training sessions and competitive results."
+msgstr ""
+"Organiza perfiles de jugadores, entrenamientos y resultados competitivos."
+
+msgid ""
+"Plan activities and track players and finances, with capacity according to "
+"your plan."
+msgstr ""
+"Planifica actividades y sigue jugadores y finanzas, con capacidad según tu "
+"plan."
+
+msgid "Questions before you start"
+msgstr "Preguntas antes de empezar"
+
+msgid "What is included in the trial?"
+msgstr "¿Qué incluye la prueba?"
+
+msgid ""
+"30 days of the Individual plan, with one player profile, matches, calendar, "
+"competitions, finances and notes."
+msgstr ""
+"30 días del plan Individual, con un perfil de jugador, partidos, calendario,"
+" competiciones, finanzas y notas."
+
+msgid "What happens after 30 days?"
+msgstr "¿Qué ocurre después de 30 días?"
+
+msgid ""
+"The free period ends. No card is requested at registration, and registration"
+" does not authorize a subscription charge. Check Plans for access and "
+"subscription options."
+msgstr ""
+"El período gratuito termina. El registro no solicita tarjeta ni autoriza "
+"cobros. Consulta Planes para conocer las opciones de acceso y contratación."
+
+msgid "I did not receive the confirmation email."
+msgstr "No recibí el correo de confirmación."
+
+msgid ""
+"Check spam and the address used at registration. You can request a new link "
+"or contact support."
+msgstr ""
+"Revisa el spam y la dirección del registro. Puedes solicitar otro enlace o "
+"contactar con soporte."
+
+msgid "Request a new verification link"
+msgstr "Solicitar otro enlace de verificación"
+
+msgid "Can I use it on my phone?"
+msgstr "¿Puedo usarlo en el móvil?"
+
+msgid ""
+"Use ETM Manager in your phone browser. Google Play availability depends on "
+"the current release and test eligibility."
+msgstr ""
+"Usa ETM Manager en el navegador móvil. La disponibilidad en Google Play "
+"depende de la versión publicada y de la participación en la prueba."
+
+msgid "Need help getting started?"
+msgstr "¿Necesitas ayuda para empezar?"
+
+msgid "Contact support"
+msgstr "Contactar con soporte"
+
+msgid ""
+"Do not send passwords or verification links. Describe the screen and the "
+"problem."
+msgstr ""
+"No envíes contraseñas ni enlaces de verificación. Describe la pantalla y el "
+"problema."
+
+msgid "Your profile"
+msgstr "Tu perfil"
+
+msgid "Coach"
+msgstr "Entrenador"
+
+msgid "Club"
+msgstr "Club"
+
+msgid "Start with the Individual trial"
+msgstr "Empezar con la prueba Individual"
+
+msgid "Trial and next steps"
+msgstr "Prueba y próximos pasos"
+
+msgid "ETM Manager | Table tennis management for athletes and coaches"
+msgstr "ETM Manager | Gestión de tenis de mesa para atletas y entrenadores"
+
+msgid ""
+"Organize matches, training, competitions and finances. Try ETM Manager for "
+"30 days without a card."
+msgstr ""
+"Organiza partidos, entrenamientos, competiciones y finanzas. Prueba ETM "
+"Manager durante 30 días sin tarjeta."

@@ -166,6 +166,7 @@ TEMPLATES = [
                     "messages"
                 ),
                 "subscriptions.context_processors.subscription_access",
+                "config.public.public_metadata",
             ],
         },
     },

@@ -30,7 +30,7 @@
 
 
             <p class="page-subtitle">
-                {% translate "Join ETM Manager and start managing your journey." %}
+                {% translate "30 days of the Individual plan, with one player profile, matches, calendar, competitions, finances and notes." %}
             </p>
 
         </div>
@@ -38,6 +38,8 @@
 
 
 
+        <p class="public-trial-note">{% translate "No card required. Your trial starts after email confirmation." %}</p>
+        <p><a href="{% url 'accounts:resend_activation' %}">{% translate "Request a new verification link" %}</a> · <a href="{% url 'home' %}#help">{% translate "Help" %}</a></p>
         <form method="post">
 
 

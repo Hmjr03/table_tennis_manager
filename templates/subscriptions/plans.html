@@ -89,7 +89,7 @@
                 {% elif user.is_authenticated %}
                     <span class="plan-action">{% translate "Coming soon" %}</span>
                 {% else %}
-                    <a class="plan-action" href="{% url 'accounts:register' %}">{% translate "Create account" %}</a>
+                    <a class="plan-action" href="{% url 'accounts:register' %}">{% translate "Start with the Individual trial" %}</a>
                 {% endif %}
             </article>
         {% endfor %}
@@ -103,8 +103,8 @@
     {% endif %}
 
     <footer class="plans-assurance">
-        <h2>{% translate "Built for a safe launch" %}</h2>
-        <p>{% translate "Prices and billing cycles are shown before purchase. Subscriptions renew automatically until canceled. Cancellation and refund rights follow the Terms of Use and applicable law." %}</p>
+        <h2>{% translate "Trial and next steps" %}</h2>
+        <p>{% translate "What happens after 30 days?" %} {% translate "The free period ends. No card is requested at registration, and registration does not authorize a subscription charge. Check Plans for access and subscription options." %}</p>
     </footer>
 </section>
 {% endblock %}

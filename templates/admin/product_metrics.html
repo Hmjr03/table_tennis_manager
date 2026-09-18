@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Cadastros e primeiro uso</h1>
+<p>Contagem atual de cadastros com aceite dos termos. Exclui equipe administrativa e contas de demonstração com e-mail .invalid. Nenhum e-mail ou dado pessoal é exibido.</p>
+<table><thead><tr><th>Etapa</th><th>Contas</th></tr></thead><tbody>
+<tr><td>Cadastros</td><td>{{ registered }}</td></tr>
+<tr><td>Contas ativas</td><td>{{ activated }} ({{ activation_rate }}% dos cadastros)</td></tr>
+<tr><td>Contas ativas com ao menos uma partida ou evento</td><td>{{ started }} ({{ usage_rate }}% das ativas)</td></tr>
+</tbody></table>
+<p>Este relatório mostra o estado atual, não uma série histórica. Uma ativação administrativa também conta como conta ativa. Registros excluídos deixam de contar.</p>
+<p>Visitas, origem de tráfego e cliques não são medidos aqui. Estes números não representam a conversão de visitantes.</p>
+<p><a href="{% url 'admin:index' %}">Voltar à administração</a></p>
+{% endblock %}

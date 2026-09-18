@@ -29,7 +29,7 @@ from subscriptions.models import Subscription
 
 
 def home(request):
-    return render(request, "home.html")
+    return render(request, "home.html", {"support_email": settings.LEGAL_CONTACT_EMAIL})
 
 
 def register(request):

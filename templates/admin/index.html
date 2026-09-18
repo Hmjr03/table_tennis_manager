@@ -1,0 +1,5 @@
+{% extends "admin/index.html" %}
+{% block content %}
+{% if user.is_superuser %}<div class="module"><h2>Adoção do produto</h2><p style="padding:12px"><a href="{% url 'product-metrics' %}">Ver cadastros, contas ativas e primeiro uso</a></p></div>{% endif %}
+{{ block.super }}
+{% endblock %}

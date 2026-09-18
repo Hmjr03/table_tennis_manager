@@ -6,6 +6,11 @@ from accounts.models import User
 
 
 class UserRegistrationForm(UserCreationForm):
+    role = forms.ChoiceField(label=_("Your profile"), choices=[
+        (User.Role.ATHLETE, _("Athlete")),
+        (User.Role.COACH, _("Coach")),
+        (User.Role.CLUB, _("Club")),
+    ])
     email = forms.EmailField(
         required=True,
         label=_("Email"),

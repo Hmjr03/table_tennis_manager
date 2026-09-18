@@ -4,7 +4,7 @@
     <div class="container header-content">
 
         <a
-            href="{% if user.is_authenticated %}{% url 'dashboard:home' %}{% else %}{% url 'accounts:login' %}{% endif %}"
+            href="{% if user.is_authenticated %}{% url 'dashboard:home' %}{% else %}{% url 'home' %}{% endif %}"
             class="logo"
         >
             <span class="logo-icon" aria-hidden="true">
@@ -101,7 +101,8 @@
                 </form>
 
             {% else %}
-
+                <a href="{% url 'home' %}#how-it-works">{% translate "How it works" %}</a>
+                <a href="{% url 'home' %}#help">{% translate "Help" %}</a>
                 <a href="{% url 'accounts:login' %}">
                     {% translate "Login" %}
                 </a>
@@ -114,7 +115,7 @@
                     href="{% url 'accounts:register' %}"
                     class="nav-register"
                 >
-                    {% translate "Create account" %}
+                    {% translate "Try free for 30 days" %}
                 </a>
 
             {% endif %}

@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import include, path
 
+from config.public import robots, sitemap
+from accounts.product_metrics import product_metrics
 from accounts import views
 from config.views import (
     android_asset_links,
@@ -15,6 +17,9 @@ from config.views import (
 
 
 urlpatterns = [
+    path("admin/product-metrics/", admin.site.admin_view(product_metrics), name="product-metrics"),
+    path("robots.txt", robots),
+    path("sitemap.xml", sitemap),
     path(
         ".well-known/assetlinks.json",
         android_asset_links,

@@ -1,158 +1,35 @@
 {% extends "base.html" %}
-{% load i18n %}
-
-
-{% block title %}
-ETM Manager | Professional Sports Management
-{% endblock %}
-
-
-
+{% load i18n static %}
+{% block title %}{% translate "ETM Manager | Table tennis management for athletes and coaches" %}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/public.css' %}">{% endblock %}
 {% block content %}
-
-
-<section class="home-hero">
-
-
-    <div class="hero-content">
-
-
-        <p class="eyebrow">
-            {% translate "TABLE TENNIS MANAGEMENT PLATFORM" %}
-        </p>
-
-
-
-        <h1>
-            {% translate "Manage your game." %}<br>
-            {% translate "Improve your performance." %}<br>
-            {% translate "Reach your next level." %}
-        </h1>
-
-
-
-        <p class="home-intro">
-            {% translate "A professional workspace designed for athletes, coaches and clubs to track performance, matches and evolution." %}
-        </p>
-
-
-
-        {% if user.is_authenticated %}
-
-
-            <a
-                class="primary-button hero-button"
-                href="{% url 'accounts:dashboard' %}"
-            >
-                {% translate "Open dashboard" %}
-            </a>
-
-
-        {% else %}
-
-
-            <div class="home-actions">
-
-
-                <a
-                    class="primary-button"
-                    href="{% url 'accounts:register' %}"
-                >
-                    {% translate "Create account" %}
-                </a>
-
-
-
-                <a
-                    class="secondary-button"
-                    href="{% url 'accounts:login' %}"
-                >
-                    {% translate "Sign in" %}
-                </a>
-
-
-            </div>
-
-
-        {% endif %}
-
-
-
-    </div>
-
-
-</section>
-
-
-
-
-
-<section class="features-section">
-
-
-    <div class="features-grid">
-
-
-        <article class="feature-card">
-
-
-            <h2>
-                {% translate "Performance Tracking" %}
-            </h2>
-
-
-            <p>
-                {% translate "Analyze wins, losses, statistics and competitive evolution." %}
-            </p>
-
-
-        </article>
-
-
-
-
-
-        <article class="feature-card">
-
-
-            <h2>
-                {% translate "Match Management" %}
-            </h2>
-
-
-            <p>
-                {% translate "Register matches, results and create your competitive history." %}
-            </p>
-
-
-        </article>
-
-
-
-
-
-        <article class="feature-card">
-
-
-            <h2>
-                {% translate "Athlete Development" %}
-            </h2>
-
-
-            <p>
-                {% translate "Build a complete profile and follow your progression over time." %}
-            </p>
-
-
-        </article>
-
-
-
-    </div>
-
-
-</section>
-
-
-
+<div class="public-site">
+<section class="public-hero">
+<div><p class="eyebrow">{% translate "TABLE TENNIS MANAGEMENT PLATFORM" %}</p>
+<h1>{% translate "Table tennis, organized." %}</h1>
+<p class="public-lead">{% translate "Keep matches, training, competitions and finances in one place." %}</p>
+<p>{% translate "A workspace for athletes, coaches and clubs who want a clear view of their sporting routine." %}</p>
+<div class="public-actions"><a class="primary-button" href="{% url 'accounts:register' %}">{% translate "Try free for 30 days" %}</a><a class="secondary-button" href="#product">{% translate "See how it works" %}</a></div>
+<p class="public-trial-note">{% translate "No card required. Your trial starts after email confirmation." %}</p></div>
+<div id="product" class="public-preview"><p class="public-demo-label">{% translate "Product preview · fictional demonstration data" %}</p>
+{% include 'includes/season_summary.html' with players_count=1 matches_played=12 wins=8 losses=4 win_rate=67 sets_won=28 sets_lost=18 current_streak=2 %}
+</div></section>
+<section id="how-it-works" class="public-section"><p class="eyebrow">{% translate "How it works" %}</p><h2>{% translate "From your first match to your next competition" %}</h2>
+<ol class="public-steps">
+<li><h3>{% translate "Create your account" %}</h3><p>{% translate "Choose your profile and confirm your email to start your Individual trial." %}</p></li>
+<li><h3>{% translate "Record your routine" %}</h3><p>{% translate "Add your player profile, a match or your next training session." %}</p></li>
+<li><h3>{% translate "Follow your progress" %}</h3><p>{% translate "Review results and keep your calendar and finances organized." %}</p></li>
+</ol></section>
+<section class="public-section"><h2>{% translate "Tools for your role" %}</h2><div class="public-roles">
+<article><h3>{% translate "Athletes" %}</h3><p>{% translate "Keep your match history, statistics and sporting commitments together." %}</p></article>
+<article><h3>{% translate "Coaches" %}</h3><p>{% translate "Organize player profiles, training sessions and competitive results." %}</p></article>
+<article><h3>{% translate "Clubs" %}</h3><p>{% translate "Plan activities and track players and finances, with capacity according to your plan." %}</p></article>
+</div><a href="{% url 'subscriptions:plans' %}">{% translate "View plans" %} →</a></section>
+<section id="help" class="public-section public-help"><div><h2>{% translate "Questions before you start" %}</h2>
+<details open><summary>{% translate "What is included in the trial?" %}</summary><p>{% translate "30 days of the Individual plan, with one player profile, matches, calendar, competitions, finances and notes." %}</p></details>
+<details><summary>{% translate "What happens after 30 days?" %}</summary><p>{% translate "The free period ends. No card is requested at registration, and registration does not authorize a subscription charge. Check Plans for access and subscription options." %}</p></details>
+<details><summary>{% translate "I did not receive the confirmation email." %}</summary><p>{% translate "Check spam and the address used at registration. You can request a new link or contact support." %}</p><a href="{% url 'accounts:resend_activation' %}">{% translate "Request a new verification link" %}</a></details>
+<details><summary>{% translate "Can I use it on my phone?" %}</summary><p>{% translate "Use ETM Manager in your phone browser. Google Play availability depends on the current release and test eligibility." %}</p></details></div>
+<aside><h3>{% translate "Need help getting started?" %}</h3><a href="mailto:{{ support_email }}">{% translate "Contact support" %}</a><p>{{ support_email }}</p><p>{% translate "Do not send passwords or verification links. Describe the screen and the problem." %}</p><a class="primary-button" href="{% url 'accounts:register' %}">{% translate "Try free for 30 days" %}</a></aside>
+</section></div>
 {% endblock %}
